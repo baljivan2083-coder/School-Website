@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>स्मार्ट पुस्तकालय व्यवस्थापन प्रणाली</title>
+<!-- टेलविन्ड CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- फन्टअवेसम आइकनहरू -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- गुगल फन्टहरू -->
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+body {
+font-family: 'मुक्ता', sans-serif;
+}
+/* अनुकूलन स्क्रोलबार */
+::-webkit-scrollbar {
+width: 6px;
+height: 6px;
+}
+::-webkit-scrollbar-track {
+background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+background: #cbd5e1;
+border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+background: #94a3b8;
+}
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
+<!-- लगइन प्यानल (Admin Login Panel) -->
+<div id="login-panel" class="fixed inset-0 bg-indigo-950 flex items-center justify-center z-50 p-4">
+<div class="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full space-y-6">
+<div class="text-center space-y-2">
+<div class="bg-emerald-500 p-3 rounded-full inline-block text-white mb-2">
+<i class="fa-solid fa-lock text-2xl"></i>
+</div>
+<h2 class="text-2xl font-bold text-slate-800">प्रणाली एडमिन लगइन</h2>
+<p class="text-sm text-slate-500">कृपया व्यवस्थापक पासवर्ड प्रविष्टि गर्नुहोस्</p>
+</div>
+<form onsubmit="handleLogin(event)" class="space-y-4">
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase mb-1">पासवर्ड (Default: admin123)</label>
+<input type="password" id="login-password" required placeholder="••••••••" class="w-full p-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+</div>
+<button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm transition">
+लगइन गर्नुहोस्
+</button>
+</form>
+</div>
+</div>
+
+<!-- मुख्य संरचना (मुख्य लेआउट) - सुरुमा लुकेको, लगइन पछि खुल्ने -->
+<div id="main-layout" class="hidden flex flex-col md:flex-row min-h-screen">
+
+<!-- साइडबार (साइडबार मेनु) - मोबाइलमैत्री -->
+<aside id="sidebar" class="bg-indigo-900 text-white w-full md:w-64 flex-shrink-0 transition-all duration-300 z-30">
+<div class="p-4 flex items-center justify-between border-indigo-800">
+<div class="flex items-center space-x-3">
+<div class="bg-emerald-500 p-2 rounded-lg">
+<i class="fa-solid fa-book-open-reader text-xl text-white"></i>
+</div>
+<div>
+<h1 class="font-bold text-lg leading-tight">स्मार्ट ई-पुस्तकालय</h1>
+<span class="text-xs text-indigo-300">स्वच्छलित प्रणाली</span>
+</div>
+</div>
+<button id="close-sidebar" class="md:hidden text-white hover:text-indigo-300">
+<i class="fa-solid fa-xmark text-xl"></i>
+</button>
+</div>
+
+<!-- नेभिगेसनहरू -->
+<nav class="p-4 space-y-1">
+<button onclick="switchTab('dashboard')" class="tab-btn active-tab w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition duration-200 hover:bg-indigo-800 bg-indigo-950 text-white font-medium" id="btn-dashboard">
+<i class="fa-solid fa-chart-line w-5"></i>
+<span>मुख्य बोर्ड</span>
+</button>
+<button onclick="switchTab('books')" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition duration-200 hover:bg-indigo-800 text-indigo-100" id="btn-books">
+<i class="fa-solid fa-book w-5"></i>
+<span>पुस्तक सूची</span>
+</button>
+<button onclick="switchTab('members')" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition duration-200 hover:bg-indigo-800 text-indigo-100" id="btn-members">
+<i class="fa-solid fa-users w-5"></i>
+<span>सदस्य व्यवस्थापन</span>
+</button>
+<button onclick="switchTab('transactions')" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition duration-200 hover:bg-indigo-800 text-indigo-100" id="btn-transactions">
+<i class="fa-solid fa-handshake w-5"></i>
+<span>लेनदेन र वित्तीय विवरण</span>
+</button>
+<button onclick="switchTab('automation')" class="tab-btn w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition duration-200 hover:bg-indigo-800 text-indigo-100" id="btn-automation">
+<i class="fa-solid fa-robot w-5"></i>
+<span>एआई र अटोमेसन</span>
+</button>
+</nav>
+
+<div class="p-4 mt-auto border-t border-indigo-800 hidden md:block">
+<div class="bg-indigo-950 p-3 rounded-lg text-xs text-indigo-300 text-center">
+<p class="font-semibold text-white mb-1">प्रणाली स्थिति</p>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400">
+<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+अनलाइन / सुरक्षित
+</span>
+</div>
+</div>
+</aside>
+
+<!-- main content area -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- शीर्ष हेडर -->
+<header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 z-10">
+<div class="flex items-center space-x-4">
+<button id="open-sidebar" class="md:hidden text-slate-600 hover:text-slate-900">
+<i class="fa-solid fa-bars text-xl"></i>
+</button>
+<h2 id="current-page-title" class="text-xl font-bold text-slate-800">ड्यासबोर्ड</h2>
+</div>
+<div class="flex items-center space-x-4">
+<div id="real-time-clock" class="text-sm font-semibold text-slate-500 hidden sm:block bg-slate-100 px-3 py-1.5 rounded-lg">
+लोड हुँदैछ...
+</div>
+<div class="flex items-center space-x-3">
+<div class="w-9 h-9 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center font-bold">
+पु
+</div>
+<span class="text-sm font-medium text-slate-700 hidden sm:block">सुनिल अर्याल</span>
+<button onclick="handleLogout()" class="text-xs text-red-500 hover:text-red-700 font-semibold border border-red-200 px-2 py-1 rounded-lg ml-2"><i class="fa-solid fa-right-from-bracket"></i></button>
+</div>
+</div>
+</header>
+
+<!-- मुख्य सामग्री विन्डो -->
+<div class="flex-1 overflow-y-auto p-6">
+
+<!-- कस्टम सूचना सन्देश -->
+<div id="notification-banner" class="hidden transform transition-all duration-300 fixed bottom-5 right-5 z-50 max-w-md bg-slate-900 text-white p-4 rounded-xl shadow-2xl border-l-4 border-emerald-500 flex items-start space-x-3">
+<div class="bg-emerald-500/20 p-2 rounded-lg text-emerald-400" id="notification-icon">
+<i class="fa-solid fa-circle-check text-lg"></i>
+</div>
+<div class="flex-1">
+<p class="font-semibold text-sm" id="notification-title">सफल भयो</p>
+<p class="text-xs text-slate-300 mt-1" id="notification-message">नयाँ डेटा सुरक्षित गरिएको छ</p>
+</div>
+<button onclick="hideNotification()" class="text-slate-400 hover:text-white">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+
+<!-- १. ड्यासबोर्ड ट्याब -->
+<div id="tab-dashboard" class="space-y-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 font-semibold uppercase tracking-wider">कुल पुस्तकहरू</p>
+<h3 class="text-3xl font-bold text-slate-800 mt-1" id="stat-total-books">०</h3>
+</div>
+<div class="p-4 bg-blue-50 text-blue-600 rounded-2xl">
+<i class="fa-solid fa-book-open text-2xl"></i>
+</div>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 font-semibold uppercase tracking-wider">जारी पाठ</p>
+<h3 class="text-3xl font-bold text-slate-800 mt-1" id="stat-issued-books">०</h3>
+</div>
+<div class="p-4 bg-orange-50 text-orange-600 rounded-2xl">
+<i class="fa-solid fa-book-bookmark text-2xl"></i>
+</div>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 font-semibold uppercase tracking-wider">बुझाउन बाँकी (ढिलो)</p>
+<h3 class="text-3xl font-bold text-slate-800 mt-1" id="stat-overdue-books">०</h3>
+</div>
+<div class="p-4 bg-red-50 text-red-600 rounded-2xl">
+<i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+</div>
+</div>
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 font-semibold uppercase tracking-wider font-bold">सक्रिय सदस्यहरू</p>
+<h3 class="text-3xl font-bold text-slate-800 mt-1" id="stat-active-members">०</h3>
+</div>
+<div class="p-4 bg-emerald-50 text-emerald-600 rounded-2xl">
+<i class="fa-solid fa-users text-2xl"></i>
+</div>
+</div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm lg:col-span-2 space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-bold text-slate-800 text-lg flex items-center">
+<i class="fa-solid fa-clock-rotate-left mr-2 text-indigo-600"></i> हालसालै जारी पुस्तकहरू
+</h3>
+<button onclick="switchTab('transactions')" class="text-sm text-indigo-600 font-semibold hover:underline">सबै हेर्नुहोस्</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-slate-500 text-xs font-semibold border-b border-slate-100">
+<th class="pb-3 text-left">पुस्तकको नाम</th>
+<th class="pb-3 text-left">विद्यार्थी / सदस्य</th>
+<th class="pb-3 text-left">जारी मिति</th>
+<th class="pb-3 text-left">अवस्था</th>
+</tr>
+</thead>
+<tbody id="हालैका-कानून-tbody" class="text-sm text-slate-700 divide-y divide-slate-100">
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="bg-indigo-950 text-white p-6 rounded-2xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-10 -bottom-10 opacity-10 text-9xl">
+<i class="fa-solid fa-brain"></i>
+</div>
+<div class="space-y-3 relative z-10">
+<span class="bg-emerald-500 text-white text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">एआई सुविधा</span>
+<h3 class="text-xl font-bold">स्मार्ट एआई असिस्टेन्ट</h3>
+<p class="text-indigo-200 text-xs leading-relaxed">
+नयाँ पुस्तक थप्दा विधा वर्गीकरण गर्न र विद्यार्थीहरूको रोजाइ अनुसार पुस्तक हेर्ने एआई मोडल प्रयोग गर्नुहोस्।
+</p>
+</div>
+<button onclick="switchTab('automation')" class="mt-6 w-full py-2.5 px-4 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition duration-200 text-center text-sm">
+एआई मोडुल खोल्नुहोस्
+</button>
+</div>
+</div>
+</div>
+
+<!-- २। पुस्तक सूची ट्याब -->
+<div id="tab-books" class="hidden space-y-6">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+<div class="relative flex-1 max-w-md">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+<i class="fa-solid fa-magnifying-glass"></i>
+</span>
+<input type="text" id="book-search" oninput="filterBooks()" placeholder="पुस्तकको नाम, लेखक वा बारकोड नम्बरबाट खोज्नुहोस्..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+</div>
+<div class="flex flex-wrap gap-2 items-center">
+<button onclick="downloadBookCSVSample()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1 transition">
+<i class="fa-solid fa-download"></i> <span>नमुना CSV</span>
+</button>
+<label class="bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-700 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1 cursor-pointer transition">
+<i class="fa-solid fa-file-import"></i> <span>डेटा Import</span>
+<input type="file" id="book-csv-file" accept=".csv" class="hidden" onchange="importBookCSV(event)">
+</label>
+<button onclick="openModal('add-book-modal')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 shadow-sm transition">
+<i class="fa-solid fa-circle-plus"></i>
+<span>नयाँ पुस्तक थप्नुहोस्</span>
+</button>
+</div>
+</div>
+
+<!-- पुस्तक तालिका -->
+<div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 text-slate-500 text-xs font-semibold border-b border-slate-100 uppercase tracking-wider">
+<th class="p-4">बारकोड</th>
+<th class="p-4">शीर्षक / लेखक</th>
+<th class="p-4">कक्षा</th>
+<th class="p-4">विधा</th>
+<th class="p-4">परिमाण</th>
+<th class="p-4">अवस्था</th>
+<th class="p-4 text-right">कार्य</th>
+</tr>
+</thead>
+<tbody id="books-tbody" class="text-sm text-slate-700 divide-y divide-slate-100">
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- ३। सदस्य व्यवस्थापन ट्याब -->
+<div id="tab-members" class="hidden space-y-6">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+<div class="relative flex-1 max-w-md">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
+<i class="fa-solid fa-user-gear"></i>
+</span>
+<input type="text" id="member-search" oninput="filterMembers()" placeholder="सदस्यको नाम, आइडी वा ईमेलबाट खोज..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+</div>
+<div class="flex flex-wrap gap-2 items-center">
+<button onclick="downloadMemberCSVSample()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1 transition">
+<i class="fa-solid fa-download"></i> <span>नमुना CSV</span>
+</button>
+<label class="bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-700 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1 cursor-pointer transition">
+<i class="fa-solid fa-file-import"></i> <span>डेटा Import</span>
+<input type="file" id="member-csv-file" accept=".csv" class="hidden" onchange="importMemberCSV(event)">
+</label>
+<button onclick="openModal('add-member-modal')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 shadow-sm transition">
+<i class="fa-solid fa-user-plus"></i>
+<span>नयाँ सदस्य दर्ता</span>
+</button>
+</div>
+</div>
+
+<!-- सदस्यहरूको सूची -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="members-grid">
+</div>
+</div>
+
+<!-- ४। लेनदेन तथा वित्तीय विवरण ट्याब -->
+<div id="tab-transactions" class="hidden space-y-6">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- पुस्तक जारी राख्ने फारम -->
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4 h-fit">
+<h3 class="font-bold text-slate-800 text-lg flex items-center border-b border-slate-100 pb-3">
+<i class="fa-solid fa-share-from-square mr-2 text-indigo-600"></i> नयाँ पुस्तक जारी राख्नुहोस्
+</h3>
+<form id="issue-book-form" onsubmit="handleIssueBook(event)" class="space-y-4">
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">पुस्तक छनोट गर्नुहोस्</label>
+<select id="issue-book-select" required class="w-full p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-sm">
+</select>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">सदस्य (विद्यार्थी) छनोट</label>
+<select id="issue-member-select" required class="w-full p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-sm">
+</select>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">जारी मिति</label>
+<input type="date" id="issue-date" required class="w-full p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-sm">
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">बुझाउने अन्तिम मिति</label>
+<input type="date" id="due-date" required class="w-full p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-sm">
+</div>
+</div>
+<button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition duration-200 text-sm">
+जारी पुष्टि गर्नुहोस्
+</button>
+</form>
+</div>
+
+<!--- जारी पुस्तकको व्यापक सूची र फिर्ता व्यवस्थापन -->
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm lg:col-span-2 space-y-4">
+<h3 class="font-bold text-slate-800 text-lg flex items-center border-b border-slate-100 pb-3">
+<i class="fa-solid fa-table-list mr-2 text-indigo-600"></i> जारी पुस्तकहरूको सूची र फिर्ता व्यवस्थापन
+</h3>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 text-slate-500 text-xs font-semibold border-b border-slate-100 uppercase tracking-wider">
+<th class="p-3">पुस्तक/सदस्य</th>
+<th class="p-3">जारी/बुझ्ने मिति</th>
+<th class="p-3">ढिलो दिनहरू</th>
+<th class="p-3">जरिवाना</th>
+<th class="p-3 text-right">कार्य</th>
+</tr>
+</thead>
+<tbody id="transactions-tbody" class="text-sm text-slate-700 divide-y divide-slate-100">
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- व्यवस्थित Statement खण्ड (थप र व्यवस्थित गरिएको) -->
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-3 gap-2">
+<h3 class="font-bold text-slate-800 text-lg flex items-center">
+<i class="fa-solid fa-file-invoice-dollar mr-2 text-emerald-600"></i> पुस्तकालय गतिविधि र जरिवाना विस्तृत विवरण (Statement)
+</h3>
+<div class="flex items-center space-x-2">
+<button onclick="printStatement()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3 py-2 rounded-xl font-bold transition flex items-center space-x-1">
+<i class="fa-solid fa-print"></i> <span>प्रिन्ट / PDF डाउनलोड</span>
+</button>
+<button onclick="downloadStatementCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-2 rounded-xl font-bold transition flex items-center space-x-1">
+<i class="fa-solid fa-file-excel"></i> <span>Excel/CSV डाउनलोड</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto" id="printable-statement-area">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-100 text-slate-600 text-xs font-bold border-b border-slate-200 uppercase">
+<th class="p-3">त्रैमासिक/ID</th>
+<th class="p-3">सदस्य विवरण</th>
+<th class="p-3">पुस्तक शीर्षक</th>
+<th class="p-3">जारी मिति</th>
+<th class="p-3">फिर्ता मिति / स्थिति</th>
+<th class="p-3 text-right">जरिवाना स्थिति</th>
+</tr>
+</thead>
+<tbody id="statement-tbody" class="text-sm text-slate-700 divide-y divide-slate-100">
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- ५। एआई र अटोमेसन ट्याब -->
+<div id="tab-automation" class="hidden space-y-6">
+<div class="bg-white p-6 rounded-2xl border border-indigo-100 shadow-sm space-y-6">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between border-slate-100 pb-4 gap-2">
+<div class="flex items-center space-x-3">
+<div class="bg-indigo-100 p-2 rounded-lg text-indigo-600">
+<i class="fa-solid fa-brain text-xl"></i>
+</div>
+<div>
+<h3 class="font-bold text-slate-800 text-lg"> एआई स्मार्ट कन्सोल</h3>
+<p class="text-xs text-slate-500">पुस्तकालय स्वचालन र स्मार्टक-</p>
+</div>
+</div>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 self-start sm:self-auto border border-indigo-100">
+AI द्वारा संचालित
+</span>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between">
+<div class="space-y-3">
+<h4 class="font-bold text-slate-800 text-sm flex items-center">
+<i class="fa-solid fa-tags text-indigo-600 mr-2"></i> एआई पुस्तक वर्गीकरण र विवरण जेनेरेटर
+</h4>
+<p class="text-xs text-slate-500">पुस्तकको शीर्षक राखेपछि, एआईले विधा वर्गीकरण र संक्षिप्त विवरण तयार गरिदिनेछ।</p>
+<div>
+<input type="text" id="ai-book-title" placeholder="उदाहरण: मुनामदन, गीताञ्जली, सिकाईको सिद्धान्त..." class="w-full p-2 rounded-xl border border-slate-200 text-xs">
+</div>
+</div>
+<button onclick="generateAIBookDetails()" class="mt-4 py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center space-x-1">
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+<span>एआई विवरण बनाउनुहोस्</span>
+</button>
+</div>
+
+<div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between">
+<div class="space-y-3">
+<h4 class="font-bold text-slate-800 text-sm flex items-center">
+<i class="fa-solid fa-sparkles text-emerald-600 mr-2"></i> एआई पुस्तक सर्वेक्षण इन्जिन
+</h4>
+<p class="text-xs text-slate-500">सदस्यको रुचि र हालको अध्ययन क्षेत्रको आधारमा एआईले उपयुक्त पुस्तकहरू देखाउनेछ।</p>
+<div>
+<input type="text" id="ai-student-interest" placeholder="रुचि: उपन्यास, विज्ञान, इतिहास, प्रविधि..." class="w-full p-2 rounded-xl border border-slate-200 text-xs">
+</div>
+</div>
+<button onclick="generateAIRecommendations()" class="mt-4 py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold transition flex items-center justify-center space-x-1">
+<i class="fa-solid fa-lightbulb"></i>
+<span>पढ्न उपयुक्त सूची निकाल्नुहोस्</span>
+</button>
+</div>
+</div>
+
+<div id="ai-result-section" class="hidden bg-indigo-50 border border-indigo-100 p-5 rounded-2xl space-y-3">
+<div class="flex items-center justify-between">
+<h4 class="font-bold text-indigo-900 text-sm flex items-center">
+<i class="fa-solid fa-message-bot mr-2 animate-bounce"></i> एआई को विश्लेषण र सुझाव
+</h4>
+<button onclick="document.getElementById('ai-result-section').classList.add('hidden')" class="text-indigo-400 hover:text-indigo-600">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<div id="ai-output-text" class="text-xs text-indigo-950 leading-relaxed bg-white p-4 rounded-xl border border-indigo-100 whitespace-pre-line max-h-60 overflow-y-auto">
+विश्लेषण...
+</div>
+</div>
+</div>
+
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
+<div class="flex items-center justify-between border-slate-100 pb-3">
+<h3 class="font-bold text-slate-800 text-lg flex items-center">
+<i class="fa-solid fa-paper-plane mr-2 text-indigo-600"></i> स्वयम् जरिवाना र रिमाइन्डर प्रणाली (सिमुलेट SMS/इमेल)
+</h3>
+<button onclick="triggerAutoReminders()" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs px-3 py-1.5 rounded-lg font-bold transition flex items-center space-x-1">
+<i class="fa-solid fa-bell"></i>
+<span>तुरुन्तै चेतावनी पठाउनुहोस्</span>
+</button>
+</div>
+<p class="text-xs text-slate-500">
+प्रणालीले प्रत्येक दिन स्वचालित रूपमा म्याद नाघेका पुस्तकहरूको ट्र्याक राख्छ र जरिवाना गणना गर्दछ। तल स्वयम् रिमाइन्डर चेतावनी लग देख्न सकिन्छ:
+</p>
+<div class="bg-slate-900 text-emerald-400 font-mono text-xs p-4 rounded-xl max-h-48 overflow-y-auto space-y-1.5" id="automation-log">
+<p class="text-slate-500">[२०२६-०७-०७ ०९:०७] स्वयम् पुस्तकालय सेवा सुचारु छ...</p>
+<p class="text-slate-500">[२०२६-०७-०७ ०९:०७] प्रणालीले कुनै पनि म्याद नाघेको पुस्तक पत्ता लगाउने जरिवाना जाँच सुरु...</p>
+</div>
+</div>
+</div>
+
+</div>
+</main>
+</div>
+
+<!-- मोडल्स (मोडल्स खण्ड) -->
+
+<!-- १. नयाँ पुस्तक थप्ने मोडल -->
+<div id="add-book-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+<div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden transform transition-all">
+<div class="bg-indigo-900 p-4 text-white flex items-center justify-between">
+<h3 class="font-bold">नयाँ पुस्तक प्रविष्टि</h3>
+<button onclick="closeModal('add-book-modal')" class="text-indigo-200 hover:text-white">
+<i class="fa-solid fa-xmark text-lg"></i>
+</button>
+</div>
+<form onsubmit="handleAddBook(event)" class="p-6 space-y-4">
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase mb-1">पुस्तकको शीर्षक</label>
+<input type="text" id="new-book-title" required placeholder="शीर्षक लेख्नुहोस्" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase mb-1">लेखकको नाम</label>
+<input type="text" id="new-book-author" required placeholder="लेखकको नाम" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase mb-1">कक्षा (Class)</label>
+<input type="text" id="new-book-class" required placeholder="उदा: ९, १०, ११" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase mb-1">विधा / श्रेणी</label>
+<input type="text" id="new-book-genre" required placeholder="विधा (उदाहरण: कथा)" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase mb-1">कुल प्रतिलिपि</label>
+<input type="number" id="new-book-copies" required min="1" value="5" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+</div>
+</div>
+<button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm transition">
+पुस्तक थप्नुहोस्
+</button>
+</form>
+</div>
+</div>
+
+<!-- २। नयाँ सदस्य थप्ने मोडल -->
+<div id="add-member-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+<div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden transform transition-all">
+<div class="bg-indigo-900 p-4 text-white flex items-center justify-between">
+<h3 class="font-bold">नयाँ सदस्य दर्ता फारम</h3>
+<button onclick="closeModal('add-member-modal')" class="text-indigo-200 hover:text-white">
+<i class="fa-solid fa-xmark text-lg"></i>
+</button>
+</div>
+<form onsubmit="handleAddMember(event)" class="p-6 space-y-4">
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase mb-1">सदस्यको पूरा नाम</label>
+<input type="text" id="new-member-name" required placeholder="पूरा नाम लेख्नुहोस्" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase mb-1">ईमेल ठेगाना</label>
+<input type="email" id="new-member-email" required placeholder="example@gmail.com" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase mb-1">कक्षा (Class)</label>
+<input type="text" id="new-member-class" required placeholder="उदा: १०, १२" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase mb-1">सम्पर्क नम्बर</label>
+<input type="text" id="new-member-phone" required placeholder="९८XXXXXXXX" class="w-full p-2.5 rounded-xl border border-slate-200 text-sm">
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase mb-1">सदस्यको फोटो अपलोड गर्नुहोस्</label>
+<input type="file" id="new-member-photo" accept="image/*" class="w-full p-2 text-sm border border-slate-200 rounded-xl bg-slate-50 focus:outline-none">
+</div>
+<button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm transition">
+सदस्य सुरक्षित गर्नुहोस्
+</button>
+</form>
+</div>
+</div>
+
+<!-- जाभास्क्रिप्ट (जाभास्क्रिप्ट तर्क) -->
+<script>
+// API कुञ्जी वातावरण सेटअप
+const apiKey = "";
+
+// प्रारम्भिक काल्पनिक डाटा
+let books = [
+{id: "BK101", title: "मुनामदन", author: "लक्ष्मीप्रसाद देवकोटा", class: "१०", genre: "काव्य", totalCopies: 10, availableCopies: 8 },
+{id: "BK102", title: "शिरिशको फूल", author: "पारिजात", class: "११", genre: "उपन्यास", totalCopies: 5, availableCopies: 5 },
+{id: "BK103", title: "सिकाईको सिद्धान्त", author: "राम बहादुर क्षेत्री", class: "९", genre: "शिक्षा", totalCopies: 12, availableCopies: 11 },
+{id: "BK104", title: "नेपालको इतिहास", author: "डा. महेशराज पन्त", class: "१०", genre: "इतिहास", totalCopies: 4, availableCopies: 3 },
+{id: "BK105", title: "प्रोग्रामिंगको आधार", author: "सन्तोष शर्मा", class: "१२", genre: "प्रविधि", totalCopies: 8, availableCopies: 7 }
+];
+
+let members = [
+{id: "MB201", name: "रोशन अधिकारी", email: "roshan@gmail.com", class: "१०", phone: "9841234567", activeIssues: 1, photo: "" },
+{id: "MB202", name: "सर्जना थापा", email: "sirjana@gmail.com", class: "११", phone: "9851012345", activeIssues: 1, photo: "" },
+{id: "MB203", name: "दिपेश श्रेष्ठ", email: "dipesh@gmail.com", class: "९", phone: "9812345678", activeIssues: 0, photo: "" },
+{id: "MB204", name: "अनिता गुरुङ", email: "anita@gmail.com", class: "१२", phone: "9807654321", activeIssues: 0, photo: "" }
+];
+
+let transactions = [
+{ id: "TX501", bookId: "BK101", memberId: "MB201", issueDate: "2026-06-25", dueDate: "2026-07-05", returnDate: null, fineCalculated: 0 },
+{ id: "TX502", bookId: "BK104", memberId: "MB202", issueDate: "2026-07-01", dueDate: "2026-07-15", returnDate: null, fineCalculated: 0 },
+{ id: "TX503", bookId: "BK105", memberId: "MB201", issueDate: "2026-06-10", dueDate: "2026-06-20", returnDate: "2026-06-19", fineCalculated: 0 }
+];
+
+// दैनिक जरिवानाको दर (रू. ५ प्रति दिन)
+const FINE_RATE_PER_DAY = 5;
+
+// एडमिन लगइन नियन्त्रण
+function handleLogin(e) {
+    e.preventDefault();
+    const password = document.getElementById('login-password').value;
+    if (password === 'admin123') {
+        document.getElementById('login-panel').classList.add('hidden');
+        document.getElementById('main-layout').classList.remove('hidden');
+        showNotification("लगइन सफल", "प्रणाली व्यवस्थापनमा स्वागत छ।", true);
+        initializeSystem();
+    } else {
+        alert("त्रुटि: गलत पासवर्ड! कृपया पुनः प्रयास गर्नुहोस्।");
+    }
+}
+
+function handleLogout() {
+    document.getElementById('login-password').value = '';
+    document.getElementById('main-layout').classList.add('hidden');
+    document.getElementById('login-panel').classList.remove('hidden');
+}
+
+// पुस्तकालय लोड बैठक आवश्यक बैठकी सेटिङ
+window.onload = function() {
+    // लगइन नभएसम्म यो होल्ड रहन्छ
+};
+
+function initializeSystem() {
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    // प्रारम्भिक मितिहरू लेनदेन फार्ममा
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('issue-date').value = today;
+
+    // १० दिन पछिको फिर्ता मिति स्वतः सेटिङ
+    const nextweek = new Date();
+    nextweek.setDate(nextweek.getDate() + 10);
+    document.getElementById('due-date').value = nextweek.toISOString().split('T')[0];
+
+    // साइडबार टगल प्रणाली
+    const sidebar = document.getElementById('sidebar');
+    document.getElementById('open-sidebar').addEventListener('click', () => sidebar.classList.remove('hidden'));
+    document.getElementById('close-sidebar').addEventListener('click', () => sidebar.classList.add('hidden'));
+
+    // प्रणाली रिफ्रेश
+    refreshAllData();
+}
+
+// घडी र समय संचार
+function updateTime() {
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    const clockEl = document.getElementById('real-time-clock');
+    if(clockEl) clockEl.innerText = now.toLocaleDateString('ne-NP', options);
+}
+
+// ट्याब व्युल कार्य
+function switchTab(tabId) {
+    document.getElementById('tab-dashboard').classList.add('hidden');
+    document.getElementById('tab-books').classList.add('hidden');
+    document.getElementById('tab-members').classList.add('hidden');
+    document.getElementById('tab-transactions').classList.add('hidden');
+    document.getElementById('tab-automation').classList.add('hidden');
+
+    document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-indigo-950', 'text-white', 'font-medium');
+        btn.classList.add('text-indigo-100');
+    });
+    const activeBtn = document.getElementById(`btn-${tabId}`);
+    activeBtn.classList.remove('text-indigo-100');
+    activeBtn.classList.add('bg-indigo-950', 'text-white', 'font-medium');
+
+    const titles = {
+        'dashboard': 'मुख्य बोर्ड',
+        'books': 'पुस्तक व्यवस्थापन सूची',
+        'members': 'पुस्तकालय सदस्य दर्ता',
+        'transactions': 'पुस्तक लेनदेन र वित्तीय विवरण',
+        'automation': 'स्मार्ट एआई र पुस्तकालय स्वचालन'
+    };
+    document.getElementById('current-page-title').innerText = titles[tabId];
+}
+
+function openModal(modalId) {
+    document.getElementById(modalId).classList.remove('hidden');
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.add('hidden');
+}
+
+function showNotification(title, message, isSuccess = true) {
+    const banner = document.getElementById('notification-banner');
+    const titleEl = document.getElementById('notification-title');
+    const msgEl = document.getElementById('notification-message');
+    const iconEl = document.getElementById('notification-icon');
+
+    titleEl.innerText = title;
+    msgEl.innerText = message;
+
+    if (isSuccess) {
+        banner.classList.remove('border-red-500');
+        banner.classList.add('border-emerald-500');
+        iconEl.className = "bg-emerald-500/20 p-2 rounded-lg text-emerald-400";
+        iconEl.innerHTML = '<i class="fa-solid fa-circle-check text-lg"></i>';
+    } else {
+        banner.classList.remove('border-emerald-500');
+        banner.classList.add('border-red-500');
+        iconEl.className = "bg-red-500/20 p-2 rounded-lg text-red-400";
+        iconEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-lg"></i>';
+    }
+
+    banner.classList.remove('hidden');
+    setTimeout(() => { hideNotification(); }, 4500);
+}
+
+function hideNotification() {
+    document.getElementById('notification-banner').classList.add('hidden');
+}
+
+function refreshAllData() {
+    calculateFinesAndOverdues();
+    renderStats();
+    renderBooks();
+    renderMembers();
+    renderTransactions();
+    renderStatement();
+    populateDropdowns();
+}
+
+function calculateFinesAndOverdues() {
+    const today = new Date();
+    transactions.forEach(tx => {
+        if (!tx.returnDate) {
+            const due = new Date(tx.dueDate);
+            if (today > due) {
+                const diffTime = Math.abs(today - due);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                tx.fineCalculated = diffDays * FINE_RATE_PER_DAY;
+            } else {
+                tx.fineCalculated = 0;
+            }
+        }
+    });
+}
+
+function renderStats() {
+    document.getElementById('stat-total-books').innerText = books.length;
+    const activeIssues = transactions.filter(tx => !tx.returnDate).length;
+    document.getElementById('stat-issued-books').innerText = activeIssues;
+
+    const overdueCount = transactions.filter(tx => {
+        if (tx.returnDate) return false;
+        return new Date() > new Date(tx.dueDate);
+    }).length;
+    document.getElementById('stat-overdue-books').innerText = overdueCount;
+    document.getElementById('stat-active-members').innerText = members.length;
+
+    const recentTbody = document.getElementById('हालैका-कानून-tbody');
+    recentTbody.innerHTML = '';
+
+    const activeTxs = [...transactions].reverse().slice(0, 5);
+    if (activeTxs.length === 0) {
+        recentTbody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-slate-400">कुनै रेकرد फेला परेन।</td></tr>`;
+        return;
+    }
+
+    activeTxs.forEach(tx => {
+        const book = books.find(b => b.id === tx.bookId);
+        const member = members.find(m => m.id === tx.memberId);
+        const isOverdue = !tx.returnDate && (new Date() > new Date(tx.dueDate));
+
+        let statusBadge = '';
+        if (tx.returnDate) {
+            statusBadge = `<span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full text-xs">फिर्ता</span>`;
+        } else if (isOverdue) {
+            statusBadge = `<span class="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs animate-pulse">ढिलो</span>`;
+        } else {
+            statusBadge = `<span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-xs">जारी</span>`;
+        }
+
+        recentTbody.innerHTML += `
+            <tr>
+                <td class="py-3 font-semibold text-slate-800">${book ? book.title : 'अज्ञान पुस्तक'}</td>
+                <td class="py-3">${member ? member.name : 'अज्ञान सदस्य'}</td>
+                <td class="py-3">${tx.issueDate}</td>
+                <td class="py-3">${statusBadge}</td>
+            </tr>
+        `;
+    });
+}
+
+function renderBooks() {
+    const tbody = document.getElementById('books-tbody');
+    tbody.innerHTML = '';
+
+    books.forEach(book => {
+        const available = book.availableCopies > 0;
+        const badge = available
+            ? `<span class="bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full text-xs font-semibold">उपलब्ध (${book.availableCopies})</span>`
+            : `<span class="bg-red-100 text-red-700 px-2.5 py-1 rounded-full text-xs font-semibold">सबै सकिए</span>`;
+
+        tbody.innerHTML += `
+            <tr class="hover:bg-slate-50">
+                <td class="p-4 font-mono font-bold text-slate-500">${book.id}</td>
+                <td class="p-4">
+                    <div class="font-semibold text-slate-800">${book.title}</div>
+                    <div class="text-xs text-slate-400">${book.author}</div>
+                </td>
+                <td class="p-4 text-xs font-semibold text-indigo-600">कक्षा ${book.class || '-'}</td>
+                <td class="p-4 text-xs font-medium text-slate-500">${book.genre}</td>
+                <td class="p-4 text-xs">${book.totalCopies} प्रति</td>
+                <td class="p-4">${badge}</td>
+                <td class="p-4 text-right">
+                    <button onclick="deleteBook('${book.id}')" class="text-red-500 hover:text-red-700 transition p-1">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function deleteBook(id) {
+    books = books.filter(b => b.id !== id);
+    showNotification("हटाउन सफल", "प्रणालीबाट पुस्तक हटाइयो।", true);
+    refreshAllData();
+}
+
+function filterBooks() {
+    const query = document.getElementById('book-search').value.toLowerCase();
+    const filtered = books.filter(b =>
+        b.title.toLowerCase().includes(query) ||
+        b.author.toLowerCase().includes(query) ||
+        b.id.toLowerCase().includes(query)
+    );
+
+    const tbody = document.getElementById('books-tbody');
+    tbody.innerHTML = '';
+    filtered.forEach(book => {
+        const badge = book.availableCopies > 0
+            ? `<span class="bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full text-xs font-semibold">उपलब्ध (${book.availableCopies})</span>`
+            : `<span class="bg-red-100 text-red-700 px-2.5 py-1 rounded-full text-xs font-semibold">सबै सकिए</span>`;
+
+        tbody.innerHTML += `
+            <tr class="hover:bg-slate-50">
+                <td class="p-4 font-mono font-bold text-slate-500">${book.id}</td>
+                <td class="p-4">
+                    <div class="font-semibold text-slate-800">${book.title}</div>
+                    <div class="text-xs text-slate-400">${book.author}</div>
+                </td>
+                <td class="p-4 text-xs font-semibold text-indigo-600">कक्षा ${book.class || '-'}</td>
+                <td class="p-4 text-xs font-medium text-slate-500">${book.genre}</td>
+                <td class="p-4 text-xs">${book.totalCopies} प्रति</td>
+                <td class="p-4">${badge}</td>
+                <td class="p-4 text-right">
+                    <button onclick="deleteBook('${book.id}')" class="text-red-500 hover:text-red-700 transition p-1">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function handleAddBook(e) {
+    e.preventDefault();
+    const title = document.getElementById('new-book-title').value;
+    const author = document.getElementById('new-book-author').value;
+    const bClass = document.getElementById('new-book-class').value;
+    const genre = document.getElementById('new-book-genre').value;
+    const copies = parseInt(document.getElementById('new-book-copies').value);
+
+    const newId = "BK" + (100 + books.length + 1);
+
+    const newBook = {
+        id: newId,
+        title: title,
+        author: author,
+        class: bClass,
+        genre: genre,
+        totalCopies: copies,
+        availableCopies: copies
+    };
+
+    books.push(newBook);
+    closeModal('add-book-modal');
+    document.getElementById('issue-book-form').reset();
+    showNotification("पुस्तक थपियो", `नयाँ पुस्तक "${title}" प्रणालीमा प्रविष्टि।`, true);
+    refreshAllData();
+}
+
+function renderMembers() {
+    const grid = document.getElementById('members-grid');
+    grid.innerHTML = '';
+
+    members.forEach(member => {
+        // फोटो जाँच (यदि छैन भने डिफल्ट बनाउने)
+        const photoHtml = member.photo 
+            ? `<img src="${member.photo}" class="w-10 h-10 rounded-full object-cover">`
+            : `<div class="bg-indigo-100 text-indigo-700 w-10 h-10 rounded-full flex items-center justify-center font-bold">${member.name[0]}</div>`;
+
+        grid.innerHTML += `
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between space-y-4">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center space-x-3">
+                        ${photoHtml}
+                        <div>
+                            <h4 class="font-bold text-slate-800">${member.name}</h4>
+                            <span class="font-mono text-xs text-slate-400 font-semibold">${member.id} (कक्षा ${member.class || '-'})</span>
+                        </div>
+                    </div>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700">
+                        ${member.activeIssues} पुस्तक जारी
+                    </span>
+                </div>
+                <div class="text-xs text-slate-500 space-y-1">
+                    <p><i class="fa-solid fa-envelope mr-1"></i> ${member.email}</p>
+                    <p><i class="fa-solid fa-phone mr-1"></i> ${member.phone}</p>
+                </div>
+                <div class="pt-3 border-t border-slate-50 flex items-center justify-between">
+                    <span class="text-[11px] text-slate-400">सक्रिय सदस्य</span>
+                    <button onclick="deleteMember('${member.id}')" class="text-xs text-red-500 hover:text-red-700 transition flex items-center space-x-1">
+                        <i class="fa-solid fa-user-minus"></i>
+                        <span>हटाउनुहोस्</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function deleteMember(id) {
+    members = members.filter(m => m.id !== id);
+    showNotification("हटाउन सफल", "सदस्यलाई हटाइयो।", true);
+    refreshAllData();
+}
+
+function filterMembers() {
+    const query = document.getElementById('member-search').value.toLowerCase();
+    const filtered = members.filter(m =>
+        m.name.toLowerCase().includes(query) ||
+        m.email.toLowerCase().includes(query) ||
+        m.id.toLowerCase().includes(query)
+    );
+
+    const grid = document.getElementById('members-grid');
+    grid.innerHTML = '';
+    filtered.forEach(member => {
+        const photoHtml = member.photo 
+            ? `<img src="${member.photo}" class="w-10 h-10 rounded-full object-cover">`
+            : `<div class="bg-indigo-100 text-indigo-700 w-10 h-10 rounded-full flex items-center justify-center font-bold">${member.name[0]}</div>`;
+
+        grid.innerHTML += `
+            <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between space-y-4">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center space-x-3">
+                        ${photoHtml}
+                        <div>
+                            <h4 class="font-bold text-slate-800">${member.name}</h4>
+                            <span class="font-mono text-xs text-slate-400 font-semibold">${member.id} (कक्षा ${member.class || '-'})</span>
+                        </div>
+                    </div>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700">
+                        ${member.activeIssues} पुस्तक जारी
+                    </span>
+                </div>
+                <div class="text-xs text-slate-500 space-y-1">
+                    <p><i class="fa-solid fa-envelope mr-1"></i> ${member.email}</p>
+                    <p><i class="fa-solid fa-phone mr-1"></i> ${member.phone}</p>
+                </div>
+                <div class="pt-3 border-t border-slate-50 flex items-center justify-between">
+                    <span class="text-[11px] text-slate-400">सक्रिय सदस्य</span>
+                    <button onclick="deleteMember('${member.id}')" class="text-xs text-red-500 hover:text-red-700 transition flex items-center space-x-1">
+                        <i class="fa-solid fa-user-minus"></i>
+                        <span>हटाउनुहोस्</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function handleAddMember(e) {
+    e.preventDefault();
+    const name = document.getElementById('new-member-name').value;
+    const email = document.getElementById('new-member-email').value;
+    const mClass = document.getElementById('new-member-class').value;
+    const phone = document.getElementById('new-member-phone').value;
+    const photoFile = document.getElementById('new-member-photo').files[0];
+
+    const newId = "MB" + (200 + members.length + 1);
+
+    const proceed = (photoUrl) => {
+        const newMember = {
+            id: newId,
+            name: name,
+            email: email,
+            class: mClass,
+            phone: phone,
+            activeIssues: 0,
+            photo: photoUrl || ""
+        };
+        members.push(newMember);
+        closeModal('add-member-modal');
+        document.getElementById('add-member-modal').querySelector('form').reset();
+        showNotification("सदस्यता दर्ता भयो", `नयाँ सदस्य "${name}" दर्ता सफल।`, true);
+        refreshAllData();
+    };
+
+    if (photoFile) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            proceed(event.target.result);
+        };
+        reader.readAsDataURL(photoFile);
+    } else {
+        proceed("");
+    }
+}
+
+function renderTransactions() {
+    const tbody = document.getElementById('transactions-tbody');
+    tbody.innerHTML = '';
+
+    const activeTxs = transactions.filter(tx => !tx.returnDate);
+    if (activeTxs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">अहिले जारी गरिएको कुनै पुस्तक बाँकी छैन।</td></tr>`;
+        return;
+    }
+
+    activeTxs.forEach(tx => {
+        const book = books.find(b => b.id === tx.bookId);
+        const member = members.find(m => m.id === tx.memberId);
+        const isOverdue = new Date() > new Date(tx.dueDate);
+
+        let delayDays = 0;
+        if (isOverdue) {
+            const diffTime = Math.abs(new Date() - new Date(tx.dueDate));
+            delayDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        tbody.innerHTML += `
+            <tr class="hover:bg-slate-50">
+                <td class="p-3">
+                    <div class="font-semibold text-slate-800">${book ? book.title : 'अज्ञात पुस्तक'}</div>
+                    <div class="text-xs text-slate-400">जारीकर्ता: ${member ? member.name : 'अज्ञात सदस्य'} (कक्षा: ${member ? member.class : '-'})</div>
+                </td>
+                <td class="p-3 text-xs">
+                    <div>जारी: <span class="font-semibold">${tx.issueDate}</span></div>
+                    <div class="text-indigo-600">अन्तिम: <span class="font-semibold">${tx.dueDate}</span></div>
+                </td>
+                <td class="p-3 text-xs">
+                    ${delayDays > 0 ? `<span class="text-red-500 font-bold">${delayDays} दिन ढिलो</span>` : `<span class="text-slate-400">छैन</span>`}
+                </td>
+                <td class="p-3 font-semibold text-slate-800 text-xs">
+                    ${tx.fineCalculated > 0 ? `<span class="text-red-600 bg-red-50 px-2 py-0.5 rounded-full font-bold">रू. ${tx.fineCalculated}</span>` : `<span class="text-slate-400">-</span>`}
+                </td>
+                <td class="p-3 text-right">
+                    <button onclick="handleReturnBook('${tx.id}')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs px-3 py-1.5 rounded-lg transition shadow-sm">
+                        फिर्ता स्वीकार्ने
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+// व्यवस्थित Statement तालिका भर्ने कार्य (थप गरिएको)
+function renderStatement() {
+    const tbody = document.getElementById('statement-tbody');
+    tbody.innerHTML = '';
+
+    if (transactions.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-3 text-center text-slate-400">विवरण उपलब्ध छैन।</td></tr>`;
+        return;
+    }
+
+    [...transactions].reverse().forEach(tx => {
+        const book = books.find(b => b.id === tx.bookId);
+        const member = members.find(m => m.id === tx.memberId);
+        
+        let statusStr = "";
+        if (tx.returnDate) {
+            statusStr = `<span class="text-slate-500 font-medium"><i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i> फिर्ता (${tx.returnDate})</span>`;
+        } else {
+            const isOverdue = new Date() > new Date(tx.dueDate);
+            statusStr = isOverdue 
+                ? `<span class="text-red-600 font-bold"><i class="fa-solid fa-triangle-exclamation mr-1 animate-pulse"></i> म्याद नाघेको</span>`
+                : `<span class="text-indigo-600 font-medium"><i class="fa-solid fa-clock mr-1"></i> जारी अवस्था</span>`;
+        }
+
+        tbody.innerHTML += `
+            <tr class="hover:bg-slate-50 text-xs">
+                <td class="p-3 font-mono font-semibold text-slate-500">${tx.id}</td>
+                <td class="p-3">
+                    <div class="font-bold text-slate-800">${member ? member.name : 'अज्ञात'}</div>
+                    <div class="text-[10px] text-slate-400">ID: ${tx.memberId} | कक्षा: ${member ? member.class : '-'}</div>
+                </td>
+                <td class="p-3 font-semibold text-slate-700">${book ? book.title : 'अज्ञात'} (कक्षा ${book ? book.class : '-'})</td>
+                <td class="p-3">${tx.issueDate}</td>
+                <td class="p-3">${statusStr}</td>
+                <td class="p-3 text-right font-bold ${tx.fineCalculated > 0 ? 'text-red-600' : 'text-slate-500'}">
+                    ${tx.fineCalculated > 0 ? 'रू. ' + tx.fineCalculated : 'रू. ०'}
+                </td>
+            </tr>
+        `;
+    });
+}
+
+// Statement प्रिन्ट गर्ने फङ्सन
+function printStatement() {
+    const printContent = document.getElementById('printable-statement-area').innerHTML;
+    const originalContent = document.body.innerHTML;
+    
+    const targetWindow = window.open('', '_blank');
+    targetWindow.document.write(`
+        <html>
+        <head>
+            <title>पुस्तकालय वित्तीय तथा गतिविधि विबरण (Statement)</title>
+            <style>
+                body { font-family: sans-serif; padding: 20px; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-size: 12px; }
+                th { background-color: #f1f5f9; }
+                .text-right { text-align: right; }
+                .title { text-center: center; margin-bottom: 20px; }
+            </style>
+        </head>
+        <body>
+            <div class="title">
+                <h2>स्मार्ट पुस्तकालय व्यवस्थापन प्रणाली</h2>
+                <p>गतिविधि र जरिवाना विस्तृत विवरण (Statement)</p>
+                <small>मिति: ${new Date().toLocaleDateString('ne-NP')}</small>
+            </div>
+            <table>
+                ${printContent}
+            </table>
+        </body>
+        </html>
+    `);
+    targetWindow.document.close();
+    targetWindow.print();
+}
+
+// Statement CSV निर्यात गर्ने फङ्सन
+function downloadStatementCSV() {
+    let csv = 'Transaction ID,Member Name,Class,Book Title,Issue Date,Return Date/Status,Fine\n';
+    transactions.forEach(tx => {
+        const book = books.find(b => b.id === tx.bookId);
+        const member = members.find(m => m.id === tx.memberId);
+        const status = tx.returnDate ? `Returned on ${tx.returnDate}` : 'Active';
+        csv += `${tx.id},"${member ? member.name : 'Unknown'}",${member ? member.class : '-'},"${book ? book.title : 'Unknown'}",${tx.issueDate},${status},${tx.fineCalculated}\n`;
+    });
+    
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", `Library_Statement_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// CSV sample downlaods 
+function downloadBookCSVSample() {
+    let csv = 'Title,Author,Class,Genre,TotalCopies\n';
+    csv += 'सुम्निमा,बीपी कोइराला,११,उपन्यास,5\n';
+    csv += 'वैज्ञानिक खोज,डा. केसी,१०,विज्ञान,8\n';
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", "Sample_Books_Import.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function downloadMemberCSVSample() {
+    let csv = 'FullName,Email,Class,Phone\n';
+    csv += 'राम बहादुर क्षेत्री,ram@gmail.com,१०,9841000000\n';
+    csv += 'सिता कुमारी थापा,sita@gmail.com,१२,9851000000\n';
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", "Sample_Members_Import.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Data CSV Imports
+function importBookCSV(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const text = e.target.result;
+        const lines = text.split('\n');
+        let importCount = 0;
+        for(let i=1; i<lines.length; i++) {
+            if(!lines[i].trim()) continue;
+            const cols = lines[i].split(',');
+            if(cols.length >= 5) {
+                const newId = "BK" + (100 + books.length + 1);
+                books.push({
+                    id: newId,
+                    title: cols[0].trim(),
+                    author: cols[1].trim(),
+                    class: cols[2].trim(),
+                    genre: cols[3].trim(),
+                    totalCopies: parseInt(cols[4]) || 1,
+                    availableCopies: parseInt(cols[4]) || 1
+                });
+                importCount++;
+            }
+        }
+        showNotification("Import सफल", `${importCount} नयाँ पुस्तकहरू प्रणालीमा आयात गरियो।`, true);
+        refreshAllData();
+    };
+    reader.readAsText(file);
+}
+
+function importMemberCSV(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const text = e.target.result;
+        const lines = text.split('\n');
+        let importCount = 0;
+        for(let i=1; i<lines.length; i++) {
+            if(!lines[i].trim()) continue;
+            const cols = lines[i].split(',');
+            if(cols.length >= 4) {
+                const newId = "MB" + (200 + members.length + 1);
+                members.push({
+                    id: newId,
+                    name: cols[0].trim(),
+                    email: cols[1].trim(),
+                    class: cols[2].trim(),
+                    phone: cols[3].trim(),
+                    activeIssues: 0,
+                    photo: ""
+                });
+                importCount++;
+            }
+        }
+        showNotification("Import सफल", `${importCount} नयाँ सदस्यहरू प्रणालीमा आयात गरियो।`, true);
+        refreshAllData();
+    };
+    reader.readAsText(file);
+}
+
+function populateDropdowns() {
+    const bookSelect = document.getElementById('issue-book-select');
+    const memberSelect = document.getElementById('issue-member-select');
+
+    if(!bookSelect || !memberSelect) return;
+
+    bookSelect.innerHTML = '<option value="">छनोट गर्नुहोस्...</option>';
+    memberSelect.innerHTML = '<option value="">छनोट गर्नुहोस्...</option>';
+
+    books.forEach(b => {
+        if (b.availableCopies > 0) {
+            bookSelect.innerHTML += `<option value="${b.id}">${b.title} (कक्षा ${b.class} - ${b.availableCopies} उपलब्ध)</option>`;
+        }
+    });
+
+    members.forEach(m => {
+        memberSelect.innerHTML += `<option value="${m.id}">${m.name} (कक्षा: ${m.class} | ID: ${m.id})</option>`;
+    });
+}
+
+function handleIssueBook(e) {
+    e.preventDefault();
+    const bookId = document.getElementById('issue-book-select').value;
+    const memberId = document.getElementById('issue-member-select').value;
+    const issueDate = document.getElementById('issue-date').value;
+    const dueDate = document.getElementById('due-date').value;
+
+    if (!bookId || !memberId) {
+        showNotification("त्रुटि", "कृपया पुस्तक र सदस्य छनोट गर्नुहोस्।", false);
+        return;
+    }
+
+    const book = books.find(b => b.id === bookId);
+    const member = members.find(m => m.id === memberId);
+
+    if (book.availableCopies <= 0) {
+        showNotification("त्रुटि", "यो पुस्तक उपलब्ध छैन।", false);
+        return;
+    }
+
+    book.availableCopies -= 1;
+    member.activeIssues += 1;
+
+    const newTxId = "TX" + (500 + transactions.length + 1);
+    const newTx = {
+        id: newTxId,
+        bookId: bookId,
+        memberId: memberId,
+        issueDate: issueDate,
+        dueDate: dueDate,
+        returnDate: null,
+        fineCalculated: 0
+    };
+
+    transactions.push(newTx);
+    showNotification("जारी गरियो", `"${book.title}" पुस्तक ${member.name} लाई जारी भयो।`, true);
+    refreshAllData();
+}
+
+function handleReturnBook(txId) {
+    const tx = transactions.find(t => t.id === txId);
+    if (!tx) return;
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    tx.returnDate = todayStr;
+
+    const book = books.find(b => b.id === tx.bookId);
+    const member = members.find(m => m.id === tx.memberId);
+
+    if (book) book.availableCopies += 1;
+    if (member) member.activeIssues = Math.max(0, member.activeIssues - 1);
+
+    let message = `"${book ? book.title : 'पुस्तक'}" फिर्ता लियो।`;
+    if (tx.fineCalculated > 0) {
+        message += ` जम्मा जरिवाना रु. ${tx.fineCalculated} असुल गरियो।`;
+    }
+
+    showNotification("फिर्ता स्वीकृत", message, true);
+    refreshAllData();
+}
+
+function triggerOverdueLog(text) {
+    const logBox = document.getElementById('automation-log');
+    const now = new Date();
+    const timeStr = `[${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}]`;
+
+    const newLog = document.createElement('p');
+    newLog.innerHTML = `<span class="text-amber-400">${timeStr}</span> ${text}`;
+    logBox.appendChild(newLog);
+    logBox.scrollTop = logBox.scrollHeight;
+}
+
+function triggerAutoReminders() {
+    const overdues = transactions.filter(tx => !tx.returnDate && (new Date() > new Date(tx.dueDate)));
+
+    if (overdues.length === 0) {
+        triggerOverdueLog("स्वचालित स्क्यान: कुनै पनि म्याद नाघेको पुस्तकहरू भेटिएन। सबै सुरक्षित छ!");
+        showNotification("चेतावनी स्क्यान", "सबै प्रणाली दुरुस्त छ। कुनै जरिवाना भेटिएन।", true);
+        return;
+    }
+
+    overdues.forEach(tx => {
+        const book = books.find(b => b.id === tx.bookId);
+        const member = members.find(m => m.id === tx.memberId);
+
+        if (book && member) {
+            triggerOverdueLog(`स्वचालित चेतावनी SMS/Email: ${member.name} लाई म्याद नाघेको पुस्तक "${book.title}" बुझाउन रु. ${tx.fineCalculated} जरिवानाबाट रिमाइन्डर चेतावनी पठाइयो।`);
+        }
+    });
+
+    showNotification("चेतावनी सूचना", "सबै ढिलो सदस्यहरूलाई चेतावनी ईमेल/SMS सिमुलेसन सफल भयो।", true);
+}
+
+// ==================  एआई कार्यात्मक एकीकरण =====================
+
+async function callGeminiAPI(systemPrompt, userPrompt) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+    const payload = {
+        contents: [{ parts: [{ text: userPrompt }] }],
+        systemInstruction: { parts: [{ text: systemPrompt }] }
+    };
+
+    let delay = 1000;
+    for (let i = 0; i < 5; i++) {
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data.candidates?.[0]?.content?.parts?.[0]?.text;
+            }
+        } catch (e) {
+            // पुन: प्रयासको लागि
+        }
+        await new Promise(resolve => setTimeout(resolve, delay));
+        delay *= 2;
+    }
+    throw new Error(" एआई अनलाइन सर्भर जडान हुन सकेन।");
+}
+
+async function generateAIBookDetails() {
+    const titleInput = document.getElementById('ai-book-title').value.trim();
+    if (!titleInput) {
+        showNotification("त्रुटि", "कृपया विश्लेषण गर्न पुस्तकको शीर्षक लेख्नुहोस्।", false);
+        return;
+    }
+
+    const outputSec = document.getElementById('ai-result-section');
+    const outputText = document.getElementById('ai-output-text');
+
+    outputSec.classList.remove('hidden');
+    outputText.innerHTML = `<div class="flex items-center space-x-2"><i class="fa-solid fa-spinner animate-spin text-indigo-600"></i> <span> एआईले पुस्तकको विश्लेषण र विस्तृत वर्गीकरण गर्दैछ...</span></div>`;
+
+    const systemPrompt = "तपाईं एक नेपाली पुस्तकालयाध्यक्ष एआई हुनुहुन्छ। पुस्तकको शीर्षक दिएपछि, यसको विधा वर्गीकृत गर्नुहोस् र नेपाली भाषामा पुस्तकको संक्षिप्त विवरण लेख्नुहोस्। यसलाई आकर्षक, व्यावसायिक र स्पष्ट राख्नुहोस्। बुलेट पोइन्टहरू सहित सफासँग ढाँचा गर्नुहोस्।";
+    const userPrompt = `पुस्तकको शीर्षक: "${titleInput}" को विधा वर्गीकरण र संक्षिप्त समीक्षा वा विवरण लेखिदिनुहोस्।`;
+
+    try {
+        let aiResponse = "";
+        if (apiKey) {
+            aiResponse = await callGeminiAPI(systemPrompt, userPrompt);
+        } else {
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            aiResponse = `📚 **पुस्तकालय एआई विश्लेषण रिपोर्ट (सिमुलेटेड):**\n\n` +
+                `• **पुस्तकको शीर्षक:** ${titleInput}\n` +
+                `• **संभावित विधा:** शिक्षण / उपन्यास / प्रेरणादायी\n` +
+                `• **विशेषता:** यो पुस्तक उत्कृष्ट रचनाहरू समावेश, पाठको कल्पनाशीलता र बौद्धिक क्षमता विकास गर्दछ। नेपाली सन्दर्भमा अत्यधिक रुचाइएको छ।\n\n` +
+                `*(नोट: वास्तविक  एआईको प्रतिक्रियाको लागि प्रणालीमा एपीआई कुञ्जी राख्नुहोस्)*`;
+        }
+        outputText.innerText = aiResponse;
+    } catch (err) {
+        outputText.innerText = `त्रुटि: ${err.message}\n\nकृपया पुन: प्रयास गर्नुहोस् वा API कुञ्जी जाँच गर्नुहोस्।`;
+    }
+}
+
+async function generateAIRecommendations() {
+    const interestInput = document.getElementById('ai-student-interest').value.trim();
+    if (!interestInput) {
+        showNotification("त्रुटि", "कृपया विद्यार्थीको रुचि वा अध्ययन क्षेत्र लेख्नुहोस्।", false);
+        return;
+    }
+
+    const outputSec = document.getElementById('ai-result-section');
+    const outputText = document.getElementById('ai-output-text');
+
+    outputSec.classList.remove('hidden');
+    outputText.innerHTML = `<div class="flex items-center space-x-2"><i class="fa-solid fa-spinner animate-spin text-emerald-600"></i> <span> एआईले विद्यार्थीको रुचिको आधारमा उपयुक्त कृतिहरू खोज्दैछ...</span></div>`;
+
+    const systemPrompt = "तपाईं नेपालमा एक बुद्धिमान पुस्तकालय सहायक हुनुहुन्छ। नेपाली भाषामा पाठकको रुचिको आधारमा ३ देखि ५ उत्कृष्ट पुस्तकहरू सिफारिस गर्नुहोस्। ती पुस्तकहरू किन पढ्नुपर्छ भन्ने शीर्षक र संक्षिप्त औचित्य प्रदान गर्नुहोस्।";
+    const userPrompt = `मलाई निम्न रुचि छ: "${interestInput}"। मेरो रुचि अनुसार उत्कृष्ट ३-४ पुस्तक सूची र कारण विश्लेषण गर्नुहोस्।`;
+
+    try {
+        let aiResponse = "";
+        if (apiKey) {
+            aiResponse = await callGeminiAPI(systemPrompt, userPrompt);
+        } else {
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            aiResponse = `💡 **एआई पुस्तक परामर्श कन्सोल (सिमुलेटेड):**\n\n` +
+                `तपाईंको रुचि **"${interestInput}"** को आधारमा यी कृतिहरू उपयोगी हुन सक्छन्:\n\n` +
+                `१। **शिरिशको फूल (पारिजात)** - जीवनको अर्थ र अस्तित्वको खोजीका लागि उत्कृष्ट उपन्यास।\n` +
+                `२। **मुनामदन (लक्ष्मीप्रसाद देवकोटा)** - प्रेम, बिछोड र मानवीय भावनाको सर्वोत्कृष्ट प्रस्तुति।\n` +
+                `३। **सिकाईको नयाँ मार्ग** - ज्ञान र बौद्धिक विकासको प्रवर्द्धन गर्ने उपयोगी पुस्तक।\n\n` +
+                `*(नोट: यो सिमुलेटेड विश्लेषण हो। वास्तविक एआई उत्तरको लागि API कुञ्जी आवश्यक छ।)*`;
+        }
+        outputText.innerText = aiResponse;
+    } catch (err) {
+        outputText.innerText = `त्रुटि: ${err.message}\n\nकृपया पुन: प्रयास गर्नुहोस्।`;
+    }
+}
+</script>
+</body>
+</html>

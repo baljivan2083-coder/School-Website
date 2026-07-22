@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 1000px; margin: auto; }
+
+        /* हेडिङ स्टाइल */
+        h2 { text-align: center; color: #2c3e50; margin-bottom: 30px; border-bottom: 3px solid #3498db; display: inline-block; padding-bottom: 10px; }
+        .section-title { text-align: center; margin-bottom: 40px; }
+
+        /* समिति कार्ड डिजाइन */
+        .committee-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 60px; }
+        .member-card { background: white; padding: 20px; border-radius: 20px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.08); transition: transform 0.3s; }
+        .member-card:hover { transform: translateY(-10px); }
+        .member-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #3498db; margin-bottom: 15px; }
+        .member-card h3 { margin: 10px 0 5px; color: #2c3e50; }
+        .role { color: #3498db; font-weight: bold; margin-bottom: 10px; display: block; }
+        .contact-info { font-size: 0.85em; color: #666; line-height: 1.6; }
+
+        /* टेबल डिजाइन */
+        .table-container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        th { background-color: #3498db; color: white; padding: 15px; }
+        th:first-child { border-top-left-radius: 10px; }
+        th:last-child { border-top-right-radius: 10px; }
+        td { padding: 15px; border-bottom: 1px solid #eee; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="section-title">
+        <h2> पूर्व बिधार्थी समाज कार्यसमिति पदाधिकारीहरू</h2>
+    </div>
+    
+    <div class="committee-grid">
+        <!-- १. अध्यक्ष -->
+        <div class="member-card">
+            <img src="DB ayal.jpg" alt="अध्यक्ष">
+            <h3>श्री रामशरण रिजाल</h3>
+            <span class="role">अध्यक्ष</span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div>
+        </div>
+
+        <!-- २. उपाध्यक्ष -->
+        <div class="member-card">
+            <img src="https://via.placeholder.com/150" alt="उपाध्यक्ष ">
+            <h3>श्री महेश खुलाल</h3>
+            <span class="role">उपाध्यक्ष </span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div>
+        </div>
+
+        <!-- ३. उपाध्यक्ष  -->
+        <div class="member-card">
+            <img src="DB aal.jpg" alt="उपाध्यक्ष ">
+            <h3>श्री रश्मी दर्जी</h3>
+            <span class="role">उपाध्यक्ष </span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div></div>
+        <!-- ४. सचिव  -->
+        <div class="member-card">
+            <img src="DB aryal.jpg" alt="सचिव">
+            <h3>श्री डी.वि. अर्याल</h3>
+            <span class="role">सचिव</span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div></div>
+        <!-- ५.सह-सचिव  -->
+        <div class="member-card">
+            <img src="DB aal.jpg" alt="सह-सचिव ">
+            <h3>श्री पुरुषोत्तम थापा</h3>
+            <span class="role">सह-सचिव </span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div></div>
+        <!-- ६. कोषाध्यक्ष  -->
+        <div class="member-card">
+            <img src="DB aal.jpg" alt="कोषाध्यक्ष">
+            <h3>श्री सबिना बिडारी</h3>
+            <span class="role">कोषाध्यक्ष</span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div></div>
+        <!-- ७. सदस्य  -->
+        <div class="member-card">
+            <img src="DB aal.jpg" alt="सदस्य">
+            <h3>श्री बद्रि प्रसाद उप्रेती</h3>
+            <span class="role">सदस्य</span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div></div>
+<!-- ८. सदस्य  -->
+        <div class="member-card">
+            <img src="DB aal.jpg" alt="सदस्य">
+            <h3>श्री रामकुमार उप्रेती</h3>
+            <span class="role">सदस्य</span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div></div>
+<!-- ९. सदस्य  -->
+        <div class="member-card">
+            <img src="DB aal.jpg" alt="सदस्य">
+            <h3>श्री होम प्रसाद उप्रेती </h3>
+            <span class="role">सदस्य</span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div></div>
+<!-- १०. सदस्य  -->
+        <div class="member-card">
+            <img src="DB aal.jpg" alt="सदस्य">
+            <h3>श्री बालकृष्ण अधिकारी</h3>
+            <span class="role">सदस्य</span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div></div>
+<!-- ११. सदस्य  -->
+        <div class="member-card">
+            <img src="DB aal.jpg" alt="सदस्य">
+            <h3>श्री चन्द्र ब. गोले</h3>
+            <span class="role">सदस्य</span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div></div>
+<!-- १२. सदस्य  -->
+        <div class="member-card">
+            <img src="DB aal.jpg" alt="सदस्य">
+            <h3>श्री प्रमेश्वर बर्तौला</h3>
+            <span class="role">सदस्य</span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div></div>
+<!-- १३. सदस्य  -->
+        <div class="member-card">
+            <img src="DB aal.jpg" alt="सदस्य">
+            <h3>श्री बद्रि नेपाली</h3>
+            <span class="role">सदस्य</span>
+            <div class="contact-info">
+                📍 मनहरी, मकवानपुर<br>
+                📱 ९८XXXXXXXX<br>
+                ✉️ makari@example.com
+            </div>
+        </div>
+    </div>
+
+    <!-- विद्यार्थी सूची -->
+    <div class="table-container">
+        <h2>पूर्व विद्यार्थीहरूको विवरण</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>फोटो</th>
+                    <th>नाम</th>
+                    <th>ब्याच</th>
+                    <th>सम्पर्क</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="https://via.placeholder.com/50" style="border-radius:50%"></td>
+                    <td>विद्यार्थी १</td>
+                    <td>२०८०</td>
+                    <td>९८XXXXXXX</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

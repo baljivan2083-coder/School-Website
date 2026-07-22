@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>शैक्षिक सामाग्री केन्द्र | श्री बाल जीवन ज्योति मा.वि.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Mukta', sans-serif; }</style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="bg-gradient-to-r align-middle from-blue-800 to-blue-950 text-white py-10 px-4 text-center">
+        <h1 class="text-3xl font-bold"><i class="fas fa-book-open mr-2 text-yellow-400"></i> डिजिटल शैक्षिक सामाग्री डाउनलोड केन्द्र</h1>
+        <p class="text-sm text-gray-300 mt-2">कक्षा अनुसारको पाठ्यक्रम, पाठ्यपुस्तक र सिकाइ नोटहरू</p>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 py-10">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            
+            <!-- ECED -->
+            <div id="eced" class="bg-white border rounded-2xl shadow-sm p-5 border-l-4 border-l-pink-500 text-center hover:shadow-md transition">
+                <div class="text-pink-500 text-3xl mb-2"><i class="fas fa-child"></i></div>
+                <h3 class="text-lg font-bold text-gray-800">ECED (शिशु कक्षा)</h3>
+                <p class="text-xs text-gray-500 mb-3">बालबालिकाहरूका लागि रमाइला सामाग्री</p>
+                <button class="bg-pink-500 hover:bg-pink-600 text-white text-xs px-3 py-1.5 rounded-full inline-block cursor-pointer">सामाग्री हेर्नुहोस्</button>
+            </div>
+
+            <!-- Classes Loop -->
+            <script>
+                const classes = [
+                    {name: "कक्षा १", subjects: ["अनिवार्‍य अङ्ग्रेजी", "अनिवार्‍य नेपाली", "हाम्रो सेरोफेरो", "अनिवार्‍य गणित", "हाम्रो मनहरी, हाम्रो पहिचान"]},
+                    {name: "कक्षा २", subjects: ["अनिवार्‍य अङ्ग्रेजी", "अनिवार्‍य नेपाली", "हाम्रो सेरोफेरो", "अनिवार्‍य गणित", "हाम्रो मनहरी, हाम्रो पहिचान"]},
+                    {name: "कक्षा ३", subjects: ["अनिवार्‍य अङ्ग्रेजी", "अनिवार्‍य नेपाली", "हाम्रो सेरोफेरो", "अनिवार्‍य गणित", "हाम्रो मनहरी, हाम्रो पहिचान"]},
+                    {name: "कक्षा ४", subjects: ["अनिवार्‍य अङ्ग्रेजी", "अनिवार्‍य नेपाली", "विज्ञान तथा प्रविधि", "अनिवार्‍य गणित", "सामाजिक अध्ययन तथा मानव मूल्य शिक्षा", "स्वास्थ्य शारीरिक तथा सिर्जनात्मक कला", "हाम्रो मनहरी, हाम्रो पहिचान"]},
+                    {name: "कक्षा ५", subjects: ["अनिवार्‍य अङ्ग्रेजी", "अनिवार्‍य नेपाली", "विज्ञान तथा प्रविधि", "अनिवार्‍य गणित", "सामाजिक अध्ययन तथा मानव मूल्य शिक्षा", "स्वास्थ्य शारीरिक तथा सिर्जनात्मक कला", "हाम्रो मनहरी, हाम्रो पहिचान"]},
+                    {name: "कक्षा ६", subjects: ["अनिवार्‍य अङ्ग्रेजी", "अनिवार्‍य नेपाली", "विज्ञान तथा प्रविधि", "अनिवार्‍य गणित", "सामाजिक अध्ययन तथा मानव मूल्य शिक्षा", "स्वास्थ्य शारीरिक तथा सिर्जनात्मक कला", "हाम्रो मनहरी, हाम्रो पहिचान"]},
+                    {name: "कक्षा ७", subjects: ["अनिवार्‍य अङ्ग्रेजी", "अनिवार्‍य नेपाली", "विज्ञान तथा प्रविधि", "अनिवार्‍य गणित", "सामाजिक अध्ययन तथा मानव मूल्य शिक्षा", "स्वास्थ्य शारीरिक तथा सिर्जनात्मक कला", "हाम्रो मनहरी, हाम्रो पहिचान"]},
+                    {name: "कक्षा ८", subjects: ["अनिवार्‍य अङ्ग्रेजी", "अनिवार्‍य नेपाली", "विज्ञान तथा प्रविधि", "अनिवार्‍य गणित", "सामाजिक अध्ययन तथा मानव मूल्य शिक्षा", "स्वास्थ्य शारीरिक तथा सिर्जनात्मक कला", "हाम्रो मनहरी, हाम्रो पहिचान"]},
+                    {name: "कक्षा ९", subjects: ["अनिवार्‍य अङ्ग्रेजी", "अनिवार्‍य नेपाली", "विज्ञान तथा प्रविधि", "अनिवार्‍य गणित", "सामाजिक अध्ययन", "ऐच्छिक प्रथम", "ऐच्छिक द्वितीय"]},
+                    {name: "कक्षा १० (SEE)", subjects: ["अनिवार्‍य अङ्ग्रेजी", "अनिवार्‍य नेपाली", "विज्ञान तथा प्रविधि", "अनिवार्‍य गणित", "सामाजिक अध्ययन", "ऐच्छिक प्रथम", "ऐच्छिक द्वितीय"]},
+                    {name: "कक्षा ११ (+2)", subjects: ["व्यवस्थापन", "शिक्षा संकाय"]},
+                    {name: "कक्षा १२ (+2)", subjects: ["व्यवस्थापन", "शिक्षा संकाय"]}
+                ];
+
+                classes.forEach(cls => {
+                    document.write(`
+                        <div class="bg-white border rounded-2xl shadow-sm p-5 border-l-4 border-l-blue-600 text-center hover:shadow-md transition">
+                            <div class="text-blue-600 text-3xl mb-2"><i class="fas fa-book"></i></div>
+                            <h3 class="text-lg font-bold text-gray-800">${cls.name}</h3>
+                            <button onclick="openSubjectModal('${cls.name}', ${JSON.stringify(cls.subjects).replace(/"/g, '&quot;')})" class="mt-3 bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded-full inline-block cursor-pointer">डाउनलोड गर्नुहोस्</button>
+                        </div>
+                    `);
+                });
+            </script>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="subjectModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h2 id="modalTitle" class="text-xl font-bold text-blue-900">कक्षा विवरण</h2>
+                <button onclick="closeSubjectModal()" class="text-gray-400 hover:text-gray-600 text-xl cursor-pointer"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="subjectList" class="space-y-2 max-h-96 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentClass = "";
+        const chapterList = [
+            "१. कार्यालय व्यवस्थापन र कार्यविधि", "२. फाइलिङ र अनुक्रमणिका", "३. बैंक, बिमा तथा वित्तीय संस्था", "४. करको परिचय",
+            "५. व्यावसायिक लेखा", "६. बैंक हिसाब मिलान", "७. लेखात्मक गल्तीहरू", "८. अन्तिम खाता", "९. नेपालको सरकारी लेखा प्रणाली",
+            "१०. राजस्व लेखा", "११. सरकारी खर्चको लेखा", "१२. जिन्सी लेखा", "१३. कोष लेखाङ्कन र धरौटी लेखा",
+            "१४. आन्तरिक नियन्त्रण र लेखापरीक्षण", "१५. नेपालको सरकारी लेखा प्रणालीमा संलग्न निकायहरू", "१६. कार्यालय सञ्चालन र लेखामा सूचना प्रविधिको प्रयोग"
+        ];
+
+        function openSubjectModal(className, subjects) {
+            currentClass = className;
+            const modal = document.getElementById('subjectModal');
+            document.getElementById('modalTitle').innerText = className + ' - विषय सूची';
+            const list = document.getElementById('subjectList');
+            list.innerHTML = "";
+            
+            subjects.forEach(sub => {
+                list.innerHTML += `
+                    <button onclick="handleSelection('${className}', '${sub}')" class="w-full flex items-center justify-between p-3 bg-gray-50 hover:bg-blue-50 rounded-xl transition border group cursor-pointer text-left">
+                        <span class="font-medium text-gray-700 group-hover:text-blue-700">${sub}</span>
+                        <i class="fas fa-chevron-right text-sm text-blue-500"></i>
+                    </button>`;
+            });
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); }, 10);
+        }
+
+        function handleSelection(className, subject) {
+            // "ऐच्छिक द्वितीय" क्लिक गर्दा केही पनि नहोस्, केवल सूची खुलोस्
+            if (className === "कक्षा १० (SEE)" && subject === "ऐच्छिक द्वितीय") {
+                const list = document.getElementById('subjectList');
+                document.getElementById('modalTitle').innerText = "ऐच्छिक द्वितीय - पाठहरू";
+                list.innerHTML = `<button onclick="location.reload()" class="text-blue-600 text-sm mb-2 underline">← पछाडि फर्कनुहोस्</button>`;
+                
+                chapterList.forEach(ch => {
+                    list.innerHTML += `
+                        <button onclick="openChapterFile('${ch}')" class="w-full text-left p-2 bg-gray-50 hover:bg-red-50 rounded-lg transition border text-sm text-gray-700">
+                            <i class="fas fa-file-pdf text-red-500 mr-2"></i> ${ch}
+                        </button>`;
+                });
+            } else {
+                // अन्य विषयहरूका लागि मात्र पीडीएफ खोल्ने
+                openPdfFile(subject);
+            }
+        }
+
+        function openChapterFile(chapterName) {
+            if (chapterName === "८. अन्तिम खाता") {
+                window.open('SEE Account.html', '_blank');
+            } else {
+                window.open(`${currentClass} ऐच्छिक द्वितीय ${chapterName}.pdf`, '_blank');
+            }
+        }
+
+        function openPdfFile(subjectName) {
+            window.open(`${currentClass} ${subjectName}.pdf`, '_blank');
+        }
+
+        function closeSubjectModal() {
+            const modal = document.getElementById('subjectModal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => { modal.classList.add('hidden'); location.reload(); }, 300);
+        }
+    </script>
+</body>
+</html>

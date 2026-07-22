@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>नेपाली साहित्य र बाल कोसेली</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;700&display=swap');
+        body { font-family: 'Mukta', sans-serif; background: #eef2f3; margin: 0; padding: 20px; color: #444; }
+        header { background: #2c3e50; color: white; padding: 3rem 1rem; text-align: center; border-radius: 0 0 50px 50px; margin-bottom: 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .grid-container { display: flex; flex-direction: column; gap: 30px; width: 100%; box-sizing: border-box; }
+        .card { background: #ffffff; padding: 30px; border-radius: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.08); border-left: 10px solid #ff9a9e; border-bottom: 6px solid #ff9a9e; }
+        .content-area { flex: 1; text-align: justify; }
+        .author-section { display: flex; flex-direction: column; align-items: center; gap: 8px; background: #fdf2f2; padding: 20px; border-radius: 20px; min-width: 250px; margin-left: 20px; }
+        .author-photo { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #ff9a9e; cursor: pointer; }
+        .author-info { text-align: center; font-size: 0.95rem; color: #555; }
+        .author-name { font-weight: 700; color: #d35400; font-size: 1.1rem; display: block; }
+        p { line-height: 1.8; font-size: 1.2rem; color: #333; margin: 0; text-align: justify; }
+        h3 { color: #2c3e50; margin: 0 0 15px 0; font-size: 1.5rem; }
+        h2 { text-align: center; color: #2c3e50; margin: 50px 0 30px; border-bottom: 3px solid #ff9a9e; display: inline-block; }
+        .section-wrapper { text-align: center; margin-top: 30px; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
+        .modal-content { max-width: 80%; max-height: 80%; border-radius: 10px; }
+        .social-actions { margin-top: 15px; display: flex; gap: 20px; }
+        .social-actions a { color: #65676b; font-size: 1.4rem; text-decoration: none; }
+        .social-actions a:hover { color: #4267B2; }
+    </style>
+</head>
+<body>
+
+<header><h1>नेपाली साहित्य र बाल कोसेली</h1></header>
+
+<div id="content-container"></div>
+
+<div id="imageModal" class="modal" onclick="closeModal()">
+    <img class="modal-content" id="fullImage">
+</div>
+
+<script>
+    const poems = [
+        { title: "१. पुतली", text: "रङ्गीचङ्गी पखेटा फिँजाइ,<br>फूलमाथि बस्छे पुतली।<br>नाच्दै-गाउँदै उडेर जाँदा,<br>सबैलाई मन पर्छे पुतली।", name: "राम", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा १", photo: "shreeyansh.jpg" },
+        { title: "२. सानो चरी", text: "चीं-चीं गर्छ सानो चरी,<br>आकाशमा उड्छ डरी-डरी।<br>दाह्रा खोज्दै यता-उता,<br>रमाइलो गर्छ चरी-मरी।", name: "सीता", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा २", photo: "photo2.jpg" },
+        { title: "३. बिरालो", text: "म्याऊँ-म्याऊँ गर्छ बिरालो,<br>दूध खान खोज्छ प्यारो।<br>मुसा देख्यो कि तर्साउँछ,<br>भएजस्तो वीर साह्रै गारो।", name: "हरि", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ३", photo: "photo3.jpg" },
+        { title: "४. मेरो स्कुल", text: "हाम्रो स्कुल राम्रो छ,<br>पढ्ने ठाउँ घमाइलो छ।<br>शिक्षक हुनुहुन्छ ज्ञानी,<br>ज्ञान पाउने ठाउँ ठूलो छ।", name: "गीता", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ४", photo: "photo4.jpg" },
+        { title: "५. जूनकीरी", text: "रातको बेला चम्किन्छ,<br>सानी जूनकीरी बत्ती बाल्छ।<br>अँध्यारोमा यता-उता,<br>सयौँ ताराझैँ उज्यालो फाल्छ।", name: "श्याम", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ५", photo: "photo5.jpg" },
+        { title: "६. बादल", text: "सेता-सेता कपास जस्ता,<br>बादल आकाशमा दौडिन्छन्।<br>पानी पारेर धर्ती भिजाई,<br>खेती-पातीलाई भरिन्छन्।", name: "रवि", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा १", photo: "photo6.jpg" },
+        { title: "७. पानी", text: "कलकल बग्छ खोलाको पानी,<br>सबैका लागि छ मीठो बानी।<br>पानी बिना त धर्ती सुक्छ,<br>बुझ्नुपर्छ हामीले यो कहानी।", name: "सन्तोष", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा २", photo: "photo7.jpg" },
+        { title: "८. हात धुने", text: "खाना खानु अघि सधैँ,<br>साबुन पानीले हात धुनु।<br>कीटाणु सबै भाग्छन् अनि,<br>सफा भएर रमाउनु।", name: "बबिता", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ३", photo: "photo8.jpg" },
+        { title: "९. डाँफे", text: "हाम्रो राष्ट्रिय चरा डाँफे,<br>रङ्गीन छ यसको रूप।<br>हिमालको काखमा नाच्ने,<br>यसको शान छ झन् अनुप।", name: "अमित", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ४", photo: "photo9.jpg" },
+        { title: "१०. किताब", text: "किताब मेरो साथी हो,<br>ज्ञानको भण्डार राख्ने।<br>पढ्दै जाँदा नयाँ कुरा,<br>संसारको चित्र देखाउने।", name: "सुनिता", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ५", photo: "photo10.jpg" },
+        { title: "११. घाम", text: "बिहानै उठेर झुल्किन्छ घाम,<br>न्यानो किरण दिने राम्रो काम।<br>अँध्यारो जति पन्छाइदिन्छ,<br>सबैको अनुहारमा ल्याउँछ दाम।", name: "विकास", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा १", photo: "photo11.jpg" },
+        { title: "१२. हात्ती", text: "ठूलो छ शरीर, लामो छ सुँड,<br>हिँड्छ हात्ती लस्त-लस्त।<br>सानो आँखा, कान ठूला,<br>देख्दा लाग्छ कति मस्त।", name: "पूजा", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा २", photo: "photo12.jpg" },
+        { title: "१३. तरकारी", text: "हरिया साग र राता गोलभेंडा,<br>तरकारी खानुपर्छ अलि-अलि।<br>स्वस्थ रहन बुद्धि बढाउन,<br>चाहिन्छ शक्ति दिनको दिनभरी।", name: "दिनेश", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ३", photo: "photo13.jpg" },
+        { title: "१४. साथी", text: "मिल्ने साथी मिलेर खेल्ने,<br>दु:ख-सुख बाँडेर खाने।<br>कहिले नरिसाई माया गर्ने,<br>एक अर्कालाई सधैँ नै मान्ने।", name: "अञ्जली", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ४", photo: "photo14.jpg" },
+        { title: "१५. वर्षा", text: "रिम्झिम-रिम्झिम पानी पर्‍यो,<br>भ्यागुताले ट्यार-ट्यार गर्‍यो।<br>कागजको डुङ्गा पानीमा छोडी,<br>खेल्दा मन साह्रै खुसी भयो।", name: "सुरेश", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ५", photo: "photo15.jpg" },
+        { title: "१६. जुत्ता", text: "बायाँ खुट्टा, दायाँ खुट्टा,<br>जुत्ता लगाउन सानो जुक्ति।<br>फिता बाँध्न सिके पछि,<br>खुसी हुन्छन् आमा-बुबा झन् कति।", name: "प्रतिभा", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा १", photo: "photo16.jpg" },
+        { title: "१७. समय", text: "समय अमूल्य छ, खेर नफाल,<br>पढ्ने बेला पढ्ने गर हाल।<br>भोलि-भोलि भन्दै गयो भने,<br>पछि पछुताउनु पर्ला नि बाल।", name: "राजेश", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा २", photo: "photo17.jpg" },
+        { title: "१८. सफा गाउँ", text: "गाउँ हाम्रो सफा राख्नु,<br>फोहोर जति खाडलमा फाल्नु।<br>स्वच्छ वातावरण मिले पछि,<br>रोगलाई कहिल्यै नडाक्नु।", name: "अनिता", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ३", photo: "photo18.jpg" },
+        { title: "१९. आमा", text: "संसारमा सबैभन्दा प्यारी आमा,<br>मलाई काखमा राखी माया दिने।<br>आमाकै काखमा म सुत्छु सधैँ,<br>मीठा-मीठा कथाहरू सुन्ने।", name: "मोहन", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ४", photo: "photo19.jpg" },
+        { title: "२०. मिहिनेत", text: "मिहिनेत गर्ने सधैँ जित्छन्,<br>सफलताको चुली चढ्छन्।<br>आलस्य गर्ने पछि पर्छन्,<br>सधैँ पछुताएर बस्छन्।", name: "सरिता", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ५", photo: "photo20.jpg" }
+    ];
+
+    const stories = [
+        { title: "इमानदार गोठालो", text: "गाउँमा राम नामको एक गोठालो बस्थ्यो। ऊ हरेक दिन गाईबस्तु चराउन जंगल जान्थ्यो। एक दिन उसले बाटोमा पैसाले भरिएको पर्स भेट्टायो। पर्समा धेरै पैसा र कागजात थिए। उसले पर्स घर नलगेर गाउँमा खोजी गर्‍यो। पर्स हराएको एक वृद्धलाई भेट्यो। रामले पर्स फिर्ता दियो। वृद्ध धेरै खुसी भए। उनीहरूले रामलाई पुरस्कार दिन खोजे। तर रामले इमानदारी नै आफ्नो सबैभन्दा ठूलो पुरस्कार भएको बतायो।", name: "किरण", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा १", photo: "photo21.jpg" },
+        { title: "मेहनती कमिला", text: "एउटा जंगलमा सानो कमिला बस्थ्यो। ऊ दिनभरि खाना जम्मा गर्न व्यस्त रहन्थ्यो। अरू कीराहरू भने खेल्न र रमाइलो गर्नमै समय बिताउँथे। गर्मी सकिएर जाडो आयो। जाडोमा खाना पाउन निकै कठिन भयो। तर कमिलासँग पर्याप्त खाना थियो। ऊ आरामसँग बस्न सक्यो। अरू कीराहरू भोकै परे। उनीहरूले आफ्नो गल्ती महसुस गरे। मेहनतको फल सधैं मिठो हुन्छ भन्ने शिक्षा पाए।", name: "सपना", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा २", photo: "photo22.jpg" },
+        { title: "दयालु बालिका", text: "सीता विद्यालय जाँदै थिई। बाटोमा उसले एउटा घाइते चरा देखी। चराले उड्न सकिरहेको थिएन। सीताले त्यसलाई सावधानीपूर्वक उठाई। घरमा ल्याएर उपचार गरिन्। चरालाई दाना र पानी दिइन्। केही दिनपछि चरा निको भयो। चराले फेरि उड्न थाल्यो। सीता धेरै खुसी भइन्। दया र माया सबैभन्दा ठूलो गुण हो भन्ने कुरा उनले बुझिन्।", name: "मिलन", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ३", photo: "photo23.jpg" },
+        { title: "सिंह र मुसा", text: "एक दिन सिंह गहिरो निद्रामा थियो। सानो मुसा खेल्दै सिंहमाथि चढ्यो। सिंह रिसायो र मुसालाई समात्यो। मुसाले माफी माग्दै आफूलाई छोड्न अनुरोध गर्‍यो। सिंहले दया गरेर छोडिदियो। केही दिनपछि सिंह शिकारीको जालमा पर्‍यो। सिंहले धेरै प्रयास गर्दा पनि उम्कन सकेन। मुसा त्यहाँ आइपुग्यो। उसले आफ्नो दाँतले जाल काट्यो। सिंह मुक्त भयो र मुसालाई धन्यवाद दियो।", name: "रविना", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ४", photo: "photo24.jpg" },
+        { title: "लोभी कुकुर", text: "एक कुकुरले मासुको टुक्रा भेट्टायो। ऊ खुशी हुँदै पुल पार गरिरहेको थियो। पानीमा आफ्नो छाया देख्यो। उसलाई अर्को कुकुरले पनि मासु बोकेको जस्तो लाग्यो। उसले त्यो मासु पनि लिन चाह्यो। भुक्नका लागि मुख खोल्नेबित्तिकै आफ्नो मासु पानीमा खस्यो। त्यसपछि उसले केही पनि पाएन। कुकुर निकै पछुतायो। लोभले सधैं हानि गराउँछ भन्ने शिक्षा उसले पायो।", name: "बिकास", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ५", photo: "photo25.jpg" },
+        { title: "साँचो मित्रता", text: "दुई साथी विद्यालय सँगै जान्थे। एक दिन उनीहरू जंगलको बाटो हुँदै हिँडिरहेका थिए। अचानक एउटा भालु देखापर्‍यो। एक साथी डराएर रूखमा चढ्यो। अर्को साथी जमिनमा सुतेर मृतजस्तै बन्यो। भालुले उसलाई केही गरेन। भालु गएपछि रूखमा चढेको साथी तल झर्‍यो। उसले भालुले के भन्यो भनेर सोध्यो। साथीले संकटमा साथ नदिने मित्रबाट सावधान रहनु भनेको थियो भनेर उत्तर दियो। त्यसपछि उसले साँचो मित्रताको महत्व बुझ्यो।", name: "रश्मि", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा १", photo: "photo26.jpg" },
+        { title: "बुद्धिमान खरायो", text: "जंगलमा एउटा क्रूर सिंह थियो। ऊ हरेक दिन जनावरहरूलाई दुःख दिन्थ्यो। सबै जनावर डराएका थिए। एक दिन खरायो सिंहकहाँ ढिलो पुग्यो। सिंह रिसायो। खरायोले अर्को सिंहले चुनौती दिएको कथा सुनायो। उसले सिंहलाई इनार नजिक लग्यो। सिंहले पानीमा आफ्नै छाया देख्यो। उसले त्यसलाई अर्को सिंह सम्झियो। रिसाएर पानीमा हाम फाल्यो। त्यसपछि जंगलका सबै जनावर सुरक्षित भए।", name: "आकाश", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा २", photo: "photo27.jpg" },
+        { title: "सफा विद्यालय", text: "एक विद्यालयमा विद्यार्थीहरूले जथाभावी फोहोर फाल्थे। विद्यालयको वातावरण बिग्रँदै गयो। प्रधानाध्यापकले सरसफाइ अभियान सुरु गरे। सबै विद्यार्थी र शिक्षक मिलेर विद्यालय सफा गर्न लागे। कक्षाकोठा, खेलमैदान र बगैँचा सफा गरियो। विद्यालय निकै सुन्दर देखिन थाल्यो। विद्यार्थीहरू पनि खुसी भए। उनीहरूले डस्टबिन प्रयोग गर्ने बानी बसाले। विद्यालय सधैं सफा रह्यो। सरसफाइ नै स्वास्थ्यको आधार हो भन्ने शिक्षा सबैले पाए।", name: "रिया", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ३", photo: "photo28.jpg" },
+        { title: "इमानदार विद्यार्थी", text: "रवि नामको विद्यार्थी पढाइमा मेहनती थियो। परीक्षा नजिकिँदै थियो। उसका केही साथीहरूले चिट प्रयोग गर्न सुझाव दिए। तर रविले त्यसलाई अस्वीकार गर्‍यो। उसले नियमित रूपमा अध्ययन गर्‍यो। परीक्षामा आफ्नै ज्ञान प्रयोग गर्‍यो। नतिजा प्रकाशित हुँदा उसले राम्रो अंक ल्यायो। शिक्षक र अभिभावक सबै खुसी भए। सबैले उसको प्रशंसा गरे। इमानदारीले सफलता दिलाउँछ भन्ने कुरा प्रमाणित भयो।", name: "रोहन", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ४", photo: "photo29.jpg" },
+        { title: "रूखको महत्व", text: "एउटा गाउँ हरियालीले भरिएको थियो। गाउँमा धेरै रूखहरू थिए। रूखले स्वच्छ हावा र चिसो छायाँ दिन्थे। चराहरूले त्यहीँ गुँड बनाउँथे। एक दिन केही मानिसहरूले रूख काट्न थाले। गाउँलेहरूले यसको विरोध गरे। उनीहरूले नयाँ बिरुवा रोप्ने अभियान चलाए। समयसँगै ती बिरुवाहरू ठूला रूख बने। गाउँ फेरि हरियाली र सुन्दर बन्यो। सबैले रूख हाम्रो जीवनका अमूल्य साथी हुन् भन्ने कुरा बुझे।", name: "स्वेता", school: "बाल जीवन ज्योति", address: "मनहरी", class: "कक्षा ५", photo: "photo30.jpg" }
+    ];
+
+    const container = document.getElementById('content-container');
+    
+    function createCard(item) {
+        return `
+            <div class="card">
+                <div class="content-area">
+                    <h3>${item.title}</h3>
+                    <p>${item.text}</p>
+                    <div class="social-actions">
+                        <a href="#" title="Like"><i class="far fa-thumbs-up"></i></a>
+                        <a href="#" title="Comment"><i class="far fa-comment"></i></a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://your-website-url.com" target="_blank" title="Share"><i class="fas fa-share"></i></a>
+                    </div>
+                </div>
+                <div class="author-section">
+                    <img src="${item.photo}" class="author-photo" onclick="openModal(this.src)" onerror="this.src='default.jpg'">
+                    <div class="author-info">
+                        <span class="author-name">नाम: ${item.name}</span>
+                        <span>विद्यालय: ${item.school}</span><br>
+                        <span>ठेगाना: ${item.address}</span><br>
+                        <span>कक्षा: ${item.class}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    container.innerHTML += '<div class="section-wrapper"><h2>कविता सङ्ग्रह</h2></div><div class="grid-container" id="poem-grid"></div>';
+    poems.forEach(p => document.getElementById('poem-grid').innerHTML += createCard(p));
+
+    container.innerHTML += '<div class="section-wrapper"><h2>बाल कथाहरू</h2></div><div class="grid-container" id="story-grid"></div>';
+    stories.forEach(s => document.getElementById('story-grid').innerHTML += createCard(s));
+
+    function openModal(src) { document.getElementById("fullImage").src = src; document.getElementById("imageModal").style.display = "flex"; }
+    function closeModal() { document.getElementById("imageModal").style.display = "none"; }
+</script>
+
+</body>
+</html>

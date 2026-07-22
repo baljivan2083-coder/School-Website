@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade-Sheet Search System - Shree Bal Jivan Jyoti Secondary School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Excel फाइल पढ्नका लागि SheetJS लाइब्रेरी -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+<!-- Search Form & Excel Import Box Together -->
+<div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md mb-8 border border-gray-200">
+    <h2 class="text-xl font-bold mb-4 text-blue-800 text-center">पहिलो त्रैमासिक परीक्षा नतिजा खोज्नुहोस् (२०८३)</h2>
+    
+    <div class="space-y-4">
+        <!-- Class Selector updated from ECED to Class 12 -->
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">कक्षा छनोट गर्नुहोस्:</label>
+            <select id="class-selector" class="w-full p-2.5 border rounded-md bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="">-- कक्षा रोज्नुहोस् --</option>
+                <option value="ECED">ECED</option>
+                <option value="Class1">Class 1</option>
+                <option value="Class2">Class 2</option>
+                <option value="Class3">Class 3</option>
+                <option value="Class4">Class 4</option>
+                <option value="Class5">Class 5</option>
+                <option value="Class6">Class 6</option>
+                <option value="Class7">Class 7</option>
+                <option value="Class8">Class 8</option>
+                <option value="Class9">Class 9</option>
+                <option value="Class10" selected>Class 10</option>
+                <option value="Class11">Class 11</option>
+                <option value="Class12">Class 12</option>
+            </select>
+        </div>
+
+        <!-- Excel Import Sub-Box Inside Form -->
+        <div class="bg-blue-50 p-3.5 rounded-md border border-blue-200 text-center">
+            <label class="block text-xs font-bold text-blue-900 mb-2 uppercase">एडमिनका लागि: छानिएको कक्षाको Excel डेटा कोडमा हाल्नुहोस्</label>
+            <input type="file" id="excel-file" accept=".xlsx, .xls" class="block w-full text-xs text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-blue-700 file:text-white hover:file:bg-blue-800 cursor-pointer mb-2" />
+            <button onclick="generateEmbeddedHTML()" class="w-full bg-green-700 hover:bg-green-800 text-white py-1.5 rounded font-bold text-xs transition">
+                📥 डेटा इम्पोर्ट गरी नयाँ HTML कोड डाउनलोड गर्नुहोस्
+            </button>
+            <p id="import-status" class="text-[11px] text-gray-600 mt-1 font-medium">माथि कक्षा छानेर त्यसको Excel फाइल लोड गर्नुहोस्।</p>
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">सिम्बोल नम्बर  राख्नुहोस्:</label>
+            <input type="text" id="symbol-input" placeholder="सिम्बोल नम्बर यहाँ राख्नुहोस् " class="w-full p-2.5 border rounded-md bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none uppercase">
+        </div>
+        
+        <button onclick="searchResult()" class="w-full bg-blue-700 hover:bg-blue-800 text-white py-2.5 rounded-md font-bold transition">
+            नतिजा खोज्नुहोस्
+        </button>
+    </div>
+
+    <div id="error-display" class="mt-4 p-3 bg-red-100 text-red-700 border border-red-200 rounded hidden text-center"></div>
+</div>
+
+<!-- Simple GPA Display Card -->
+<div id="result-display" class="hidden max-w-xl mx-auto">
+    <div class="bg-white p-6 rounded-lg shadow-md border-2 border-blue-800 text-center">
+        <!-- School Header inside Card -->
+        <h3 class="text-lg font-bold text-gray-800 uppercase">Shree Bal Jivan Jyoti Secondary School</h3>
+        <p class="text-xs text-gray-600 font-semibold mb-1">Manahari-01, Makari, Makawanpur</p>
+        
+        <!-- Display Class Name -->
+        <p class="text-sm font-bold text-blue-800 mb-2">Class: <span id="disp-class"></span></p>
+        
+        <!-- Dynamic Exam Title -->
+        <span id="exam-title" class="inline-block bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide my-1"></span>
+        
+        <hr class="border-gray-300 my-3">
+        
+        <!-- Student Info -->
+        <div class="text-left space-y-1 my-4 text-sm font-medium text-gray-700">
+            <p><strong>Name:</strong> <span id="student-name" class="uppercase text-blue-900 font-bold"></span></p>
+            <p><strong>Symbol No:</strong> <span id="disp-symbol"></span></p>
+        </div>
+
+        <hr class="border-gray-300 my-3">
+
+        <!-- Big GPA Display -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-5 my-4">
+            <p class="text-gray-600 text-sm font-bold tracking-wider uppercase">Grade Point Average (GPA)</p>
+            <h1 id="final-gpa" class="text-5xl font-extrabold text-blue-700 mt-2"></h1>
+        </div>
+
+        <!-- Action Button -->
+        <button onclick="window.print()" class="mt-2 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1.5 px-4 rounded transition">
+            प्रिन्ट गर्नुहोस्
+        </button>
+    </div>
+</div>
+
+<script>
+    // सबै कक्षाहरूको लागि डेटाबेस संरचना तयार पारिएको छ
+    // [START_DATABASE]
+    let schoolDatabase = {
+        "ECED": {},
+        "Class1": {},
+        "Class2": {},
+        "Class3": {},
+        "Class4": {},
+        "Class5": {},
+        "Class6": {},
+        "Class7": {},
+        "Class8": {},
+        "Class9": {},
+        "Class10": {
+            "03302639 O": { name: "BASANTA PRAJA", examName: "First Terminal Examination", gpa: "-" },
+            "03302640 P": { name: "AADITYA GHALAN", examName: "First Terminal Examination", gpa: "3.0625" },
+            "03302641 Q": { name: "ASMITA BULUN", examName: "First Terminal Examination", gpa: "-" },
+            "03302642 R": { name: "BIBASH PRAJA", examName: "First Terminal Examination", gpa: "-" },
+            "03302643 S": { name: "BIBEK GHALAN", examName: "First Terminal Examination", gpa: "-" },
+            "03302644 T": { name: "BIBEK HATUWAL", examName: "First Terminal Examination", gpa: "-" },
+            "03302645 U": { name: "BIBEK SING JIMBA", examName: "First Terminal Examination", gpa: "-" },
+            "03302646 V": { name: "BIJAYA PRAJA", examName: "First Terminal Examination", gpa: "-" },
+            "03302647 W": { name: "BUDDHIMAN MUKTAN", examName: "First Terminal Examination", gpa: "-" },
+            "03302648 X": { name: "KALASH GHALAN", examName: "First Terminal Examination", gpa: "-" },
+            "03302649 Y": { name: "KANCHAN GHALAN", examName: "First Terminal Examination", gpa: "-" },
+            "03302650 Z": { name: "KARINA THING", examName: "First Terminal Examination", gpa: "-" },
+            "03302651 A": { name: "LAXMI LAMICHHANE", examName: "First Terminal Examination", gpa: "3.5375" },
+            "03302652 B": { name: "MANISA MAINALI", examName: "First Terminal Examination", gpa: "2.65" },
+            "03302653 C": { name: "MANITA THING", examName: "First Terminal Examination", gpa: "-" },
+            "03302654 D": { name: "NANITA MUKTAN", examName: "First Terminal Examination", gpa: "-" },
+            "03302655 E": { name: "NIROJ GOLE", examName: "First Terminal Examination", gpa: "-" },
+            "03302656 F": { name: "RAMAN GOLE", examName: "First Terminal Examination", gpa: "2.8" },
+            "03302657 G": { name: "RAMIT THAKURI", examName: "First Terminal Examination", gpa: "-" },
+            "03302658 H": { name: "RASMI DARJI", examName: "First Terminal Examination", gpa: "2.8625" }
+        },
+        "Class11": {},
+        "Class12": {}
+    };
+    // [END_DATABASE]
+
+    // फाइल ब्राउज गर्दा अस्थायी रूपमा मात्र डेटा लोड गर्न
+    document.getElementById('excel-file').addEventListener('change', function(e) {
+        processExcel(e.target.files[0], false);
+    });
+
+    // एक्सेलबाट डेटा निकालेर छनोट गरिएको कक्षामा सुरक्षित गर्ने मुख्य फङ्सन
+    function processExcel(file, shouldDownload) {
+        const cls = document.getElementById('class-selector').value;
+        if (!cls) {
+            alert("कृपया पहिले कुन कक्षाको डेटा इम्पोर्ट गर्ने हो, त्यो कक्षा छनोट गर्नुहोस् !");
+            return;
+        }
+        if (!file) {
+            alert("कृपया लोड गर्नका लागि Excel फाइल रोज्नुहोस् !");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const firstSheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheetName];
+            const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+            
+            let classData = {};
+            let loadCount = 0;
+            let symIndex = -1, nameIndex = -1, gpaIndex = -1;
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                if (!row) continue;
+                for (let j = 0; j < row.length; j++) {
+                    const cellValue = row[j] ? row[j].toString().toUpperCase().trim() : "";
+                    if (cellValue.includes("SYM") || cellValue.includes("SYMBOL")) symIndex = j;
+                    else if (cellValue.includes("NAME") || cellValue.includes("STUDENT")) nameIndex = j;
+                    else if (cellValue.includes("GPA")) gpaIndex = j;
+                }
+                
+                if (symIndex !== -1 && nameIndex !== -1) {
+                    for (let k = i + 1; k < rows.length; k++) {
+                        const studentRow = rows[k];
+                        if (!studentRow || !studentRow[symIndex]) continue;
+
+                        const symbol = studentRow[symIndex].toString().trim().toUpperCase();
+                        const name = studentRow[nameIndex] ? studentRow[nameIndex].toString().trim().toUpperCase() : "";
+                        let gpa = (gpaIndex !== -1 && studentRow[gpaIndex]) ? studentRow[gpaIndex].toString().trim() : "-";
+                        
+                        if (gpa !== "-" && !isNaN(gpa)) {
+                            gpa = parseFloat(gpa).toString(); 
+                        }
+
+                        if (symbol) {
+                            classData[symbol] = { name: name, examName: "First Terminal Examination 2083", gpa: gpa };
+                            loadCount++;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            if (loadCount > 0) {
+                // जुन कक्षा छानिएको छ, त्यसमै डेटा बस्छ (अरू कक्षाको पुरानो डेटा हराउँदैन)
+                schoolDatabase[cls] = classData;
+                document.getElementById('import-status').innerHTML = `✅ <span class="text-green-700 font-bold">${cls} मा ${loadCount} जनाको डेटा लोड भयो!</span>`;
+                
+                if (shouldDownload) {
+                    downloadUpdatedHTMLFile();
+                }
+            } else {
+                document.getElementById('import-status').innerHTML = `❌ <span class="text-red-700 font-bold">डेटा फेला परेन। Excel को ढाँचा मिलेन।</span>`;
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    // नयाँ कोड डाउनलोड गराउने फङ्सन
+    function generateEmbeddedHTML() {
+        const fileInput = document.getElementById('excel-file');
+        processExcel(fileInput.files[0], true);
+    }
+
+    function downloadUpdatedHTMLFile() {
+        let currentHTML = document.documentElement.outerHTML;
+        let databaseString = "let schoolDatabase = " + JSON.stringify(schoolDatabase, null, 4) + ";";
+        const regex = /\/\/ \[START_DATABASE\][\s\S]*?\/\/ \[END_DATABASE\]/;
+        const updatedHTMLContent = "<!DOCTYPE html>\n<html lang=\"en\">\n" + currentHTML.replace(regex, "// [START_DATABASE]\n    " + databaseString + "\n    // [END_DATABASE]");
+
+        const blob = new Blob([updatedHTMLContent], { type: "text/html;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "result_all_classes.html";
+        link.click();
+    }
+
+    // सर्च गर्ने मुख्य फङ्सन
+    function searchResult() {
+        const cls = document.getElementById('class-selector').value;
+        let inputText = document.getElementById('symbol-input').value.trim().toUpperCase();
+        const resDisplay = document.getElementById('result-display');
+        const errDisplay = document.getElementById('error-display');
+
+        resDisplay.classList.add('hidden');
+        errDisplay.classList.add('hidden');
+
+        if (!cls || !inputText) {
+            errDisplay.innerText = "कृपया कक्षा छनोट गर्नुहोस् र सिम्बोल नम्बर भर्नुहोस्।";
+            errDisplay.classList.remove('hidden');
+            return;
+        }
+
+        let foundKey = null;
+        if (schoolDatabase[cls]) {
+            const cleanPattern = /(\d{7,8})\s*([A-Z])/;
+            const match = inputText.match(cleanPattern);
+            
+            if (match) {
+                const formattedInput = match[1] + " " + match[2];
+                if (schoolDatabase[cls][formattedInput]) {
+                    foundKey = formattedInput;
+                }
+            }
+            
+            if (!foundKey) {
+                const standardizedInput = inputText.replace(/\s+/g, '');
+                for (let key in schoolDatabase[cls]) {
+                    const standardizedKey = key.replace(/\s+/g, '');
+                    if (standardizedInput.includes(standardizedKey) || standardizedKey.includes(standardizedInput)) {
+                        foundKey = key;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (foundKey && schoolDatabase[cls][foundKey]) {
+            const student = schoolDatabase[cls][foundKey];
+            
+            document.getElementById('student-name').innerText = student.name;
+            document.getElementById('disp-symbol').innerText = foundKey;
+            
+            // कक्षाको नाम देखाउने ढाँचा मिलाउने
+            let classFormatted = cls;
+            if(cls.startsWith("Class")) {
+                classFormatted = "Class " + cls.replace("Class", "");
+            }
+            document.getElementById('disp-class').innerText = classFormatted;
+            
+            document.getElementById('final-gpa').innerText = student.gpa === "-" ? "NG" : student.gpa;
+            document.getElementById('exam-title').innerText = student.examName;
+
+            resDisplay.classList.remove('hidden');
+        } else {
+            errDisplay.innerText = "क्षमा गर्नुहोस्, विवरण फेला परेन। कृपया कक्षा र सिम्बोल नम्बर मिल्दो भएको पक्का गर्नुहोस्।";
+            errDisplay.classList.remove('hidden');
+        }
+    }
+</script>
+
+</body>
+</html>

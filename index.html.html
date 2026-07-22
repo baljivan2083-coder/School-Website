@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>श्री बाल जीवन ज्योति माध्यमिक विद्यालय - मनहरी-१, मकवानपुर</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght=300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Mukta', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(30, 64, 175, 0.75), rgba(15, 23, 42, 0.8)), url('poshan.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            animation: bgZoom 20s infinite alternate ease-in-out;
+        }
+        @keyframes bgZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+        .search-highlight {
+            background-color: #fef08a;
+            color: #000;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        #page-viewer {
+            width: 100%;
+            height: calc(100vh - 150px);
+            border: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- स्कुलको गीत फाइल -->
+ <audio id="school-song" src="school_song.mp3.mp3" loop></audio>
+
+
+    <!-- गुड्ने/फ्लोटिङ म्युजिक कन्ट्रोल बटन -->
+    <div class="fixed bottom-6 right-6 z-[9999]">
+        <button id="music-toggle-btn" onclick="toggleMusic()" class="bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all transform hover:scale-110 focus:outline-none border-2 border-white animate-bounce">
+            <i id="music-icon" class="fas fa-volume-up text-xl"></i>
+        </button>
+    </div>
+
+    <div class="bg-blue-900 text-white text-sm py-2 px-4 hidden md:block">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex space-x-6">
+                <span><i class="fas fa-map-marker-alt mr-2 text-yellow-400"></i>मकरी, मनहरी-१, मकवानपुर</span>
+                <span><i class="fas fa-phone mr-2 text-yellow-400"></i>९८४५६८७८३५</span>
+                <span><i class="fas fa-envelope mr-2 text-yellow-400"></i>baljivanjyotimabi@gmail.com</span>
+            </div>
+            <div class="flex items-center space-x-4 border-l border-blue-700 pl-4">
+                <div class="relative flex items-center mr-2">
+                    <input type="text" id="site-search" placeholder="यहाँ खोज्नुहोस्..." class="bg-blue-950 border border-blue-700 text-white placeholder-gray-400 rounded-full px-4 py-1.5 text-xs focus:outline-none focus:border-yellow-400 pr-10 w-56 lg:w-64 transition-all shadow-inner">
+                    <button onclick="performSearch()" class="absolute right-3 top-2.5 text-gray-400 hover:text-yellow-400">
+                        <i class="fas fa-search text-xs"></i>
+                    </button>
+                </div>
+                <span class="text-gray-200"><i class="far fa-calendar-alt text-yellow-400 mr-1.5"></i><span id="nepali-date">लोड हुँदैछ...</span></span>
+                <span class="text-gray-200"><i class="far fa-clock text-yellow-400 mr-1.5"></i><span id="nepali-time">००:००:००</span></span>
+                <div class="flex space-x-3 border-l border-blue-700 pl-4">
+                    <a href="#" class="hover:text-yellow-400 text-lg"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-yellow-400 text-lg"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="hover:text-yellow-400 text-lg"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+            
+            <div class="flex flex-wrap items-center justify-between md:justify-start gap-4 flex-grow">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 text-white p-3 rounded-full text-2xl font-bold shadow-md shrink-0">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-bold text-blue-900 leading-tight">श्री बाल जीवन ज्योति माध्यमिक विद्यालय</h1>
+                        <p class="text-xs md:text-sm text-gray-600 font-semibold">मनहरी गाउँपालिका-१,मकरी,मकवानपुर</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4 md:hidden absolute right-4 top-5">
+                <button id="mobile-search-btn" class="text-blue-900 text-xl focus:outline-none">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button id="menu-btn" class="text-blue-900 focus:outline-none text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <nav class="hidden md:flex space-x-3.5 lg:space-x-5 font-bold text-gray-700 items-center text-sm lg:text-[15px] whitespace-nowrap">
+                <a href="javascript:void(0)" onclick="loadPage('home', null, this)" class="nav-link text-blue-600 hover:text-blue-600 transition">गृहपृष्ठ</a>
+                
+                <div class="relative inline-block text-left">
+                    <button id="about-dropdown-btn" class="nav-link hover:text-blue-600 transition flex items-center focus:outline-none font-bold">
+                        <span>हाम्रो बारेमा</span>
+                        <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+                    <div id="about-dropdown-menu" class="hidden absolute left-0 mt-2 w-72 bg-white rounded-md shadow-lg py-1 border border-gray-100 z-50">
+                        <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#teachers-staff', null, document.getElementById('about-dropdown-btn'))" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"><i class="fas fa-user-tie mr-2 text-blue-500"></i>शिक्षक तथा कर्मचारी विवरण</a>
+                        <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#ex-teachers-staff', null, document.getElementById('about-dropdown-btn'))" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"><i class="fas fa-users-slash mr-2 text-gray-400"></i>पुर्व शिक्षक तथा कर्मचारी विवरण</a>
+                        <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#smc', null, document.getElementById('about-dropdown-btn'))" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"><i class="fas fa-users mr-2 text-emerald-500"></i>विद्यालय व्यवस्थापन समिति (SMC)</a>
+                        <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#pta', null, document.getElementById('about-dropdown-btn'))" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"><i class="fas fa-handshake mr-2 text-amber-500"></i>शिक्षक अभिभावक संघ (PTA)</a>
+                        <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#ex-principals', null, document.getElementById('about-dropdown-btn'))" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"><i class="fas fa-history mr-2 text-purple-500"></i>पूर्व प्रधानाध्यापकहरू (कार्यकाल सहित)</a>
+                        <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#ex-chairmen', null, document.getElementById('about-dropdown-btn'))" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"><i class="fas fa-award mr-2 text-blue-600"></i>पूर्व अध्यक्षहरू (कार्यकाल सहितको इतिहास)</a>
+                    </div>
+                </div>
+
+                <a href="javascript:void(0)" onclick="loadPage('saikshik samagri.html', null, this)" class="nav-link hover:text-blue-600 transition">शैक्षिक सामग्री</a>
+                <a href="javascript:void(0)" onclick="loadPage('sahitya.html', null, this)" class="nav-link hover:text-blue-600 transition">साहित्य</a>
+                <a href="javascript:void(0)" onclick="loadPage('elearning.html', null, this)" class="nav-link hover:text-blue-600 transition"> ई-लर्निङ</a>
+                <a href="javascript:void(0)" onclick="loadPage('result.html', null, this)" class="nav-link hover:text-blue-600 transition"> नतिजा</a>
+                <a href="javascript:void(0)" onclick="loadPage('aatirakta kriyakalap.html', null, this)" class="nav-link hover:text-blue-600 transition">अतिरिक्त कृयाकलाप</a>
+                <a href="javascript:void(0)" onclick="loadPage('home', 'notices', this)" class="nav-link hover:text-blue-600 transition">सूचना </a>
+                <a href="javascript:void(0)" onclick="loadPage('home', 'contact', this)" class="nav-link hover:text-blue-600 transition">सम्पर्क</a>
+            </nav>
+        </div>
+
+        <div id="mobile-search-box" class="hidden px-4 pb-3 pt-1 border-t border-gray-100 md:hidden bg-white">
+            <div class="relative">
+                <input type="text" id="mobile-site-search" placeholder="यहाँ खोज्नुहोस्..." class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-600 pr-10">
+                <button onclick="performMobileSearch()" class="absolute right-3 top-3 text-gray-400">
+                    <i class="fas fa-search text-sm"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-blue-50 border-t border-gray-200 px-4 py-4 space-y-3">
+            <a href="javascript:void(0)" onclick="loadPage('home', null, this)" class="mobile-nav-link block font-semibold text-blue-600">गृहपृष्ठ</a>
+            
+            <div class="space-y-1">
+                <button id="mobile-about-btn" class="mobile-nav-link w-full flex justify-between items-center font-semibold text-gray-700 hover:text-blue-600 focus:outline-none">
+                    <span>हाम्रो बारेमा</span>
+                    <i id="mobile-about-icon" class="fas fa-chevron-down text-xs transition-transform"></i>
+                </button>
+                <div id="mobile-about-menu" class="hidden pl-4 space-y-2 pt-1 border-l-2 border-blue-300">
+                    <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#teachers-staff', null, document.getElementById('mobile-about-btn'))" class="block text-sm text-gray-600 hover:text-blue-600 py-1">शिक्षक तथा कर्मचारी विवरण</a>
+                    <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#ex-teachers-staff', null, document.getElementById('mobile-about-btn'))" class="block text-sm text-gray-600 hover:text-blue-600 py-1">पुर्व शिक्षक तथा कर्मचारी विवरण</a>
+                    <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#smc', null, document.getElementById('mobile-about-btn'))" class="block text-sm text-gray-600 hover:text-blue-600 py-1">विद्यालय व्यवस्थापन समिति (SMC)</a>
+                    <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#pta', null, document.getElementById('mobile-about-btn'))" class="block text-sm text-gray-600 hover:text-blue-600 py-1">शिक्षक अभिभावक संघ (PTA)</a>
+                    <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#ex-principals', null, document.getElementById('mobile-about-btn'))" class="block text-sm text-gray-600 hover:text-blue-600 py-1">पूर्व प्रधानाध्यापकहरू (कार्यकाल सहित)</a>
+                    <a href="javascript:void(0)" onclick="loadPage('hamro barema.html#ex-chairmen', null, document.getElementById('mobile-about-btn'))" class="block text-sm text-gray-600 hover:text-blue-600 py-1">पूर्व अध्यक्षहरू (कार्यकाल सहित)</a>
+                </div>
+            </div>
+
+            <a href="javascript:void(0)" onclick="loadPage('home', 'academic', this)" class="mobile-nav-link block font-semibold text-gray-700 hover:text-blue-600">शैक्षिक कार्यक्रम</a>
+            <a href="javascript:void(0)" onclick="loadPage('saikshik samagri.html', null, this)" class="mobile-nav-link block font-semibold text-gray-700 hover:text-blue-600">डिजिटल शैक्षिक सामग्री डाउनलोड केन्द्र</a>
+            <a href="javascript:void(0)" onclick="loadPage('aatirakta kriyakalap.html', null, this)" class="mobile-nav-link block font-semibold text-gray-700 hover:text-blue-600">अतिरिक्त कृयाकलाप</a>
+            <a href="javascript:void(0)" onclick="loadPage('home', 'facilities', this)" class="mobile-nav-link block font-semibold text-gray-700 hover:text-blue-600">सुविधाहरू</a>
+            <a href="javascript:void(0)" onclick="loadPage('home', 'notices', this)" class="mobile-nav-link block font-semibold text-gray-700 hover:text-blue-600">सूचना तथा समाचार</a>
+            <a href="javascript:void(0)" onclick="loadPage('home', 'contact', this)" class="mobile-nav-link block font-semibold text-gray-700 hover:text-blue-600">सम्पर्क</a>
+        </div>
+    </header>
+
+    <iframe id="page-viewer" class="hidden"></iframe>
+
+    <div id="home-view">
+        <section id="home" class="hero-container text-white py-24 md:py-36 px-4 text-center">
+            <div class="hero-bg"></div>
+            <div class="max-w-3xl mx-auto relative z-10">
+                <span class="bg-yellow-500 text-blue-950 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wide">ज्ञान नै शक्ति हो</span>
+                <h2 class="text-3xl md:text-5xl font-bold mt-4 mb-3 flex flex-col space-y-6">
+                  <span>गुणस्तरीय शिक्षा, अनुशासित विद्यार्थी,</span>
+                  <span>उज्ज्वल भविष्य</span>
+                </h2>      
+                <p class="text-md md:text-xl text-gray-200 mb-8 font-light">हामी विद्यार्थीहरूको बौद्धिक, मानसिक र शारीरिक विकासका लागि प्रतिबद्ध छौँ।</p>
+            </div>
+        </section>
+
+        <div class="bg-yellow-400 text-blue-950 font-bold py-3 shadow-md relative z-10">
+            <div class="container mx-auto px-4 flex items-center">
+                <span class="bg-red-600 text-white px-3 py-1 rounded text-sm mr-4 shrink-0 animate-pulse"><i class="fas fa-bullhorn mr-1"></i> जरुरी सूचना:</span>
+                <marquee class="text-md cursor-pointer" scrollamount="5">शैक्षिक सत्र २०८३ को लागि कक्षा नर्सरी देखि कक्षा ११ सम्म नयाँ भर्ना खुल्यो! सिट सीमित भएकोले आजै आफ्नो स्थान सुरक्षित गर्नुहोला।</marquee>
+            </div>
+        </div>
+
+        <section id="about" class="container mx-auto px-4 pt-0 pb-16">
+            <div class="grid md:grid-cols-2 gap-12 items-start mt-2">
+                <div>
+                    <span class="text-blue-600 font-bold uppercase tracking-wider">विद्यालय परिचय</span>
+                   <h2 class="text-3xl font-bold text-blue-900 mt-2 mb-4">श्री बाल जीवन ज्योति माध्यमिक विद्यालय</h2>
+
+<!-- मुख्य विवरण पाठ -->
+<p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg first-letter:text-3xl first-letter:font-bold first-letter:text-blue-600">
+    समाज विकासको क्रममा शिक्षा मानिसको लागि अभिन्न अंग रहेकोले सबै जातजाति, पिछडिएको जनजाति, दलित, सिमान्तकृत चेपाङ सम्म शिक्षाको पहुँच पुर्याउने उद्देश्य अनुरुप वि.सं. २०१९ सालमा यहाँका स्थानिय बुद्धिजिवि, समाजसेवी तथा शिक्षा प्रेमीहरूको सक्रियतामा बागमती प्रदेश (साविक नारायणी अंचल) मकवानपुर जिल्लाको सदरमुकाम हेटौंडाबाट पश्चिम तथा पर्सा वन्य जन्तु आरक्षको क्षेत्र भित्र पर्ने राप्ती नदी सँगको सिमानामा जोडिएको मनहरी गाउँपालिका वडा नं. १ (साविक हाँडीखोला गा.वि.स. वडा नं. २) मकरीमा स्थानीय समुदायका व्यक्तिहरूले छाप्रो बनाई वि.सं. २०१९ साल देखि नै राम मन्दिर बगैंचा मन्दिरको जग्गा परिसर भित्र पठन पाठन सुचारु गर्न कोदो, मकै जस्ता अन्न मुठी दान अर्थात् चन्दा स्वरुप संकलन गरी व्यय भारको सङ्कट टार्दै कक्षा सञ्चालन गरेको पाइन्छ।
+</p>
+
+<!-- पृष्ठभूमि र इतिहास -->
+<p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg">
+    मनहरी-१, चकरी (साविक हाँडीखोला-१) निवासी शिक्षा प्रेमी स्व. श्री लक्ष्मण प्रसाद कँडेल ज्यूको सक्रिय सहभागिताबाट वि.सं. २०१९ सालमा प्रा.वी.को जन्म भयो र यस विद्यालयलाई अनौपचारिक रुपमा संचालन गर्न गराउन शिक्षा प्रेमी स्व. श्री लक्ष्मण प्रसाद कँडेल र स्व. पहलराज कप्रौला ज्यूबाट स्वीकृत प्राप्त गर्न गराई पठन पाठन संचालन गरियो। हाल यस विद्यालय रहेको जग्गा मिति वि.सं. २०१० साल चैत्र रामनवमीको दिन श्री राम बगैंचा मन्दिरको नाममा तपसिल व्यक्तित्वहरूले जग्गा दान गर्नुभएको थियो।
+</p> <!-- 'See More' बटन (रातो रङमा) -->
+<div class="mb-6">
+    <button id="toggleBtn" onclick="toggleContent()" class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded transition duration-200">
+        See More)
+    </button>
+</div>
+
+<!-- लुकेको सामग्री (Hidden Content) -->
+<div id="moreContent" class="hidden">
+    <!-- १.२ भौगोलिक अवस्था -->
+    <p class="text-gray-700 mb-2 font-bold text-base md:text-lg">भौगोलिक अवस्था</p>
+    <p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg">
+        सदरमुकाम हेटौंडा देखि १६ कि.मि. पश्चिम श्री निर्मल मा.वि. बस्तिपुर देखि ६ कि.मि. दक्षिण तर्फ रहेको यस श्री बाल जीवन ज्योति मा.वि. को पूर्वमा चकरी खोला पश्चिम च्यापल खोला उत्तर राप्ती नदी दक्षिण गोगनपानीले घेरेको यस विद्यालयको चारैतिर गाँउहरु छन् ।
+    </p>
+
+    <!-- १.३ विद्यालयमा रहेको समुदायको बनोट -->
+    <p class="text-gray-700 mb-2 font-bold text-base md:text-lg">विद्यालयमा रहेको समुदायको बनोट</p>
+    <p class="text-gray-700 mb-4 leading-relaxed text-justify text-base md:text-lg">
+        यस सेवा क्षेत्रभित्र बसोबास गर्ने तामाङ्ग, चेपाङ, क्षेत्री, व्राह्मण, कामी, दमई जाती नै मुख्य बासिन्दाका रुपमा रहेकाहरु परम्परागत सोच र चिन्तन रितिरिवाज तथा धर्म, संस्कृतिको कारणले गर्दा अपवाद बाहेक धेरै बालबालिकाहरु बाधिन पुग्छन् । जसको कारणले गर्दा सानै उमेरमा पारिवारिक जिम्मेवारी बहन गर्नुपर्ने हुन्छ साथै धुम्रपान तथा मद्यपान जस्ता कुलतको सेवनमा यस क्षेत्रका अधिकांस मानिसहरु लागेको पाइन्छ तर हाल केहि यूवाहरु रोजगारीको खोजीमा विदेशतिर गएको पाइन्छ ।
+    </p>
+    <p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg">
+        यस सेवा क्षेत्र भित्र बसोबास गर्ने केही परिवारहरुको आर्थिक अवस्था ज्यादै नाजुक र दयनिय रहेको छ आर्थिक अवस्था कमजोर हुनुको पछाडी धर्म, संस्कृति तथा रितीरिवाज, रुढीवादी परम्परा नै कारक तत्वको रुपमा रहेकोछ । यसका साथै यहाँका भूमिमा सिचाईको अभाव रहेको कारण आकासे खेतीपाती कृषि कार्य भएकोले पनि आर्थिक अवस्था केहि मात्रामा राम्रो भए तापनि तामाङ्ग, चेपाङ, कामी, दमईहरुले धेरै दुःख गरेर विहान वेलूकी छाक टार्न सक्दछन् । किनभने उनिहरु मध्येबाट ८५% ले आफ्ना बाल बालिकालाई मा.वि र उच्च मा.वि. शिक्षा पुरा गर्ने गराउने भएको हुनाले पनि उनीहरुको आय आर्जन हुने खालको थप क्रियाकलापमा लागि परेका छन् । यूवाहरु केहि मात्रामा रोजगारको लागि विदेशिएका पनि छन्।
+    </p>
+
+    <!-- १.४ विद्यालय सेवा क्षेत्र -->
+    <p class="text-gray-700 mb-2 font-bold text-base md:text-lg">विद्यालय सेवा क्षेत्र</p>
+    <ul class="list-disc list-inside text-gray-700 mb-6 leading-relaxed text-base md:text-lg pl-2">
+        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, मकरी, स्कुल चोक</li>
+        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, तल्लो मकरी</li>
+        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, चकरी</li>
+        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, घैयाडाडा</li>
+        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, पर्ता</li>
+        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, गोगनपानी</li>
+        <li class="mb-1">मनहरी गाउँपालिका वडा नं. २, च्यापल</li>
+        <li class="mb-1">मनहरी गाउँपालिका वडा नं. ३, सिद्दकाली</li>
+    </ul>
+
+    <!-- १.५ विद्यालयमा सञ्चालित कार्यक्रम -->
+    <p class="text-gray-700 mb-2 font-bold text-base md:text-lg">विद्यालयमा सञ्चालित कार्यक्रम</p>
+    <p class="text-gray-700 mb-4 leading-relaxed text-justify text-base md:text-lg">
+        मनहरी गाउँपालिका वडा नं. १ स्थित बि.स. २०१९ सालमा स्थापना भएको यस श्री बाल जीवन ज्योति माध्यमिक विद्यालयले बि.स. २०५५ सालमा माध्यमिक तहको अनुमति लिई मिति २०५६ सालमा एस.इल.सि. परीक्षामा समावेश भयो र बि.स. २०७९ सालमा कक्षा ११ को अनुमति प्राप्त गरी बि.स. २०८० सालमा पुःन कक्षा १२ को अनुमति प्राप्त गरी राष्ट्रिय परीक्षा बोर्डले लिएको कक्षा १२ को परीक्षामा समावेश हुन सफल भएको छ ।
+    </p>
+    <p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg">
+        हाल कक्षा वालविकास देखि कक्षा १२ सञ्चालन भइरहेको छ भने कक्षा ११, १२ मा वााणिज्य, मानविकी र शिक्षा संकायमा कक्षाहरु सञ्चालन भइरहेको छ । साथै यसै शैक्षिक सत्र देखि नै कक्षा वालविकास देखि कक्षा ३ सम्म अंग्रेजी माध्यममा पठनपाठन शुरु गरिएको छ ।
+    </p>
+
+    <!-- विद्यालय सेवा क्षेत्रको रैथाने ज्ञान, सिप, शैली -->
+    <p class="text-gray-700 mb-2 font-bold text-base md:text-lg">विद्यालय सेवा क्षेत्रको रैथाने ज्ञान, सिप, शैली</p>
+    <p class="text-gray-700 mb-4 leading-relaxed text-justify text-base md:text-lg">
+        यस विद्यालयमा अध्ययन गर्ने बालबालिकाहरु आउने समुदाय विशेष गरी कृषिमा आत्मनिर्भर रहेका छन् । यहा सिंचाईको अभावका कारण मौषमे बाली हुने गर्दछ । अधिकांश समुदायमा गाई बस्तु, कुखुरा, बाख्रा, सुङ्गुर इत्यादी पालन गरिन्छ ।
+    </p>
+    <p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg">
+        केहि समुदायमा भने परम्परागत सिपहरु जस्तै बाँसबाट डोको, नाङ्ग्लो, डालो बुन्ने, नाम्लो तथा डोरी बुन्ने, हसिया कुटो कोदालो बनाउने कार्य गरिन्छ भने केहि समुदायमा गलैँचा बुन्ने काम समेत गरिन्छ । थोरै मात्रामा सरकारी क्षेत्र जस्तै शिक्षक, निजामती कर्मचारी क्षेत्रमा संलग्नता हुनुहुन्छ भने अधिकांश युवाहरु विदेश पलायन हुनुभएको छ ।
+    </p>
+    
+    <!-- दाताहरूको जानकारीहरू पनि यसै भित्र समावेश गरियो -->
+    <!-- (यहाँ तपाईंले राख्नुभएको दाताहरूको सूचीको कोड पनि राख्न सकिन्छ) -->
+</div>
+
+<script>
+function toggleContent() {
+    var content = document.getElementById("moreContent");
+    var btn = document.getElementById("toggleBtn");
+    
+    if (content.classList.contains("hidden")) {
+        content.classList.remove("hidden");
+        btn.innerHTML = "कम हेर्नुहोस् (See Less)";
+    } else {
+        content.classList.add("hidden");
+        btn.innerHTML = "थप हेर्नुहोस् (See More)";
+    }
+}
+</script>
+
+                    <div class="grid grid-cols-3 gap-4 border-t pt-6 text-center">
+                        <div>
+                            <h4 class="text-2xl font-bold text-blue-600">५००+</h4>
+                            <p class="text-sm text-gray-500">विद्यार्थीहरू</p>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-blue-600">२०+</h4>
+                            <p class="text-sm text-gray-500">दक्ष शिक्षकहरू</p>
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold text-blue-600">%</h4>
+                            <p class="text-sm text-gray-500">उत्कृष्ट नतिजा</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="bg-blue-50 p-6 rounded-2xl border-l-8 border-blue-600 shadow-sm">
+                        <div class="flex items-center space-x-4 mb-3">
+                            <div class="overflow-hidden rounded-full w-16 h-16 border-2 border-blue-600 shrink-0">
+                                <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-110 cursor-pointer" src="एकराज गौतम.jpg" alt="प्रधानाध्यापक" onclick="openImageModal(this.src)">
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-blue-900">प्रधानाध्यापकको सन्देश</h3>
+                                <p class="text-xs text-gray-500">-एकराज गौतम</p>
+                            </div>
+                        </div>
+                        <blockquote class="text-gray-700 italic text-sm leading-relaxed text-justify">
+                            "आदरणीय अभिभावक तथा प्यारा विद्यार्थी भाइबहिनीहरू, DIGITAL युगको माग अनुसार हामीले विद्यालयको शैक्षिक गुणस्तरलाई परिमार्जन गर्दै प्रविधिमैत्री शिक्षामा जोड दिएका छौँ। हामी केवल किताबी ज्ञान मात्र नभई संस्कारयुक्त शिक्षा प्रदान गर्न कटिबद्ध छौँ।"
+                        </blockquote>
+                    </div>
+
+                    <div class="bg-blue-50 p-6 rounded-2xl border-l-8 border-purple-600 shadow-sm">
+                        <div class="flex items-center space-x-4 mb-3">
+                            <div class="overflow-hidden rounded-full w-16 h-16 border-2 border-purple-600 shrink-0">
+                                <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-110 cursor-pointer" src="बद्रि प्रसाद उप्रेती.jpg" alt="विद्यालय व्यवस्थापन समिति अध्यक्ष" onclick="openImageModal(this.src)">
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-purple-900">अध्यक्षको सन्देश</h3>
+                                <p class="text-xs text-gray-500">-बद्रि प्रसाद उप्रेती(SMC)</p>
+                            </div>
+                        </div>
+                        <blockquote class="text-gray-700 italic text-sm leading-relaxed text-justify">
+                            "शिक्षा विकासको मुख्य मेरुदण्ड हो। विद्यालय व्यवस्थापन समितिको तर्फबाट हामी भौतिक पूर्वाधार सुधार, चुस्त प्रशासन र गुणस्तरीय सिकाई वातावरण सुनिश्चित गर्न निरन्तर क्रियाशील छौँ। विद्यालयको चौतर्फी प्रगतिका लागि यहाँहरूको रचनात्मक सुझाव तथा सहयोग सधैं स्वागतयोग्य रहनेछ।"
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="imageModal" class="fixed inset-0 bg-black/80 hidden z-[9999] flex items-center justify-center p-4" onclick="closeImageModal()">
+            <button class="absolute top-4 right-4 text-white text-3xl hover:text-gray-300 focus:outline-none">&times;</button>
+            <div class="max-w-full max-h-[90vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+                <img id="modalImg" class="max-w-full max-h-[75vh] object-contain rounded shadow-2xl" src="" alt="Full Size Visual">
+                <div id="modalDetails" class="mt-4 text-center bg-white/90 text-gray-900 px-6 py-3 rounded-lg max-w-md hidden shadow-lg">
+                    <p id="modalName" class="font-bold text-lg text-blue-900"></p>
+                    <p id="modalRole" class="text-sm text-gray-700"></p>
+                    <p id="modalContact" class="text-xs text-gray-600 mt-1"></p>
+                </div>
+            </div>
+        </div>
+
+        <section class="bg-gray-100 py-12">
+            <div class="container mx-auto px-4 grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                    <i class="fas fa-eye text-3xl text-blue-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-blue-900 mb-2">हाम्रो परिकल्पना (Vision)</h3>
+                    <p class="text-gray-600 text-sm">सबैका लागि समतामूलक, प्रतिस्पर्धी र जीवनोपयोगी शिक्षा प्रदान गर्ने केन्द्र बन्ने।</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                    <i class="fas fa-bullseye text-3xl text-blue-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-blue-900 mb-2">हाम्रो लक्ष्य (Mission)</h3>
+                    <p class="text-gray-600 text-sm">आधुनिक प्रविधिको प्रयोग र दक्ष जनशक्तिद्वारा शैक्षिक स्तरलाई उच्च बनाउने।</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                    <i class="fas fa-star text-3xl text-blue-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-blue-900 mb-2">मुख्य उद्देश्य (Objectives)</h3>
+                    <p class="text-gray-600 text-sm">विद्यार्थीको चौतर्फी विकासका साथै उनीहरूलाई चरित्रवान नागरिक बनाउने।</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="academic" class="container mx-auto px-4 py-16">
+            <div class="text-center max-w-xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-2">शैक्षिक कार्यक्रमहरू</h2>
+                <p class="text-gray-500">हाम्रो विद्यालयमा प्रारम्भिक बाल विकासदेखि माध्यमिक तहसम्म पढाइ हुन्छ।</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="bg-blue-600 text-white p-4 text-center font-bold text-lg">प्रारम्भिक बाल विकास (ECD)</div>
+                    <div class="p-6 text-gray-600 text-sm space-y-2">
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>खेलकुद विधिबाट अध्यापन</p>
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>रमाइलो र सुरक्षित वातावरण</p>
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>विशेष हेरचाह र बालमैत्री कक्षा</p>
+                    </div>
+                </div>
+                <div class="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="bg-blue-700 text-white p-4 text-center font-bold text-lg">आधारभूत तह (कक्षा १–८)</div>
+                    <div class="p-6 text-gray-600 text-sm space-y-2">
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>राष्ट्रिय पाठ्यक्रममा आधारित</p>
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>अंग्रेजी तथा नेपाली माध्यम</p>
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>कम्प्युटर शिक्षाको सुरुवात</p>
+                    </div>
+                </div>
+                <div class="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="bg-blue-800 text-white p-4 text-center font-bold text-lg">माध्यमिक तह (कक्षा ९–१०)</div>
+                    <div class="p-6 text-gray-600 text-sm space-y-2">
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>SEE परीक्षा केन्द्रित तयारी</p>
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>नियमित प्रयोगात्मक कक्षाहरू</p>
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>विशेष परामर्श तथा ट्युसन</p>
+                    </div>
+                </div>
+                <div class="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                    <div class="bg-blue-900 text-white p-4 text-center font-bold text-lg">कक्षा ११–१२</div>
+                    <div class="p-6 text-gray-600 text-sm space-y-2">
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>व्यवस्थापन (Management)</p>
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>शिक्षा शास्त्र (Education)</p>
+                        <p><i class="fas fa-check text-green-500 mr-2"></i>नयाँ पाठ्यक्रम अनुसार कक्षाहरू</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="facilities" class="bg-gray-100 py-16">
+            <div class="container mx-auto px-4">
+                <div class="text-center max-w-xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold text-blue-900 mb-2">भौतिक तथा शैक्षिक सुविधाहरू</h2>
+                    <p class="text-gray-500">विद्यार्थीहरूको उत्कृष्ट सिकाइका लागि उपलब्ध सुविधाहरू।</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm flex items-start space-x-4">
+                        <div class="text-blue-600 text-3xl"><i class="fas fa-book-reader"></i></div>
+                        <div>
+                            <h3 class="font-bold text-lg text-blue-900 mb-1">सुविधायुक्त पुस्तकालय</h3>
+                            <p class="text-gray-600 text-sm">पाठ्यपुस्तकका अतिरिक्त ज्ञानवर्धक र साहित्यिक पुस्तकहरूको व्यवस्था।</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm flex items-start space-x-4">
+                        <div class="text-blue-600 text-3xl"><i class="fas fa-flask"></i></div>
+                        <div>
+                            <h3 class="font-bold text-lg text-blue-900 mb-1">विज्ञान प्रयोगशाला</h3>
+                            <p class="text-gray-600 text-sm">भौतिक, रसायन र जीव विज्ञानका लागि छुट्टाछुट्टै आधुनिक प्रयोगात्मक सामग्री।</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm flex items-start space-x-4">
+                        <div class="text-blue-600 text-3xl"><i class="fas fa-laptop"></i></div>
+                        <div>
+                            <h3 class="font-bold text-lg text-blue-900 mb-1">कम्प्युटर ल्याब</h3>
+                            <p class="text-gray-600 text-sm">इन्टरनेट सुविधा सहितको आधुनिक कम्प्युटर ल्याब र DIGITAL सिकाई।</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm flex items-start space-x-4">
+                        <div class="text-blue-600 text-3xl"><i class="fas fa-running"></i></div>
+                        <div>
+                            <h3 class="font-bold text-lg text-blue-900 mb-1">खेलकुद तथा खेलमैदान</h3>
+                            <p class="text-gray-600 text-sm">भलिबल, फुटबल र अन्य अतिरिक्त क्रियाकलापका लागि ठूलो खेलमैदान।</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm flex items-start space-x-4">
+                        <div class="text-blue-600 text-3xl"><i class="fas fa-tint"></i></div>
+                        <div>
+                            <h3 class="font-bold text-lg text-blue-900 mb-1">स्वच्छ खानेपानी</h3>
+                            <p class="text-gray-600 text-sm">विद्यार्थी तथा शिक्षकहरूका लागि युरोगार्ड सहितको शुद्ध र स्वच्छ पिउने पानी।</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm flex items-start space-x-4">
+                        <div class="text-blue-600 text-3xl"><i class="fas fa-restroom"></i></div>
+                        <div>
+                            <h3 class="font-bold text-lg text-blue-900 mb-1">सरसफाइ तथा शौचालय</h3>
+                            <p class="text-gray-600 text-sm">छात्र र छात्राका लागि छुट्टाछुत्तै अपाङ्गमैत्री र वातावरणमैत्री शौचालयको व्यवस्था।</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="notices" class="container mx-auto px-4 py-16 scroll-mt-20">
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-2xl font-bold text-blue-900 mb-6 border-b-2 border-blue-600 pb-2"><i class="fas fa-bullhorn text-red-500 mr-2"></i>नवीनतम सूचनाहरू</h2>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600">
+                            <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> २०८३ असार १५</span>
+                            <a href="#" class="font-bold text-gray-800 hover:text-blue-600 block mt-1">प्रथम त्रैमासिक परीक्षा तालिका प्रकाशन सम्बन्धी सूचना</a>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600">
+                            <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> २०८३ जेठ २५</span>
+                            <a href="#" class="font-bold text-gray-800 hover:text-blue-600 block mt-1">छात्रवृत्ति आवेदन फारम भर्ने बारे अत्यन्त जरुरी सूचना</a>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600">
+                            <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> २०८३ जेठ १०</span>
+                            <a href="#" class="font-bold text-gray-800 hover:text-blue-600 block mt-1">अभिभावक भेला तथा शैक्षिक अन्तर्क्रिया कार्यक्रम</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="ai-ict-section">
+                    <h2 class="text-2xl font-bold text-blue-900 mb-6 border-b-2 border-purple-600 pb-2"><i class="fas fa-laptop-code text-purple-600 mr-2"></i>AI र ICT शिक्षा प्रवर्द्धन</h2>
+                    <div class="bg-white p-6 rounded-xl border shadow-sm">
+                        <p class="text-gray-600 text-sm mb-4">आधुनिक डिजिटल युगको गतिसँगै विद्यालयले विद्यार्थीहरूमा प्रविधि र कृत्रिम बुद्धिमत्ता (AI) सम्बन्धी ज्ञान विकासमा जोड दिइने छ।</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start p-3 bg-blue-50/50 rounded-lg border border-blue-100">
+                                <div class="text-blue-600 text-xl mt-1 mr-3"><i class="fas fa-brain"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-blue-900 text-sm">AI तथा स्मार्ट सिकाई (Smart Learning)</h4>
+                                    <p class="text-xs text-gray-600 mt-0.5">शिक्षण सिकाइ प्रक्रियामा AI टुलहरूको सही प्रयोग र डिजिटल एनिमेसन मार्फत कठिन विषयहरूलाई सहज बनाउने प्रयास।</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start p-3 bg-purple-50/50 rounded-lg border border-purple-100">
+                                <div class="text-purple-600 text-xl mt-1 mr-3"><i class="fas fa-code"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-purple-900 text-sm">आधारभूत कोडिङ र कम्प्युटर साक्षरता</h4>
+                                    <p class="text-xs text-gray-600 mt-0.5">विद्यार्थीहरूलाई प्रविधिको केवल प्रयोगकर्ता मात्र नबनाई सिर्जनशील बनाउन आधारभूत प्रोग्रामिङ र तार्किक क्षमता अभिवृद्धि कक्षाहरू संचालन गर्ने सोच बनाइएको छ ।</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start p-3 bg-emerald-50/50 rounded-lg border border-emerald-100">
+                                <div class="text-emerald-600 text-xl mt-1 mr-3"><i class="fas fa-network-wired"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-emerald-900 text-sm">साइवर सुरक्षा(Cyber Security)</h4>
+                                    <p class="text-xs text-gray-600 mt-0.5">इन्टरनेट र सामाजिक सञ्जालको सुरक्षित, मर्यादित र सिर्जनशील प्रयोगका बारेमा नियमित सचेतना कार्यक्रम।</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 py-16 border-t">
+            <div class="text-center max-w-xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-2">हाम्रो फोटो ग्यालरी</h2>
+                <p class="text-gray-500"> विद्यालयका केही झलक तथा अतिरिक्त क्रियाकलापहरू।</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="overflow-hidden rounded-xl shadow-md border group">
+                    <img class="w-full h-64 object-cover group-hover:scale-105 transition duration-300 cursor-pointer" src="11.jpg" alt="पोषण प्रदर्शनी १" onclick="openImageModal(this.src)">
+                </div>
+                <div class="overflow-hidden rounded-xl shadow-md border group">
+                    <img class="w-full h-64 object-cover group-hover:scale-105 transition duration-300 cursor-pointer" src="22.jpg" alt="पोषण प्रदर्शनी २" onclick="openImageModal(this.src)">
+                </div>
+                <div class="overflow-hidden rounded-xl shadow-md border group">
+                    <img class="w-full h-64 object-cover group-hover:scale-105 transition duration-300 cursor-pointer" src="sunill.jpg" alt="पोषण प्रदर्शनी ३" onclick="openImageModal(this.src)">
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="bg-gray-100 py-16 border-t">
+            <div class="container mx-auto px-4 max-w-5xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-blue-900">हामीलाई सम्पर्क गर्नुहोस्</h2>
+                    <p class="text-gray-500 mt-2">थप जानकारी वा सोधपुछका लागि विद्यालयको कार्यालयमा सम्पर्क गर्न सक्नुहुन्छ।</p>
+                </div>
+                
+                <div class="grid md:grid-cols-5 gap-8 items-stretch">
+                    <div class="md:col-span-2 space-y-5 flex flex-col justify-between">
+                        <div class="bg-white p-4 rounded-xl flex items-center space-x-4 shadow-sm border border-l-4 border-l-blue-600">
+                            <div class="bg-blue-600 text-white p-3 rounded-full shrink-0"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-semibold">ठेगाना</p>
+                                <p class="font-bold text-gray-800 text-sm md:text-base">मकरी, मनहरी-१,  मकवानपुर, नेपाल</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl flex items-center space-x-4 shadow-sm border border-l-4 border-l-blue-600">
+                            <div class="bg-blue-600 text-white p-3 rounded-full shrink-0"><i class="fas fa-phone-alt"></i></div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-semibold">फोन नम्बर</p>
+                                <p class="font-bold text-gray-800 text-sm md:text-base">९८४५६८७८३५, ९८५५०७२९३०</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl flex items-center space-x-4 shadow-sm border border-l-4 border-l-blue-600">
+                            <div class="bg-blue-600 text-white p-3 rounded-full shrink-0"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-semibold">इमेल ठेगाना</p>
+                                <p class="font-bold text-gray-800 text-sm md:text-base">baljivanjyotimabi@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-xl flex justify-between items-center shadow-sm border border-l-4 border-l-yellow-500 gap-4">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-yellow-500 text-blue-950 p-3 rounded-full shrink-0"><i class="fas fa-laptop-code"></i></div>
+                                <div>
+                                    <p class="text-xs text-gray-500 font-semibold">System Design तथा निर्माण</p>
+                                    <p class="font-bold text-gray-800 text-sm md:text-base">सुनिल कुमार अर्याल</p>
+                                    <p class="text-xs text-gray-600 mt-0.5"><i class="fas fa-phone-alt text-gray-400 mr-1"></i>९८५५०७२९३० | <i class="fas fa-envelope text-gray-400 mr-1"></i>aryalsunil026@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="overflow-hidden rounded-full w-14 h-14 border-2 border-yellow-500 shrink-0">
+                                <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-110 cursor-pointer" src="सुनिल कुमार अर्याल.png" alt="सुनिल कुमार अर्याल" onclick="openImageModal(this.src, 'सुनिल कुमार अर्याल', 'System Designer,Coading तथा निर्माणकर्ता (सहायक प्र.अ. श्री बाल जीवन ज्योति माध्यमिक बिधालय ,मनहरी-१ ,मकरी,मकवानपुर )', ' सम्पर्क  नम्बर: ९८५५०७२९३०, ईमेल : aryalsunil026@gmail.com')">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:col-span-3 w-full flex flex-col md:flex-row gap-6">
+                        <!-- Google Map -->
+                        <div class="flex-grow min-h-[260px] bg-gray-300 rounded-xl overflow-hidden relative shadow-sm border">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-600 bg-gray-200 p-4 text-center">
+                                <i class="fas fa-map-marked-alt text-4xl text-blue-600 mb-2"></i>
+                                <p class="font-bold">गूगल म्याप (Google Map)</p>
+                                <p class="text-xs text-gray-500">मकरी, मनहरी गाउँपालिका-१, मकवानपुर क्षेत्र</p>
+                            </div>
+                        </div>
+                        
+                        <!-- सूचना अधिकारी -->
+                        <div class="w-full md:w-64 bg-white p-5 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center">
+                            <h3 class="font-bold text-blue-900 mb-4 border-b pb-2 w-full">सूचना अधिकारी</h3>
+                            <div class="overflow-hidden rounded-full w-24 h-24 border-2 border-blue-600 mb-3">
+                                <img src="DB aryal.jpg" alt="D.B. Aryal" class="w-full h-full object-cover">
+                            </div>
+                            <p class="font-bold text-gray-800">D.B. Aryal</p><br> लेखापाल
+                            <p class="text-sm text-gray-600 mt-2 flex items-center">
+                                <i class="fas fa-phone-alt text-blue-600 mr-2"></i> ९८४५१६२६२२
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-blue-950 text-gray-300 py-12 border-t border-blue-900">
+            <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-3">श्री बाल जीवन ज्योति मा.वि.</h3>
+                    <p class="text-sm text-gray-400 text-justify">हामी गुणस्तरीय शिक्षाको माध्यमबाट विद्यार्थीहरूलाई दक्ष, अनुशासित र देश विकासमा योगदान पुर्याउन सक्ने सक्षम नागरिक बनाउन निरन्तर क्रियाशील छौँ।</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-3">महत्वपूर्ण लिङ्कहरू</h3>
+                    <div class="space-y-2">
+                        <a href="javascript:void(0)" onclick="loadPage('badapatra.html', null, this)" class="block hover:text-white transition">नागरीक वडापत्र</a>
+                        <a href="javascript:void(0)" onclick="loadPage('aacharsanhita.html', null, this)" class="block hover:text-white transition">आचार संहिता</a>
+                        <a href="javascript:void(0)" onclick="loadPage('purbabidharthi.html', null, this)" class="block hover:text-white transition">पूर्व बिधार्थी</a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-3">हाम्रो सामाजिक सञ्जाल</h3>
+                    <p class="text-sm text-gray-400 mb-4">हाम्रा विद्यालयका गतिविधिहरू हेर्नका लागि सामाजिक सञ्जालमा जोडिनुहोस्।</p>
+                    <div class="flex space-x-4 text-xl">
+                        <a href="#" class="hover:text-white bg-blue-900 p-2 rounded-full w-10 h-10 flex items-center justify-center"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="hover:text-white bg-blue-900 p-2 rounded-full w-10 h-10 flex items-center justify-center"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="hover:text-white bg-blue-900 p-2 rounded-full w-10 h-10 flex items-center justify-center"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="container mx-auto px-4 text-center text-xs text-gray-500 border-t border-blue-900 mt-8 pt-6">
+                &copy; २०८३ श्री बाल जीवन ज्योति माध्यमिक विद्यालय। सर्वाधिकार सुरक्षित।
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const audio = document.getElementById('school-song');
+        const musicIcon = document.getElementById('music-icon');
+        const musicBtn = document.getElementById('music-toggle-btn');
+        let hasInteracted = false;
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    musicIcon.className = 'fas fa-volume-up text-xl';
+                    musicBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                    musicBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                }).catch(err => console.log("प्ले गर्न असफल:", err));
+            } else {
+                audio.pause();
+                musicIcon.className = 'fas fa-volume-mute text-xl';
+                musicBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                musicBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+            }
+        }
+
+        // अटो-प्लेको लागि लजिक
+        window.addEventListener('load', () => {
+            const playAttempt = () => {
+                audio.play().then(() => {
+                    musicIcon.className = 'fas fa-volume-up text-xl';
+                    musicBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                    musicBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                    hasInteracted = true;
+                }).catch(error => {
+                    console.log("अटो-प्ले रोकियो, प्रयोगकर्ताको अन्तरक्रिया आवश्यक छ।");
+                });
+            };
+
+            playAttempt();
+
+            // यदि अटो-प्ले भएन भने, पहिलो क्लिकमा प्ले गर्नको लागि
+            document.addEventListener('click', () => {
+                if (!hasInteracted) {
+                    audio.play();
+                    musicIcon.className = 'fas fa-volume-up text-xl';
+                    musicBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                    musicBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                    hasInteracted = true;
+                }
+            }, { once: true });
+        });
+
+        function loadPage(url, sectionId = null, element = null) {
+            const homeView = document.getElementById('home-view');
+            const pageViewer = document.getElementById('page-viewer');
+
+            if (element) {
+                const isMobile = element.classList.contains('mobile-nav-link') || element.closest('#mobile-menu');
+                
+                if (isMobile) {
+                    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                        link.classList.remove('text-blue-600');
+                        link.classList.add('text-gray-700');
+                    });
+                    element.classList.remove('text-gray-700');
+                    element.classList.add('text-blue-600');
+                } else {
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('text-blue-600');
+                        link.classList.add('text-gray-700');
+                    });
+                    element.classList.remove('text-gray-700');
+                    element.classList.add('text-blue-600');
+                }
+            }
+
+            if (url === 'home') {
+                pageViewer.classList.add('hidden');
+                homeView.classList.remove('hidden');
+                pageViewer.src = "";
+                
+                if (sectionId) {
+                    const elementToScroll = document.getElementById(sectionId);
+                    if (elementToScroll) {
+                        elementToScroll.scrollIntoView({ behavior: 'smooth' });
+                    }
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            } else {
+                homeView.classList.add('hidden');
+                pageViewer.classList.remove('hidden');
+                pageViewer.src = url;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function openImageModal(src, name = '', role = '', contact = '') {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalDetails = document.getElementById('modalDetails');
+            
+            modalImg.src = src;
+            
+            if (name) {
+                document.getElementById('modalName').innerText = name;
+                document.getElementById('modalRole').innerText = role;
+                document.getElementById('modalContact').innerText = contact;
+                modalDetails.classList.remove('hidden');
+            } else {
+                modalDetails.classList.add('hidden');
+            }
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+      function updateNepaliDateTime() {
+    // मिति कन्भर्टर लजिक (अंग्रेजी मितिलाई नेपाली मितिमा बदल्ने)
+    const getNepaliDate = (date) => {
+        // नोट: यहाँ हामीले एक सरल लाइब्रेरी वा कन्भर्टरको प्रयोग गर्नुपर्छ।
+        // हालका लागि, 'Nepali Date' लाइब्रेरी नभए पनि हामी आजको मिति (२०८३ असार ३१) 
+        // अनुसार मिल्ने गरी अटो-अपडेट गर्ने छौँ।
+        
+        // यदि तपाईंलाई पूर्ण सही कन्भर्टर चाहिन्छ भने यसलाई प्रयोग गर्नुहोस्:
+        // हालको अंग्रेजी मिति (२०२६-०७-१५) = विक्रम संवत् २०८३-०४-०१ (आजको मिति)
+        const day = "३१"; // आज असार ३१ गते
+        const month = "असार";
+        const year = "२०८३";
+        return `${year} ${month} ${day} गते, ${['आइतबार','सोमबार','मंगलबार','बुधबार','बिहीबार','शुक्रबार','शनिबार'][date.getDay()]}`;
+    };
+
+    const now = new Date();
+    document.getElementById('nepali-date').innerText = getNepaliDate(now);
+
+    // समय नेपाली अङ्कमा
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+    
+    const engNums = ['0','1','2','3','4','5','6','7','8','9'];
+    const nepNums = ['०','१','२','३','४','५','६','७','८','९'];
+    
+    let timeString = `${hours < 10 ? '०'+hours : hours}:${minutes < 10 ? '०'+minutes : minutes}:${seconds < 10 ? '०'+seconds : seconds}`;
+    for(let i=0; i<10; i++) {
+        timeString = timeString.replaceAll(engNums[i], nepNums[i]);
+    }
+    
+    document.getElementById('nepali-date').innerText = "बुधबार, ३१ असार २०८३"; // यहाँ स्थिर मिति राखिएको छ
+    document.getElementById('nepali-time').innerText = timeString;
+}
+
+setInterval(updateNepaliDateTime, 1000);
+updateNepaliDateTime();
+
+        function searchInPage(keyword) {
+            if (!keyword.trim()) return;
+
+            const previousHighlights = document.querySelectorAll('.search-highlight');
+            previousHighlights.forEach(el => {
+                el.replaceWith(document.createTextNode(el.textContent));
+            });
+
+            const walker = document.createTreeWalker(
+                document.getElementById('home-view'),
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: function(node) {
+                        const parent = node.parentNode.tagName.toLowerCase();
+                        if (parent === 'script' || parent === 'style' || parent === 'textarea' || parent === 'input') {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                }
+            );
+
+            let textNode;
+            const matches = [];
+            while (textNode = walker.nextNode()) {
+                if (textNode.nodeValue.toLowerCase().includes(keyword.toLowerCase())) {
+                    matches.push(textNode);
+                }
+            }
+
+            if (matches.length > 0) {
+                loadPage('home', null, document.querySelectorAll('.nav-link')[0]); 
+                setTimeout(() => {
+                    const targetNode = matches[0];
+                    const parentEl = targetNode.parentNode;
+                    
+                    const regex = new RegExp(`(${keyword})`, 'gi');
+                    const newHTML = parentEl.innerHTML.replace(regex, `<span class="search-highlight">$1</span>`);
+                    parentEl.innerHTML = newHTML;
+
+                    const highlightTarget = parentEl.querySelector('.search-highlight');
+                    if (highlightTarget) {
+                        highlightTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 100);
+            } else {
+                alert('खोजिएको विवरण भेटिएन!');
+            }
+        }
+
+        const siteSearchInput = document.getElementById('site-search');
+        siteSearchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            const query = siteSearchInput.value;
+            searchInPage(query);
+        }
+
+        const mobileSearchInput = document.getElementById('mobile-site-search');
+        mobileSearchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performMobileSearch();
+            }
+        });
+
+        function performMobileSearch() {
+            const query = mobileSearchInput.value;
+            searchInPage(query);
+            document.getElementById('mobile-search-box').classList.add('hidden');
+        }
+
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        const mobileSearchBtn = document.getElementById('mobile-search-btn');
+        const mobileSearchBox = document.getElementById('mobile-search-box');
+        mobileSearchBtn.addEventListener('click', () => {
+            mobileSearchBox.classList.toggle('hidden');
+        });
+
+        const aboutDropdownBtn = document.getElementById('about-dropdown-btn');
+        const aboutDropdownMenu = document.getElementById('about-dropdown-menu');
+        aboutDropdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            aboutDropdownMenu.classList.toggle('hidden');
+        });
+
+        const mobileAboutBtn = document.getElementById('mobile-about-btn');
+        const mobileAboutMenu = document.getElementById('mobile-about-menu');
+        const mobileAboutIcon = document.getElementById('mobile-about-icon');
+        mobileAboutBtn.addEventListener('click', () => {
+            mobileAboutMenu.classList.toggle('hidden');
+            mobileAboutIcon.classList.toggle('rotate-180');
+        });
+
+        document.addEventListener('click', () => {
+            if (!aboutDropdownMenu.classList.contains('hidden')) {
+                aboutDropdownMenu.classList.add('hidden');
+            }
+        });
+
+        const subLinks = document.querySelectorAll('#mobile-about-menu a');
+        subLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        const navLinks = mobileMenu.querySelectorAll('a:not(#mobile-about-btn *)');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

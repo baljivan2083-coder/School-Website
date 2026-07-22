@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade-Sheet Search System - Shree Bal Jivan Jyoti Secondary School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+<div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md mb-8 border border-gray-200">
+    <h2 class="text-xl font-bold mb-4 text-blue-800 text-center">पहिलो त्रैमासिक परीक्षा नतिजा खोज्नुहोस् (२०८३)</h2>
+    
+    <div class="space-y-4">
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">कक्षा छनोट गर्नुहोस्:</label>
+            <select id="class-selector" class="w-full p-2.5 border rounded-md bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="">-- कक्षा रोज्नुहोस् --</option>
+                <option value="ECED">ECED</option>
+                <option value="Class1">Class 1</option>
+                <option value="Class2">Class 2</option>
+                <option value="Class3">Class 3</option>
+                <option value="Class4">Class 4</option>
+                <option value="Class5">Class 5</option>
+                <option value="Class6">Class 6</option>
+                <option value="Class7">Class 7</option>
+                <option value="Class8">Class 8</option>
+                <option value="Class9">Class 9</option>
+                <option value="Class10" selected>Class 10</option>
+                <option value="Class11">Class 11</option>
+                <option value="Class12">Class 12</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">सिम्बोल नम्बर राख्नुहोस्:</label>
+            <input type="text" id="symbol-input" placeholder="सिम्बोल नम्बर यहाँ राख्नुहोस् " class="w-full p-2.5 border rounded-md bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none uppercase">
+        </div>
+        
+        <button onclick="searchResult()" class="w-full bg-blue-700 hover:bg-blue-800 text-white py-2.5 rounded-md font-bold transition">
+            नतिजा खोज्नुहोस्
+        </button>
+    </div>
+
+    <div id="error-display" class="mt-4 p-3 bg-red-100 text-red-700 border border-red-200 rounded hidden text-center"></div>
+</div>
+
+<div id="result-display" class="hidden max-w-xl mx-auto">
+    <div class="bg-white p-6 rounded-lg shadow-md border-2 border-blue-800 text-center">
+        <h3 class="text-lg font-bold text-gray-800 uppercase">Shree Bal Jivan Jyoti Secondary School</h3>
+        <p class="text-xs text-gray-600 font-semibold mb-1">Manahari-01, Makari, Makawanpur</p>
+        
+        <p class="text-sm font-bold text-blue-800 mb-2">Class: <span id="disp-class"></span></p>
+        
+        <span id="exam-title" class="inline-block bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide my-1"></span>
+        
+        <hr class="border-gray-300 my-3">
+        
+        <div class="text-left space-y-1 my-4 text-sm font-medium text-gray-700">
+            <p><strong>Name:</strong> <span id="student-name" class="uppercase text-blue-900 font-bold"></span></p>
+            <p><strong>Symbol No:</strong> <span id="disp-symbol"></span></p>
+        </div>
+
+        <hr class="border-gray-300 my-3">
+
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-5 my-4">
+            <p class="text-gray-600 text-sm font-bold tracking-wider uppercase">Grade Point Average (GPA)</p>
+            <h1 id="final-gpa" class="text-5xl font-extrabold text-blue-700 mt-2"></h1>
+        </div>
+
+        <button onclick="window.print()" class="mt-2 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1.5 px-4 rounded transition">
+            प्रिन्ट गर्नुहोस्
+        </button>
+    </div>
+</div>
+
+<script>
+    // सबै कक्षाहरूको लागि डेटाबेस संरचना (Class 10 को डाटा यथावत् राखिएको छ)
+    let schoolDatabase = {
+        "ECED": {},
+        "Class1": {},
+        "Class2": {},
+        "Class3": {},
+        "Class4": {},
+        "Class5": {},
+        "Class6": {},
+        "Class7": {},
+        "Class8": {},
+        "Class9": {},
+         "Class10": {
+        "03302639 O": {
+            "name": "BASANTA PRAJA",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302640 P": {
+            "name": "AADITYA GHALAN",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "3.0625"
+        },
+        "03302641 Q": {
+            "name": "ASMITA BULUN",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302642 R": {
+            "name": "BIBASH PRAJA",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302643 S": {
+            "name": "BIBEK GHALAN",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302644 T": {
+            "name": "BIBEK HATUWAL",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302645 U": {
+            "name": "BIBEK SING JIMBA",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302646 V": {
+            "name": "BIJAYA PRAJA",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302647 W": {
+            "name": "BUDDHIMAN MUKTAN",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302648 X": {
+            "name": "KALASH GHALAN",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302649 Y": {
+            "name": "KANCHAN GHALAN",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302650 Z": {
+            "name": "KARINA THING",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302651 A": {
+            "name": "LAXMI LAMICHHANE",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "3.5335"
+        },
+        "03302652 B": {
+            "name": "MANISA MAINALI",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "2.6499999999999995"
+        },
+        "03302653 C": {
+            "name": "MANITA THING",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302654 D": {
+            "name": "NANITA MUKTAN",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        },
+        "03302655 E": {
+            "name": "NIROJ GOLE",
+            "examName": "First Terminal Examination 2083",
+            "gpa": "-"
+        }
+    },
+        "Class11": {},
+        "Class12": {}
+    };
+
+    // सर्च गर्ने मुख्य फङ्सन
+    function searchResult() {
+        const cls = document.getElementById('class-selector').value;
+        let inputText = document.getElementById('symbol-input').value.trim().toUpperCase();
+        const resDisplay = document.getElementById('result-display');
+        const errDisplay = document.getElementById('error-display');
+
+        resDisplay.classList.add('hidden');
+        errDisplay.classList.add('hidden');
+
+        if (!cls || !inputText) {
+            errDisplay.innerText = "कृपया कक्षा छनोट गर्नुहोस् र सिम्बोल नम्बर भर्नुहोस्।";
+            errDisplay.classList.remove('hidden');
+            return;
+        }
+
+        let foundKey = null;
+        if (schoolDatabase[cls]) {
+            const cleanPattern = /(\d{7,8})\s*([A-Z])/;
+            const match = inputText.match(cleanPattern);
+            
+            if (match) {
+                const formattedInput = match[1] + " " + match[2];
+                if (schoolDatabase[cls][formattedInput]) {
+                    foundKey = formattedInput;
+                }
+            }
+            
+            if (!foundKey) {
+                const standardizedInput = inputText.replace(/\s+/g, '');
+                for (let key in schoolDatabase[cls]) {
+                    const standardizedKey = key.replace(/\s+/g, '');
+                    if (standardizedInput.includes(standardizedKey) || standardizedKey.includes(standardizedInput)) {
+                        foundKey = key;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (foundKey && schoolDatabase[cls][foundKey]) {
+            const student = schoolDatabase[cls][foundKey];
+            
+            document.getElementById('student-name').innerText = student.name;
+            document.getElementById('disp-symbol').innerText = foundKey;
+            
+            // कक्षाको नाम देखाउने ढाँचा मिलाउने
+            let classFormatted = cls;
+            if(cls.startsWith("Class")) {
+                classFormatted = "Class " + cls.replace("Class", "");
+            }
+            document.getElementById('disp-class').innerText = classFormatted;
+            
+            // GPA व्यवस्थापन: यदि "-" छ भने "NG" देखाउने, नम्बर छ भने दशमलव पछाडि २ अंक मात्र देखाउने
+            if (student.gpa === "-") {
+                document.getElementById('final-gpa').innerText = "NG";
+            } else {
+                let parsedGpa = parseFloat(student.gpa);
+                document.getElementById('final-gpa').innerText = isNaN(parsedGpa) ? student.gpa : parsedGpa.toFixed(2);
+            }
+            
+            document.getElementById('exam-title').innerText = student.examName;
+
+            resDisplay.classList.remove('hidden');
+        } else {
+            errDisplay.innerText = "क्षमा गर्नुहोस्, विवरण फेला परेन। कृपया कक्षा र सिम्बोल नम्बर मिल्दो भएको पक्का गर्नुहोस्।";
+            errDisplay.classList.remove('hidden');
+        }
+    }
+</script>
+
+</body>
+</html>

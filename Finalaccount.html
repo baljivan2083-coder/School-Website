@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>अन्तिम हिसाब खाता: सिकाइ मार्गदर्शक</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen p-4">
+
+    <div class="max-w-xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-slate-900">अन्तिम हिसाब खाता सिकाइ मार्गदर्शक</h1>
+            <p class="text-slate-600 text-lg mt-1">तयार गर्ने: सुनिल कुमार अर्याल, बाल जीवन ज्योती माध्यमिक विद्यालय मनहरी -१,मकवानपुर  </p>
+        </header>
+
+        <!-- Result Box -->
+        <div id="result-box" class="sticky top-4 bg-indigo-700 text-white p-6 rounded-2xl shadow-2xl mb-8 min-h-[140px] flex items-center justify-center text-center transition-all border-4 border-white">
+            <p class="text-xl font-medium">कुनै पनि आइटममा क्लिक गर्नुहोस्</p>
+        </div>
+
+        <div class="flex flex-col gap-4 pb-12">
+            <!-- Items -->
+            <button onclick="show('प्रारम्भिक मौज्दात (Opening Stock)', 'व्यापार खाता - डेबिट (Trading - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">प्रारम्भिक मौज्दात (Opening Stock)</button>
+            <button onclick="show('खरिद (Purchases)', 'व्यापार खाता - डेबिट (Trading - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">खरिद (Purchases)</button>
+            <button onclick="show('खरिद फिर्ता (Purchase Return)', 'व्यापार खाता - डेबिट मा खरिद बाट घटाउने')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">खरिद फिर्ता (Purchase Return)</button>
+            <button onclick="show('बिक्री (Sales)', 'व्यापार खाता - क्रेडिट (Trading - Cr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">बिक्री (Sales)</button>
+            <button onclick="show('बिक्री फिर्ता (Sales Return)', 'व्यापार खाता - क्रेडिटमा बिक्रि बाट घटाउने')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">बिक्री फिर्ता (Sales Return)</button>
+            <button onclick="show('ढुवानी खर्च (Carriage Inward)', 'व्यापार खाता - डेबिट (Trading - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">ढुवानी खर्च (Carriage Inward)</button>
+            <button onclick="show('ज्याला (Wages)', 'व्यापार खाता - डेबिट (Trading - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">ज्याला (Wages)</button>
+            <button onclick="show('भन्सार महसुल (Customs Duty)', 'व्यापार खाता - डेबिट (Trading - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">भन्सार महसुल (Customs Duty)</button>
+            <button onclick="show('आयात शुल्क (Import Duty)', 'व्यापार खाता - डेबिट (Trading - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">आयात शुल्क (Import Duty)</button>
+            <button onclick="show('प्रत्यक्ष खर्च (Direct Expenses)', 'व्यापार खाता - डेबिट (Trading - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">प्रत्यक्ष खर्च (Direct Expenses)</button>
+            
+            <button onclick="show('तलब (Salary)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">तलब (Salary)</button>
+            <button onclick="show('घरभाडा (Rent)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">घरभाडा (Rent)</button>
+            <button onclick="show('बीमा (Insurance)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">बीमा (Insurance)</button>
+            <button onclick="show('विज्ञापन (Advertisement)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">विज्ञापन (Advertisement)</button>
+            <button onclick="show('स्टेशनरी (Stationery)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">स्टेशनरी (Stationery)</button>
+            <button onclick="show('हुलाक तथा टेलिफोन (Postage & Telephone)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">हुलाक तथा टेलिफोन (Postage & Telephone)</button>
+            <button onclick="show('यात्रा खर्च (Travelling Expenses)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">यात्रा खर्च (Travelling Expenses)</button>
+            <button onclick="show('मर्मत खर्च (Repairs)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">मर्मत खर्च (Repairs)</button>
+            <button onclick="show('बैंक शुल्क (Bank Charges)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">बैंक शुल्क (Bank Charges)</button>
+            <button onclick="show('मूल्यह्रास (Depreciation)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">मूल्यह्रास (Depreciation)</button>
+            <button onclick="show('खराब ऋण (Bad Debt)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">खराब ऋण (Bad Debt)</button>
+            <button onclick="show('छुट दिएको (Discount Allowed)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">छुट दिएको (Discount Allowed)</button>
+            <button onclick="show('ब्याज खर्च (Interest Expense)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">ब्याज खर्च (Interest Expense)</button>
+            <button onclick="show('लेखापरीक्षण शुल्क (Audit Fee)', 'नाफा–नोक्सान खाता - डेबिट (P&L - Dr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">लेखापरीक्षण शुल्क (Audit Fee)</button>
+            <button onclick="show('प्राप्त छुट (Discount Received)', 'नाफा–नोक्सान खाता - क्रेडिट (P&L - Cr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">प्राप्त छुट (Discount Received)</button>
+            <button onclick="show('प्राप्त कमिसन (Commission Received)', 'नाफा–नोक्सान खाता - क्रेडिट (P&L - Cr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">प्राप्त कमिसन (Commission Received)</button>
+            <button onclick="show('प्राप्त ब्याज (Interest Received)', 'नाफा–नोक्सान खाता - क्रेडिट (P&L - Cr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">प्राप्त ब्याज (Interest Received)</button>
+            <button onclick="show('प्राप्त भाडा (Rent Received)', 'नाफा–नोक्सान खाता - क्रेडिट (P&L - Cr)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">प्राप्त भाडा (Rent Received)</button>
+            
+            <button onclick="show('पूँजी (Capital)', 'वासलात - दायित्व (Balance Sheet - Liab)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">पूँजी (Capital)</button>
+            <button onclick="show('बैंक ऋण (Bank Loan)', 'वासलात - दायित्व (Balance Sheet - Liab)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">बैंक ऋण (Bank Loan)</button>
+            <button onclick="show('साहु (Creditors)', 'वासलात - दायित्व (Balance Sheet - Liab)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">साहु (Creditors)</button>
+            <button onclick="show('देय बिल (Bills Payable)', 'वासलात - दायित्व (Balance Sheet - Liab)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">देय बिल (Bills Payable)</button>
+            <button onclick="show('नगद (Cash)', 'वासलात - सम्पत्ति (Balance Sheet - Asset)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">नगद (Cash)</button>
+            <button onclick="show('बैंक मौज्दात (Bank Balance)', 'वासलात - सम्पत्ति (Balance Sheet - Asset)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">बैंक मौज्दात (Bank Balance)</button>
+            <button onclick="show('देनदार (Debtors)', 'वासलात - सम्पत्ति (Balance Sheet - Asset)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">देनदार (Debtors)</button>
+            <button onclick="show('प्राप्य बिल (Bills Receivable)', 'वासलात - सम्पत्ति (Balance Sheet - Asset)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">प्राप्य बिल (Bills Receivable)</button>
+            <button onclick="show('फर्निचर (Furniture)', 'वासलात - सम्पत्ति (Balance Sheet - Asset)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">फर्निचर (Furniture)</button>
+            <button onclick="show('मेसिन (Machine)', 'वासलात - सम्पत्ति (Balance Sheet - Asset)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">मेसिन (Machine)</button>
+            <button onclick="show('भवन (Building)', 'वासलात - सम्पत्ति (Balance Sheet - Asset)')" class="bg-white p-5 text-left rounded-2xl shadow-lg border-2 border-slate-200 text-lg font-bold hover:bg-slate-100">भवन (Building)</button>
+            
+            <!-- Adjustments -->
+            <h2 class="text-2xl font-bold text-slate-800 mt-8 mb-4 border-b-4 border-slate-800 pb-2">समायोजनहरू (Adjustments)</h2>
+            
+            <button onclick="show('अन्तिम मौज्दात (Closing Stock)', 'व्यापार खाता (Trading Cr) र वासलात (BS Asset)')" class="bg-red-100 p-5 text-left rounded-2xl shadow-lg border-4 border-red-300 font-bold text-lg hover:bg-red-200">अन्तिम मौज्दात (Closing Stock)</button>
+            <button onclick="show('मूल्यह्रास (Depreciation)', 'नाफा–नोक्सान (P&L Dr) र वासलात (Asset बाट घट्ने)')" class="bg-red-100 p-5 text-left rounded-2xl shadow-lg border-4 border-red-300 font-bold text-lg hover:bg-red-200">मूल्यह्रास (Depreciation)</button>
+            <button onclick="show('बाँकी खर्च (Outstanding Expenses)', 'नाफा–नोक्सान (P&L Dr मा थपिने) र वासलात (BS Liab)')" class="bg-red-100 p-5 text-left rounded-2xl shadow-lg border-4 border-red-300 font-bold text-lg hover:bg-red-200">बाँकी खर्च (Outstanding Expenses)</button>
+            <button onclick="show('अग्रिम खर्च (Prepaid Expenses)', 'नाफा–नोक्सान (P&L Dr बाट घट्ने) र वासलात (BS Asset)')" class="bg-red-100 p-5 text-left rounded-2xl shadow-lg border-4 border-red-300 font-bold text-lg hover:bg-red-200">अग्रिम खर्च (Prepaid Expenses)</button>
+            <button onclick="show('प्राप्त हुन बाँकी आम्दानी (Accrued Income)', 'नाफा–नोक्सान (P&L Cr मा थपिने) र वासलात (BS Asset)')" class="bg-red-100 p-5 text-left rounded-2xl shadow-lg border-4 border-red-300 font-bold text-lg hover:bg-red-200">प्राप्त हुन बाँकी आम्दानी (Accrued Income)</button>
+            <button onclick="show('प्राप्त अग्रिम आम्दानी (Income Received in Advance)', 'नाफा–नोक्सान (P&L Cr बाट घट्ने) र वासलात (BS Liab)')" class="bg-red-100 p-5 text-left rounded-2xl shadow-lg border-4 border-red-300 font-bold text-lg hover:bg-red-200">प्राप्त अग्रिम आम्दानी (Income Received in Advance)</button>
+        </div>
+    </div>
+
+    <script>
+        function show(item, destination) {
+            const box = document.getElementById('result-box');
+            box.innerHTML = `
+                <div>
+                    <p class="text-sm opacity-90 uppercase tracking-widest">आइटम (Item):</p>
+                    <p class="text-xl font-bold mt-1">${item}</p>
+                    <p class="text-sm mt-4 opacity-90 uppercase tracking-widest">गन्तव्य (Destination):</p>
+                    <p class="font-bold text-lg mt-1">${destination}</p>
+                </div>
+            `;
+            box.classList.add('bg-indigo-900');
+            setTimeout(() => box.classList.remove('bg-indigo-900'), 200);
+        }
+    </script>
+</body>
+</html>
