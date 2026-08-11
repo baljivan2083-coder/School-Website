@@ -618,7 +618,7 @@
                     <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                         थप हेर्नुहोस्
                     </button>
-                    <a href="javascript:void(0);" onclick="shareNoticeOnFacebook('वर्षे विदा सम्बन्धी अत्यन्त जरुरी सूचना')" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 </div>
@@ -638,7 +638,7 @@
                     <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                         थप हेर्नुहोस्
                     </button>
-                    <a href="javascript:void(0);" onclick="shareNoticeOnFacebook('प्रविधिको सदुपयोग गरौं')" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 </div>
@@ -658,7 +658,7 @@
                     <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                         थप हेर्नुहोस्
                     </button>
-                    <a href="javascript:void(0);" onclick="shareNoticeOnFacebook('नियमित अध्ययन गर्ने बानी बसालौं')" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 </div>
@@ -680,7 +680,7 @@
                         <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                             थप हेर्नुहोस्
                         </button>
-                        <a href="javascript:void(0);" onclick="shareNoticeOnFacebook('सिर्जनात्मक तथा अतिरिक्त क्रियाकलापमा सहभागी बनौं')" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
@@ -700,7 +700,7 @@
                         <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                             थप हेर्नुहोस्
                         </button>
-                        <a href="javascript:void(0);" onclick="shareNoticeOnFacebook('स्वास्थ्य, सरसफाइ र अनुशासनमा ध्यान दिऔं')" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
@@ -787,14 +787,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-
-// सूचना फेसबुकमा सेयर गर्ने फंक्सन
-function shareNoticeOnFacebook(noticeTitle) {
-    const currentUrl = window.location.href.split('#')[0] + '#notices';
-    // फेसबुकको शेयर विन्डो खोल्ने जसले यूआरएलसँगै सूचनाको पहिचान बोक्छ
-    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}&quote=${encodeURIComponent(noticeTitle)}`;
-    window.open(facebookShareUrl, '_blank', 'width=600,height=400');
-}
 
 // See More / See Less टगल गर्ने फंक्सन
 function toggleMoreNotices() {
