@@ -594,7 +594,7 @@
             </div>
         </section>
 
-        <!-- नवीनतम सूचनाहरू (यहाँ फेसबुक शेयर लिङ्क व्यवस्थित गरिएको छ) -->
+        <!-- नवीनतम सूचनाहरू (फेसबुक शेयर लिङ्क व्यवस्थित गरिएको) -->
         <section id="notices" class="container mx-auto px-4 py-16 scroll-mt-20">
           
 <div class="grid md:grid-cols-2 gap-12">
@@ -618,7 +618,8 @@
                     <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                         थप हेर्नुहोस्
                     </button>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                    <!-- फेसबुक शेयर बटन (जाभास्क्रिप्टमार्फत कन्टेन्ट सहित लिंक हुने) -->
+                    <a href="#" target="_blank" class="fb-share-btn bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 </div>
@@ -638,7 +639,7 @@
                     <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                         थप हेर्नुहोस्
                     </button>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                    <a href="#" target="_blank" class="fb-share-btn bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 </div>
@@ -658,13 +659,13 @@
                     <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                         थप हेर्नुहोस्
                     </button>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                    <a href="#" target="_blank" class="fb-share-btn bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 </div>
             </div>
 
-            <!-- लुकेका थप सूचनाहरू (See More मा क्लिक गरेपछि खुल्ने) -->
+            <!-- लुकेका थप सूचनाहरू -->
             <div id="extra-notices" class="space-y-4 hidden">
                 <!-- सूचना ४ -->
                 <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
@@ -680,7 +681,7 @@
                         <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                             थप हेर्नुहोस्
                         </button>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                        <a href="#" target="_blank" class="fb-share-btn bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
@@ -700,7 +701,7 @@
                         <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                             थप हेर्नुहोस्
                         </button>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                        <a href="#" target="_blank" class="fb-share-btn bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
@@ -753,7 +754,7 @@
     </div>
 </div>
 
-<!-- जाभास्क्रिप्ट कोड -->
+<!-- जाभास्क्रिप्ट कोड (सूचना तथा फेसबुक शेयर सेटिङ) -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const noticeCards = document.querySelectorAll('.notice-card');
@@ -763,14 +764,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const title = card.getAttribute('data-title');
         const desc = card.getAttribute('data-desc');
         
-        // डेटा स्वतः HTML को भित्री भागमा राख्ने
         const dateSpan = card.querySelector('.notice-date-text');
         const titleSpan = card.querySelector('.notice-title-text');
         
         if(dateSpan) dateSpan.innerText = date;
         if(titleSpan) titleSpan.innerText = title;
         
-        // बक्समा क्लिक गर्दा मोडल खुल्ने
+        // मोडल खुल्ने इभेन्ट
         const contentTrigger = card.querySelector('.notice-content-trigger');
         if(contentTrigger) {
             contentTrigger.addEventListener('click', function() {
@@ -778,17 +778,23 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
         
-        // "थप हेर्नुहोस्" बटनमा क्लिक गर्दा मोडल खुल्ने
         const btnTrigger = card.querySelector('.notice-btn');
         if(btnTrigger) {
             btnTrigger.addEventListener('click', function() {
                 openNoticeModal(date, title, desc);
             });
         }
+
+        // फेसबुक शेयर युआरएल व्यवस्थित गर्ने (शीर्षक र विवरण सहित)
+        const fbShareBtn = card.querySelector('.fb-share-btn');
+        if(fbShareBtn) {
+            const currentUrl = window.location.href.split('#')[0];
+            const shareText = encodeURIComponent(title + "\n\n" + desc + "\n\nथप जानकारीको लागि: " + currentUrl);
+            fbShareBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}&quote=${shareText}`;
+        }
     });
 });
 
-// See More / See Less टगल गर्ने फंक्सन
 function toggleMoreNotices() {
     const extraNotices = document.getElementById('extra-notices');
     const toggleText = document.getElementById('toggle-text');
