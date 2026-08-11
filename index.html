@@ -606,6 +606,7 @@
             
             <!-- सूचना १ -->
             <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
+                 data-id="1"
                  data-date="२०८३ साउन ०७" 
                  data-title="वर्षे विदा सम्बन्धी अत्यन्त जरुरी सूचना" 
                  data-desc="प्रस्तुत विषयमा मनहरी गाउँपालिको २०८३ सालको शैक्षिक पात्रो अनुसार यहि मिति २०८३ श्रावण ०८ गते शुक्रबार देखि २०८३ श्रावण ३१ गते आइतबार सम्म वर्षे विदा दिने निर्णय भएको हुँदा उक्त विदा अवधिभर विद्यालयको शैक्षिक तथा प्रशासनिक कार्य वन्द रहने र भदौ १ गते देखि नियमित पठनपाठन तथा प्रशासनिक कार्य सूचारु रहने व्यहोरा सम्बन्धित सबैमा जानकारी गराइन्छ ।">
@@ -618,7 +619,8 @@
                     <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                         थप हेर्नुहोस्
                     </button>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                    <!-- फेसबुक सेयर बटन (Dynamic URL सहित) -->
+                    <a href="#" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition fb-share-btn" title="शेयर गर्नुहोस्">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 </div>
@@ -626,6 +628,7 @@
 
             <!-- सूचना २ -->
             <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
+                 data-id="2"
                  data-date="२०८३ असार २५" 
                  data-title="प्रविधिको सदुपयोग गरौं" 
                  data-desc="मोबाइल, कम्प्युटर र इन्टरनेटलाई मनोरञ्जनका लागि मात्र प्रयोग नगरी शैक्षिक भिडियो हेर्न, नयाँ सीप सिक्न, डिजिटल पुस्तक पढ्न तथा ज्ञानवर्धक सामग्री खोज्न प्रयोग गरौं। सामाजिक सञ्जाल र अनावश्यक गेममा समय खेर नफालौं।">
@@ -638,7 +641,7 @@
                     <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                         थप हेर्नुहोस्
                     </button>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                    <a href="#" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition fb-share-btn" title="शेयर गर्नुहोस्">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 </div>
@@ -646,9 +649,10 @@
 
             <!-- सूचना ३ -->
             <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
+                 data-id="3"
                  data-date="२०८३ साउन २५" 
                  data-title="नियमित अध्ययन गर्ने बानी बसालौं" 
-                 data-desc="विद्यालय बिदा भए पनि दैनिक कम्तीमा १–२ घण्टा पाठ्यपुस्तक तथा आफूले कमजोर ठानेका विषयको अध्ययन गरौं। अघिल्लो कक्षामा पढेका पाठहरू दोहोर्याउनुका साथै आगामी कक्षाका पाठहरूबारे सामान्य जानकारी लिने बानी बसालौं।आगामी धान दिवसको अवसर पारेर विद्यालयमा अन्तर-सद्भाव हाजिरी जवाफ तथा वक्तृत्वकला प्रतियोगिता आयोजना हुनेछ।">
+                 data-desc="विद्यालय बिदा भए पनि दैनिक कम्तीमा १–२ घण्टा पाठ्यपुस्तक तथा आफूले कमजोर ठानेका विषयको अध्ययन गरौं। अघिल्लो कक्षामा पढेका पाठहरू दोहोर्याउनुका साथै आगामी कक्षाका पाठहरूबारे सामान्य जानकारी लिने बानी बसालौं।">
                 <div class="cursor-pointer flex-grow notice-content-trigger">
                     <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span class="notice-date-text"></span></span>
                     <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition notice-title-text"></span>
@@ -658,16 +662,17 @@
                     <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                         थप हेर्नुहोस्
                     </button>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                    <a href="#" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition fb-share-btn" title="शेयर गर्नुहोस्">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                 </div>
             </div>
 
-            <!-- लुकेका थप सूचनाहरू (See More मा क्लिक गरेपछि खुल्ने) -->
+            <!-- थप सूचनाहरू (Hidden) -->
             <div id="extra-notices" class="space-y-4 hidden">
                 <!-- सूचना ४ -->
                 <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
+                     data-id="4"
                      data-date="२०८३ साउन २५" 
                      data-title="सिर्जनात्मक तथा अतिरिक्त क्रियाकलापमा सहभागी बनौं" 
                      data-desc="बिदाको समय चित्रकला, कथा/कविता लेखन, पुस्तक पढ्ने, हस्तकला, संगीत, खेलकुद तथा अन्य सिर्जनात्मक गतिविधिमा प्रयोग गरौं। यस्ता गतिविधिले ज्ञान, सीप र आत्मविश्वास बढाउन सहयोग गर्छ।">
@@ -680,7 +685,7 @@
                         <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                             थप हेर्नुहोस्
                         </button>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                        <a href="#" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition fb-share-btn" title="शेयर गर्नुहोस्">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
@@ -688,6 +693,7 @@
 
                 <!-- सूचना ५ -->
                 <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
+                     data-id="5"
                      data-date="२०८३ साउन २५" 
                      data-title="स्वास्थ्य, सरसफाइ र अनुशासनमा ध्यान दिऔं" 
                      data-desc="घरपरिवारलाई सहयोग गर्दै बिदाको समयलाई रमाइलो, सुरक्षित र उपलब्धिमूलक बनाऔं।">
@@ -700,7 +706,7 @@
                         <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                             थप हेर्नुहोस्
                         </button>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                        <a href="#" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition fb-share-btn" title="शेयर गर्नुहोस्">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                     </div>
@@ -756,35 +762,61 @@
 <!-- जाभास्क्रिप्ट कोड -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+    const baseUrl = "https://baljivanjyoti.edu.np"; // तपाईंको मुख्य वेबसाइटको URL
     const noticeCards = document.querySelectorAll('.notice-card');
     
+    // URL बाट ?notice_id=... को मान पत्ता लगाउने (कसैले लिङ्क खोलेमा मोडल स्वतः खोल्न)
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeNoticeId = urlParams.get('notice_id');
+
     noticeCards.forEach(card => {
+        const id = card.getAttribute('data-id');
         const date = card.getAttribute('data-date');
         const title = card.getAttribute('data-title');
         const desc = card.getAttribute('data-desc');
         
-        // डेटा स्वतः HTML को भित्री भागमा राख्ने
+        // डेटा HTML मा सेट गर्ने
         const dateSpan = card.querySelector('.notice-date-text');
         const titleSpan = card.querySelector('.notice-title-text');
         
         if(dateSpan) dateSpan.innerText = date;
         if(titleSpan) titleSpan.innerText = title;
         
-        // बक्समा क्लिक गर्दा मोडल खुल्ने
-        const contentTrigger = card.querySelector('.notice-content-trigger');
-        if(contentTrigger) {
-            contentTrigger.addEventListener('click', function() {
-                openNoticeModal(date, title, desc);
-            });
+        // प्रत्येक सूचनाको लागि छुट्टै Facebook Share URL बनाउने (जस्तै: https://baljivanjyoti.edu.np/?notice_id=1)
+        const specificNoticeUrl = `${baseUrl}/?notice_id=${id}`;
+        const fbShareBtn = card.querySelector('.fb-share-btn');
+        if(fbShareBtn) {
+            fbShareBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(specificNoticeUrl)}`;
         }
         
-        // "थप हेर्नुहोस्" बटनमा क्लिक गर्दा मोडल खुल्ने
-        const btnTrigger = card.querySelector('.notice-btn');
-        if(btnTrigger) {
-            btnTrigger.addEventListener('click', function() {
+        // यदि लिङ्क खोल्दा कुनै विशेष ID म्याच भयो भने मोडल स्वतः ओपन गराउने
+        if(activeNoticeId === id) {
+            // यदि सूचना लुकेको (extra-notices) भित्र छ भने त्यसलाई देखिने बनाउने
+            if(card.closest('#extra-notices')) {
+                document.getElementById('extra-notices').classList.remove('hidden');
+                document.getElementById('toggle-text').innerText = "कम मात्र देखाउनुहोस् (See Less)";
+                document.getElementById('toggle-icon').classList.replace('fa-chevron-down', 'fa-chevron-up');
+            }
+            // मोडल खोल्ने फंक्सन कल गर्ने (तपाईंले बनाएको openNoticeModal function यहाँ काम गर्छ)
+            if(typeof openNoticeModal === 'function') {
                 openNoticeModal(date, title, desc);
-            });
+            }
         }
+        
+        // बक्स वा थप हेर्नुहोस् मा क्लिक गर्दा मोडल खुल्ने र URL मा ID थपिने
+        const contentTrigger = card.querySelector('.notice-content-trigger');
+        const btnTrigger = card.querySelector('.notice-btn');
+        
+        const triggerAction = function() {
+            // URL अपडेट गर्ने (Page reload नगरी)
+            window.history.pushState({}, '', `?notice_id=${id}`);
+            if(typeof openNoticeModal === 'function') {
+                openNoticeModal(date, title, desc);
+            }
+        };
+
+        if(contentTrigger) contentTrigger.addEventListener('click', triggerAction);
+        if(btnTrigger) btnTrigger.addEventListener('click', triggerAction);
     });
 });
 
