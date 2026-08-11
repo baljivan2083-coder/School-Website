@@ -49,8 +49,7 @@
 <body class="bg-gray-50 text-gray-800">
 
     <!-- स्कुलको गीत फाइल -->
- <audio id="school-song" src="school_song.mp3.mp3" loop></audio>
-
+    <audio id="school-song" src="school_song.mp3.mp3" loop></audio>
 
     <!-- गुड्ने/फ्लोटिङ म्युजिक कन्ट्रोल बटन -->
     <div class="fixed bottom-6 right-6 z-[9999]">
@@ -185,10 +184,11 @@
             </div>
         </section>
 
+        <!-- जरुरी सूचना -->
         <div class="bg-yellow-400 text-blue-950 font-bold py-3 shadow-md relative z-10">
             <div class="container mx-auto px-4 flex items-center">
                 <span class="bg-red-600 text-white px-3 py-1 rounded text-sm mr-4 shrink-0 animate-pulse"><i class="fas fa-bullhorn mr-1"></i> जरुरी सूचना:</span>
-                <marquee class="text-md cursor-pointer" scrollamount="5">प्रस्तुत विषयमा मनहरी गाउँपालिको २०८३ सालको शैक्षिक पात्रो अनुसार यहि मिति २०८३ श्रावण ०८ गते शुक्रबार देखि २०८३ श्रावण ३१ गते आइतबार सम्म वर्षे विदा दिने निर्णय भएको हुँदा उक्त विदा अवधिभर विद्यालयको शैक्षिक तथा प्रशासनिक कार्य वन्द रहने र भदौ १ गते देखि नियमित पठनपाठन तथा प्रशासनिक कार्य सूचारु रहने व्यहोरा सम्बन्धित सबैमा जानकारी गराइन्छ ।</marquee>
+                <marquee id="jaruri-notice-text" class="text-md cursor-pointer" scrollamount="5">प्रस्तुत विषयमा मनहरी गाउँपालिको २०८३ सालको शैक्षिक पात्रो अनुसार यहि मिति २०८३ श्रावण ०८ गते शुक्रबार देखि २०८३ श्रावण ३१ गते आइतबार सम्म वर्षे विदा दिने निर्णय भएको हुँदा उक्त विदा अवधिभर विद्यालयको शैक्षिक तथा प्रशासनिक कार्य वन्द रहने र भदौ १ गते देखि नियमित पठनपाठन तथा प्रशासनिक कार्य सूचारु रहने व्यहोरा सम्बन्धित सबैमा जानकारी गराइन्छ ।</marquee>
             </div>
         </div>
 
@@ -198,127 +198,131 @@
                     <span class="text-blue-600 font-bold uppercase tracking-wider">विद्यालय परिचय</span>
                    <h2 class="text-3xl font-bold text-blue-900 mt-2 mb-4">श्री बाल जीवन ज्योति माध्यमिक विद्यालय</h2>
 
-<!-- मुख्य विवरण पाठ -->
-<div class="relative">
-<div id="intro-message" class="text-gray-700 mb-2 leading-relaxed text-justify text-base md:text-lg overflow-hidden transition-all duration-300" style="max-height: 9.5em;">
-<p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg first-letter:text-3xl first-letter:font-bold first-letter:text-blue-600">
-    समाज विकासको क्रममा शिक्षा मानिसको लागि अभिन्न अंग रहेकोले सबै जातजाति, पिछडिएको जनजाति, दलित, सिमान्तकृत चेपाङ सम्म शिक्षाको पहुँच पुर्याउने उद्देश्य अनुरुप वि.सं. २०१९ सालमा यहाँका स्थानिय बुद्धिजिवि, समाजसेवी तथा शिक्षा प्रेमीहरूको सक्रियतामा बागमती प्रदेश (साविक नारायणी अंचल) मकवानपुर जिल्लाको सदरमुकाम हेटौंडाबाट पश्चिम तथा पर्सा वन्य जन्तु आरक्षको क्षेत्र भित्र पर्ने राप्ती नदी सँगको सिमानामा जोडिएको मनहरी गाउँपालिका वडा नं. १ (साविक हाँडीखोला गा.वि.स. वडा नं. २) मकरीमा स्थानीय समुदायका व्यक्तिहरूले छाप्रो बनाई वि.सं. २०१९ साल देखि नै राम मन्दिर बगैंचा मन्दिरको जग्गा परिसर भित्र पठन पाठन सुचारु गर्न कोदो, मकै जस्ता अन्न मुठी दान अर्थात् चन्दा स्वरुप संकलन गरी व्यय भारको सङ्कट टार्दै कक्षा संचालन गरेको पाइन्छ।
-</p>
+<div class="space-y-6">
+    <div class="text-gray-700 leading-relaxed text-justify text-base md:text-lg space-y-6">
+        <p class="first-letter:text-3xl first-letter:font-bold first-letter:text-blue-600">
+            समाज विकासको क्रममा शिक्षा मानिसको लागि अभिन्न अंग रहेकोले सबै जातजाति, पिछडिएको जनजाति, दलित, सिमान्तकृत चेपाङ सम्म शिक्षाको पहुँच पुर्याउने उद्देश्य अनुरुप वि.सं. २०१९ सालमा यहाँका स्थानिय बुद्धिजिवि, समाजसेवी तथा शिक्षा प्रेमीहरूको सक्रियतामा बागमती प्रदेश (साविक नारायणी अंचल) मकवानपुर जिल्लाको सदरमुकाम हेटौंडाबाट पश्चिम तथा पर्सा वन्य जन्तु आरक्षको क्षेत्र भित्र पर्ने राप्ती नदी सँगको सिमानामा जोडिएको मनहरी गाउँपालिका वडा नं. १ (साविक हाँडीखोला गा.वि.स. वडा नं. २) मकरीमा स्थानीय समुदायका व्यक्तिहरूले छाप्रो बनाई वि.सं. २०१९ साल देखि नै राम मन्दिर बगैंचा मन्दिरको जग्गा परिसर भित्र पठन पाठन सुचारु गर्न कोदो, मकै जस्ता अन्न मुठी दान अर्थात् चन्दा स्वरुप संकलन गरी व्यय भारको सङ्कट टार्दै कक्षा संचालन गरेको पाइन्छ।
+                   मनहरी-१, चकरी (साविक हाँडीखोला-१) निवासी शिक्षा प्रेमी स्व. श्री लक्ष्मण प्रसाद कँडेल ज्यूको सक्रिय सहभागिताबाट वि.सं. २०१९ सालमा प्रा.वी.को जन्म भयो र यस विद्यालयलाई अनौपचारिक रुपमा संचालन गर्न गराउन शिक्षा प्रेमी स्व. श्री लक्ष्मण प्रसाद कँडेल र स्व. पहलराज कप्रौला ज्यूबाट स्वीकृत प्राप्त गर्न गराई पठन पाठन संचालन गरियो। हाल यस विद्यालय रहेको जग्गा मिति वि.सं. २०१० साल चैत्र रामनवमीको दिन श्री राम बगैंचा मन्दिरको नाममा तपसिल व्यक्तित्वहरूले जग्गा दान गर्नुभएको थियो।
+        </p>
+        <p><strong>तपसिल</strong></p>
+        <ol class="list-decimal list-inside space-y-1">
+            <li>श्री देवी प्रसाद गुनी</li>
+            <li>बम्बुशंकर बर्तौला</li>
+            <li>श्री डण्डपानी पराजुली</li>
+            <li>श्री नन्दलाल चिमरिया</li>
+            <li>श्री इन्द्रनन्द चिमरिया</li>
+            <li>श्री विर बहादुर बखती</li>
+            <li>श्री कृष्ण प्रसाद गुनी</li>
+            <li>श्री देवी प्रसाद बर्तौला</li>
+            <li>श्री डम्बर बहादुर लटौला</li>
+            <li>श्री जेठा अर्याल बाजे</li>
+            <li>श्री कान्छा अर्जेल बाजे</li>
+            <li>श्री कृष्ण बहादुर गुनी</li>
+        </ol>
+        <p>
+            यसैगरी <strong>वि.स. २०५९ सालमा</strong> यस विद्यालयको नाममा तपसिल व्यक्तित्वहरूले जग्गा दान गर्नुभएको थियो।
+        </p>
+        <h3 class="font-bold">तपसिलः</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse border border-gray-300 text-sm">
+                <thead>
+                    <tr class="bg-blue-50">
+                        <th class="border border-gray-300 p-2">क्र.सं.</th>
+                        <th class="border border-gray-300 p-2">दाता</th>
+                        <th class="border border-gray-300 p-2">जग्गाको क्षेत्रफल</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border border-gray-300 p-2 text-center">१</td>
+                        <td class="border border-gray-300 p-2">श्री साहिली उप्रेती</td>
+                        <td class="border border-gray-300 p-2">०-३-०</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2 text-center">२</td>
+                        <td class="border border-gray-300 p-2">श्री प्रेमनाथ उपाध्याय</td>
+                        <td class="border border-gray-300 p-2">०-१-०</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2 text-center">३</td>
+                        <td class="border border-gray-300 p-2">श्री हर्क बहादुर पराजुली</td>
+                        <td class="border border-gray-300 p-2">०-१-०</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2 text-center">४</td>
+                        <td class="border border-gray-300 p-2">छायाँ देवी खड्का</td>
+                        <td class="border border-gray-300 p-2">०-१-०</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2 text-center">५</td>
+                        <td class="border border-gray-300 p-2">श्री हेम प्रसाद घिमिरे</td>
+                        <td class="border border-gray-300 p-2">०-०-१०</td>
+                    </tr>
+                    <tr>
+                        <td class="border border-gray-300 p-2 text-center">६</td>
+                        <td class="border border-gray-300 p-2">श्री कान्छि माया बस्नेत</td>
+                        <td class="border border-gray-300 p-2">०-०-१०</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<!-- पृष्ठभूमि र इतिहास -->
-<p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg">
-    मनहरी-१, चकरी (साविक हाँडीखोला-१) निवासी शिक्षा प्रेमी स्व. श्री लक्ष्मण प्रसाद कँडेल ज्यूको सक्रिय सहभागिताबाट वि.सं. २०१९ सालमा प्रा.वी.को जन्म भयो र यस विद्यालयलाई अनौपचारिक रुपमा संचालन गर्न गराउन शिक्षा प्रेमी स्व. श्री लक्ष्मण प्रसाद कँडेल र स्व. पहलराज कप्रौला ज्यूबाट स्वीकृत प्राप्त गर्न गराई पठन पाठन संचालन गरियो। हाल यस विद्यालय रहेको जग्गा मिति वि.सं. २०१० साल चैत्र रामनवमीको दिन श्री राम बगैंचा मन्दिरको नाममा तपसिल व्यक्तित्वहरूले जग्गा दान गर्नुभएको थियो।
-</p>
-<h3>तपसिलः</h3>
+    <div class="relative">
+        <div id="intro-message" class="text-gray-700 leading-relaxed text-justify text-base md:text-lg overflow-hidden transition-all duration-300 space-y-6" style="max-height: 0px;">
+            <div>
+                <p class="font-bold text-base md:text-lg mb-2">भौगोलिक अवस्था</p>
+                <p class="leading-relaxed">
+                    सदरमुकाम हेटौंडा देखि १६ कि.मि. पश्चिम श्री निर्मल मा.वि. बस्तिपुर देखि ६ कि.मि. दक्षिण तर्फ रहेको यस श्री बाल जीवन ज्योति मा.वि. को पूर्वमा चकरी खोला पश्चिम च्यापल खोला उत्तर राप्ती नदी दक्षिण गोगनपानीले घेरेको यस विद्यालयको चारैतिर गाँउहरु छन् ।
+                </p>
+            </div>
 
-<ol>
-    <li>श्री देवी प्रसाद गुनी</li>
-    <li>श्री बम्बुशंकर बर्तौला</li>
-    <li>डण्डपानी पराजुली</li>
-    <li>नन्दलाल चिमरिया</li>
-    <li>इन्द्रनन्द चिमरिया</li>
-    <li>विर बहादुर बखती</li>
-    <li>श्री कृष्ण प्रसाद गुनी</li>
-    <li>श्री देवी प्रसाद बर्तौला</li>
-    <li>श्री डम्बर बहादुर लटौला</li>
-    <li>श्री जेठा अर्याल बाजे</li>
-    <li>श्री कान्छा अर्जेल बाजे</li>
-    <li>श्री कृष्ण बहादुर गुनी</li>
-</ol>
+            <div>
+                <p class="font-bold text-base md:text-lg mb-2">विद्यालयमा रहेको समुदायको बनोट</p>
+                <p class="leading-relaxed mb-4">
+                    यस सेवा क्षेत्रभित्र बसोबास गर्ने तामाङ्ग, चेपाङ, क्षेत्री, व्राह्मण, कामी, दमई जाती नै मुख्य बासिन्दाका रुपमा रहेकाहरु परम्परागत सोच र चिन्तन रितिरिवाज तथा धर्म, संस्कृतिको कारणले गर्दा अपवाद बाहेक धेरै बालबालिकाहरु बाधिन पुग्छन् । जसको कारणले गर्दा सानै उमेरमा पारिवारिक जिम्मेवारी बहन गर्नुपर्ने हुन्छ साथै धुम्रपान तथा मद्यपान जस्ता कुलतको सेवनमा यस क्षेत्रका अधिकांस मानिसहरु लागेको पाइन्छ तर हाल केहि यूवाहरु रोजगारीको खोजीमा विदेशतिर गएको पाइन्छ ।
+                </p>
+                <p class="leading-relaxed">
+                    यस सेवा क्षेत्र भित्र बसोबास गर्ने केही परिवारहरुको आर्थिक अवस्था ज्यादै नाजुक र दयनिय रहेको छ आर्थिक अवस्था कमजोर हुनुको पछाडी धर्म, संस्कृति तथा रितीरिवाज, रुढीवादी परम्परा नै कारक तत्वको रुपमा रहेकोछ । यसका साथै यहाँका भूमिमा सिचाईको अभाव रहेको कारण आकासे खेतीपाती कृषि कार्य भएकोले पनि आर्थिक अवस्था केहि मात्रामा राम्रो भए तापनि तामाङ्ग, चेपाङ, कामी, दमईहरुले धेरै दुःख गरेर विहान वेलूकी छाक टार्न सक्दछन् । किनभने उनिहरु मध्येबाट ८५% ले आफ्ना बाल बालिकालाई मा.वि र उच्च मा.वि. शिक्षा पुरा गर्ने गराउने भएको हुनाले पनि उनीहरुको आय आर्जन हुने खालको थप क्रियाकलापमा लागि परेका छन् । यूवाहरु केहि मात्रामा रोजगारको लागि विदेशिएका पनि छन्।
+                </p>
+            </div>
 
-<p>
-    यसैगरी <strong>वि.स. २०५९ सालमा</strong> यस विद्यालयको नाममा तपसिल व्यक्तित्वहरूले जग्गा दान गर्नुभएको थियो।
-</p>
-<h3>तपसिलः</h3>
+            <div>
+                <p class="font-bold text-base md:text-lg mb-2">विद्यालय सेवा क्षेत्र</p>
+                <ul class="list-disc list-inside space-y-1 pl-2">
+                    <li>मनहरी गाउँपालिका वडा नं. १, मकरी, स्कुल चोक</li>
+                    <li>मनहरी गाउँपालिका वडा नं. १, तल्लो मकरी</li>
+                    <li>मनहरी गाउँपालिका वडा नं. १, चकरी</li>
+                    <li>मनहरी गाउँपालिका वडा नं. १, घैयाडाडा</li>
+                    <li>मनहरी गाउँपालिका वडा नं. १, पर्ता</li>
+                    <li>मनहरी गाउँपालिका वडा नं. १, गोगनपानी</li>
+                    <li>मनहरी गाउँपालिका वडा नं. २, च्यापल</li>
+                    <li>मनहरी गाउँपालिका वडा नं. ३, सिद्दकाली</li>
+                </ul>
+            </div>
 
-<table border="1" cellspacing="0" cellpadding="8">
-    <thead>
-        <tr>
-            <th>क्र.सं.</th>
-            <th>दाता</th>
-            <th>जग्गाको क्षेत्रफल</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>१</td>
-            <td>श्री साहिली उप्रेती</td>
-            <td>०-३-०</td>
-        </tr>
-        <tr>
-            <td>२</td>
-            <td>श्री प्रेमनाथ उपाध्याय</td>
-            <td>०-१-०</td>
-        </tr>
-        <tr>
-            <td>३</td>
-            <td>श्री हर्क बहादुर पराजुली</td>
-            <td>०-१-०</td>
-        </tr>
-        <tr>
-            <td>४</td>
-            <td>छायाँ देवी खड्का</td>
-            <td>०-१-०</td>
-        </tr>
-        <tr>
-            <td>५</td>
-            <td>श्री हेम प्रसाद घिमिरे</td>
-            <td>०-०-१०</td>
-        </tr>
-        <tr>
-            <td>६</td>
-            <td>श्री कान्छि माया बस्नेत</td>
-            <td>०-०-१०</td>
-        </tr>
-    </tbody>
-</table>
-    <!-- १.२ भौगोलिक अवस्था -->
-    <p class="text-gray-700 mb-2 font-bold text-base md:text-lg">भौगोलिक अवस्था</p>
-    <p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg">
-        सदरमुकाम हेटौंडा देखि १६ कि.मि. पश्चिम श्री निर्मल मा.वि. बस्तिपुर देखि ६ कि.मि. दक्षिण तर्फ रहेको यस श्री बाल जीवन ज्योति मा.वि. को पूर्वमा चकरी खोला पश्चिम च्यापल खोला उत्तर राप्ती नदी दक्षिण गोगनपानीले घेरेको यस विद्यालयको चारैतिर गाँउहरु छन् ।
-    </p>
+            <div>
+                <p class="font-bold text-base md:text-lg mb-2">विद्यालयमा सञ्चालित कार्यक्रम</p>
+                <p class="leading-relaxed mb-4">
+                    मनहरी गाउँपालिका वडा नं. १ स्थित बि.स. २०१९ सालमा स्थापना भएको यस श्री बाल जीवन ज्योति माध्यमिक विद्यालयले बि.स. २०५५ सालमा माध्यमिक तहको अनुमति लिई मिति २०५६ सालमा एस.इल.सि. परीक्षामा समावेश भयो र बि.स. २०७९ सालमा कक्षा ११ को अनुमति प्राप्त गरी बि.स. २०८० सालमा पुःन कक्षा १२ को अनुमति प्राप्त गरी राष्ट्रिय परीक्षा बोर्डले लिएको कक्षा १२ को परीक्षामा समावेश हुन सफल भएको छ ।
+                </p>
+                <p class="leading-relaxed">
+                    हाल कक्षा वालविकास देखि कक्षा १२ सञ्चालन भइरहेको छ भने कक्षा ११, १२ मा वााणिज्य, मानविकी र शिक्षा संकायमा कक्षाहरु सञ्चालन भइरहेका छन् । साथै यसै शैक्षिक सत्र देखि नै कक्षा वालविकास देखि कक्षा ३ सम्म अंग्रेजी माध्यममा पठनपाठन शुरु गरिएको छ ।
+                </p>
+            </div>
 
-    <!-- १.३ विद्यालयमा रहेको समुदायको बनोट -->
-    <p class="text-gray-700 mb-2 font-bold text-base md:text-lg">विद्यालयमा रहेको समुदायको बनोट</p>
-    <p class="text-gray-700 mb-4 leading-relaxed text-justify text-base md:text-lg">
-        यस सेवा क्षेत्रभित्र बसोबास गर्ने तामाङ्ग, चेपाङ, क्षेत्री, व्राह्मण, कामी, दमई जाती नै मुख्य बासिन्दाका रुपमा रहेकाहरु परम्परागत सोच र चिन्तन रितिरिवाज तथा धर्म, संस्कृतिको कारणले गर्दा अपवाद बाहेक धेरै बालबालिकाहरु बाधिन पुग्छन् । जसको कारणले गर्दा सानै उमेरमा पारिवारिक जिम्मेवारी बहन गर्नुपर्ने हुन्छ साथै धुम्रपान तथा मद्यपान जस्ता कुलतको सेवनमा यस क्षेत्रका अधिकांस मानिसहरु लागेको पाइन्छ तर हाल केहि यूवाहरु रोजगारीको खोजीमा विदेशतिर गएको पाइन्छ ।
-    </p>
-    <p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg">
-        यस सेवा क्षेत्र भित्र बसोबास गर्ने केही परिवारहरुको आर्थिक अवस्था ज्यादै नाजुक र दयनिय रहेको छ आर्थिक अवस्था कमजोर हुनुको पछाडी धर्म, संस्कृति तथा रितीरिवाज, रुढीवादी परम्परा नै कारक तत्वको रुपमा रहेकोछ । यसका साथै यहाँका भूमिमा सिचाईको अभाव रहेको कारण आकासे खेतीपाती कृषि कार्य भएकोले पनि आर्थिक अवस्था केहि मात्रामा राम्रो भए तापनि तामाङ्ग, चेपाङ, कामी, दमईहरुले धेरै दुःख गरेर विहान वेलूकी छाक टार्न सक्दछन् । किनभने उनिहरु मध्येबाट ८५% ले आफ्ना बाल बालिकालाई मा.वि र उच्च मा.वि. शिक्षा पुरा गर्ने गराउने भएको हुनाले पनि उनीहरुको आय आर्जन हुने खालको थप क्रियाकलापमा लागि परेका छन् । यूवाहरु केहि मात्रामा रोजगारको लागि विदेशिएका पनि छन्।
-    </p>
-
-    <!-- १.४ विद्यालय सेवा क्षेत्र -->
-    <p class="text-gray-700 mb-2 font-bold text-base md:text-lg">विद्यालय सेवा क्षेत्र</p>
-    <ul class="list-disc list-inside text-gray-700 mb-6 leading-relaxed text-base md:text-lg pl-2">
-        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, मकरी, स्कुल चोक</li>
-        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, तल्लो मकरी</li>
-        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, चकरी</li>
-        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, घैयाडाडा</li>
-        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, पर्ता</li>
-        <li class="mb-1">मनहरी गाउँपालिका वडा नं. १, गोगनपानी</li>
-        <li class="mb-1">मनहरी गाउँपालिका वडा नं. २, च्यापल</li>
-        <li class="mb-1">मनहरी गाउँपालिका वडा नं. ३, सिद्दकाली</li>
-    </ul>
-
-    <!-- १.५ विद्यालयमा सञ्चालित कार्यक्रम -->
-    <p class="text-gray-700 mb-2 font-bold text-base md:text-lg">विद्यालयमा सञ्चालित कार्यक्रम</p>
-    <p class="text-gray-700 mb-4 leading-relaxed text-justify text-base md:text-lg">
-        मनहरी गाउँपालिका वडा नं. १ स्थित बि.स. २०१९ सालमा स्थापना भएको यस श्री बाल जीवन ज्योति माध्यमिक विद्यालयले बि.स. २०५५ सालमा माध्यमिक तहको अनुमति लिई मिति २०५६ सालमा एस.इल.सि. परीक्षामा समावेश भयो र बि.स. २०७९ सालमा कक्षा ११ को अनुमति प्राप्त गरी बि.स. २०८० सालमा पुःन कक्षा १२ को अनुमति प्राप्त गरी राष्ट्रिय परीक्षा बोर्डले लिएको कक्षा १२ को परीक्षामा समावेश हुन सफल भएको छ ।
-    </p>
-    <p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg">
-        हाल कक्षा वालविकास देखि कक्षा १२ सञ्चालन भइरहेको छ भने कक्षा ११, १२ मा वााणिज्य, मानविकी र शिक्षा संकायमा कक्षाहरु सञ्चालन भइरहेका छन् । साथै यसै शैक्षिक सत्र देखि नै कक्षा वालविकास देखि कक्षा ३ सम्म अंग्रेजी माध्यममा पठनपाठन शुरु गरिएको छ ।
-    </p>
-
-    <!-- विद्यालय सेवा क्षेत्रको रैथाने ज्ञान, सिप, शैली -->
-    <p class="text-gray-700 mb-2 font-bold text-base md:text-lg">विद्यालय सेवा क्षेत्रको रैथाने ज्ञान, सिप, शैली</p>
-    <p class="text-gray-700 mb-4 leading-relaxed text-justify text-base md:text-lg">
-        यस विद्यालयमा अध्ययन गर्ने बालबालिकाहरु आउने समुदाय विशेष गरी कृषिमा आत्मनिर्भर रहेका छन् । यहा सिंचाईको अभावका कारण मौषमे बाली हुने गर्दछ । अधिकांश समुदायमा गाई बस्तु, कुखुरा, बाख्रा, सुङ्गुर इत्यादी पालन गरिन्छ ।
-    </p>
-    <p class="text-gray-700 mb-6 leading-relaxed text-justify text-base md:text-lg">
-        केहि समुदायमा भने परम्परागत सिपहरु जस्तै बाँसबाट डोको, नाङ्ग्लो, डालो बुन्ने, नाम्लो तथा डोरी बुन्ने, हसिया कुटो कोदालो बनाउने कार्य गरिन्छ भने केहि समुदायमा गलैँचा बुन्ने काम समेत गरिन्छ । थोरै मात्रामा सरकारी क्षेत्र जस्तै शिक्षक, निजामती कर्मचारी क्षेत्रमा संलग्नता हुनुहुन्छ भने अधिकांश युवाहरु विदेश पलायन हुनुभएको छ ।
-    </p>
-</div>
-<button id="intro-see-more" onclick="toggleMessage('intro-message', 'intro-see-more')" class="text-blue-600 font-bold text-xs mt-2 focus:outline-none hover:underline block">See More</button>
+            <div>
+                <p class="font-bold text-base md:text-lg mb-2">विद्यालय सेवा क्षेत्रको रैथाने ज्ञान, सिप, शैली</p>
+                <p class="leading-relaxed mb-4">
+                    यस विद्यालयमा अध्ययन गर्ने बालबालिकाहरु आउने समुदाय विशेष गरी कृषिमा आत्मनिर्भर रहेका छन् । यहा सिंचाईको अभावका कारण मौषमे बाली हुने गर्दछ । अधिकांश समुदायमा गाई बस्तु, कुखुरा, बाख्रा, सुङ्गुर इत्यादी पालन गरिन्छ ।
+                </p>
+                <p class="leading-relaxed">
+                    केहि समुदायमा भने परम्परागत सिपहरु जस्तै बाँसबाट डोको, नाङ्ग्लो, डालो बुन्ने, नाम्लो तथा डोरी बुन्ने, हसिया कुटो कोदालो बनाउने कार्य गरिन्छ भने केहि समुदायमा गलैँचा बुन्ने काम समेत गरिन्छ । थोरै मात्रामा सरकारी क्षेत्र जस्तै शिक्षक, निजामती कर्मचारी क्षेत्रमा संलग्नता हुनुहुन्छ भने अधिकांश युवाहरु विदेश पलायन हुनुभएको छ ।
+                </p>
+            </div>
+        </div>
+        <button id="intro-see-more" onclick="toggleMessage('intro-message', 'intro-see-more')" class="text-blue-600 font-bold text-xs mt-3 focus:outline-none hover:underline block">See More</button>
+    </div>
 </div>
 
                     <div class="grid grid-cols-3 gap-4 border-t pt-6 text-center mt-6">
@@ -353,7 +357,7 @@
                                 "आदरणीय शिक्षकवृन्द, प्रिय विद्यार्थीहरू, सम्मानित अभिभावक तथा विद्यालयका शुभेच्छुकहरू,
 बाल जीवन ज्योति मा.वि. केवल ज्ञान दिने संस्था मात्र होइन, असल चरित्र, अनुशासन, नैतिकता र जिम्मेवार नागरिक निर्माण गर्ने पवित्र थलो हो। हाम्रो साझा प्रयास, इमानदारी र समर्पणले विद्यालयको गुणस्तर र प्रतिष्ठा अझ उच्च बनाउनेछ।
 म सम्पूर्ण शिक्षकहरूलाई गुणस्तरीय, सिर्जनशील (सिर्जनात्मक) र विद्यार्थीकेन्द्रित शिक्षामा निरन्तर समर्पित रहन अनुरोध गर्दछु। प्रिय विद्यार्थीहरूलाई नियमित अध्ययन, अनुशासन, परिश्रम, समयको सदुपयोग र असल आचरणलाई जीवनको आधार बनाउन आग्रह गर्दछु। साथै, सम्मानित अभिभावकहरूलाई विद्यालयसँग निरन्तर सहकार्य गर्दै आफ्ना बालबालिकाको शैक्षिक तथा नैतिक विकासमा सक्रिय भूमिका निर्वाह गर्न हार्दिक अनुरोध गर्दछु।
-हामी सबै मिलेर सिकाइको उत्कृष्ट वातावरण निर्माण गरौँ। आधुनिक प्रविधिको सकारात्मक उपयोग गरौँ, वातावरण संरक्षण, सरसफाइ आपसी सम्मान र सामाजिक उत्तरदायीत्व लाई बिधालय संस्कृतिको अभिन्न अंग बनाऔं हाम्रो लक्ष्य केवल परीक्षामा उत्कृष्ट अंक ल्याउनु मात्र होइन,असल,सक्षम,सिर्जनसिल जिम्मेवार नागरिक निर्माण गर्ने हो ।<br>लक्ष्रयहरू<br> 
+हामी सबै मिलेर सिकाइको उत्कृष्ट वातावरण निर्माण गरौँ। आधुनिक प्रविधिको सकारात्मक उपयोग गरौँ, वातावरण संरक्षण, सरसफाइ आपसी सम्मान र सामाजिक उत्तरदायीत्व लाई बिधालय संस्कृतिको अभिन्न अंग बनाऔं हाम्रो लक्ष्य केवल परीक्षामा उत्कृष्ट अंक ल्याउनु मात्र होइन,असल,सक्षम,सिर्जनसिल जिम्मेवार नागरिक निर्माण गर्ने हो ।<br>लक्ष्यहरू<br> 
 १. पठन पाठनका अतिरिक्त असल, सक्षम, अनुशासित, नैतिकवान् र जिम्मेवार नागरिक निर्माण गर्ने पवित्र थलो विद्यालय भएकोले हाम्रो विद्यालयलाई समयसापेक्ष, गुणस्तरीय, प्रविधिमैत्री निर्माण गर्ने लक्ष्यका साथ हामी अगाडि बढ्नुपर्दछ ।<br>
 २. प्रत्येक विद्यार्थीको गुणस्तर सुधार गर्दै सिकाइ उपलब्धि बढाउन अतिरिक्त कक्षा, नियमित मूल्याङ्कन, आधुनिक तथा विद्यार्थीकेन्द्रित शिक्षण विधि, सूचना प्रविधिको प्रभावकारी प्रयोग गरिनेछ, जसबाट विद्यालयले शैक्षिक गुणस्तर सुधार गर्ने लक्ष्य लिएको छ ।<br>
 ३. अनुशासन, नैतिक शिक्षा र सकारात्मक व्यवहारलाई विद्यालयको मुख्य आधार मानिनेछ। विद्यार्थीहरूमा इमानदारी, जिम्मेवारी, नेतृत्व क्षमता, सामाजिक उत्तरदायित्वको विकास गरिनेछ।<br>
@@ -369,7 +373,7 @@
 
 १. विद्यालयलाई गुणस्तरीय, अनुशासित र विद्यार्थीमैत्री संस्थाको रूपमा विकास गर्ने,<br>
 २. प्रत्येक विद्यार्थीको सिकाइ उपलब्धि (Learning Achievement) निरन्तर सुधार गर्ने,<br>
-३. आधारभूत तहमा शतप्रतिशत भर्ना, नियमित उपस्थिति, र कक्षा उत्तीर्ण दर bढाउने,<br>
+३. आधारभूत तहमा शतप्रतिशत भर्ना, नियमित उपस्थिति, र कक्षा उत्तीर्ण दर बढाउने,<br>
 ४. SEE मा उत्कृष्ट नतिजा हासिल गर्ने,<br>
 ५. आधुनिक प्रविधिमैत्री ICT मा आधारित शिक्षण सिकाइ लागू गर्ने,<br>
 ६. शिक्षकको व्यावसायिक क्षमता अभिवृद्धिमा तालिम तथा कार्यशाला सञ्चालन गर्ने,<br>
@@ -403,7 +407,7 @@
                             <blockquote id="chairman-message" class="text-gray-700 italic text-sm leading-relaxed text-justify overflow-hidden transition-all duration-300 pr-2" style="max-height: 9.5em;">
                                 "आदरणीय अभिभावक, शिक्षक-शिक्षिका, विद्यार्थी भाइबहिनीहरू, स्थानीय शिक्षाप्रेमी, युवा तथा बुज्रुक सामाजिक व्यक्तित्वहरू!
 साथै विद्यालय स्थापना कालका ती अग्रज ऐतिहासिक व्यक्तित्वहरू तथा उहाँका परिवारजन, विभिन्न कालखण्डमा यस विद्यालयको सर्वाङ्गीण विकासका लागि सल्लाह-सुझाव सहित चल-अचल सम्पत्ति को योगदान गर्नुहुने दाता तथा दाता-परिवार, पूर्वविद्यार्थी, शिक्षक-शिक्षिका, विद्यालय व्यवस्थापन समिति सम्पूर्णमा न्यानो नम्र नमस्कार!
-साथै ऐतिहासिक दस्तावेज, वर्तमान अवस्था र सुन्दर भविष्यको परिकल्पनाको सँगालो यस विद्यालयको वेबसाइटमा यहाँहरूलाई स्वागत छ । <br>
+साथै ऐतिहासिक दस्तावेज, वर्तमान अवस्था र सुन्दर भविष्यको परिकल्पनाको सँगालो यस विद्यालयको वेबसाइटमा Hereहरूलाई स्वागत छ । <br>
 शिक्षा समाजको सर्वाङ्गीण विकासको मेरुदण्ड हो भने विद्यालय त्यसको माध्यम हो, जहाँ आजका बालबालिका (भोलिका कर्णधारहरू) जीवनको दोस्रो पाठशालाका रूपमा आफ्नो दैनिकीको एक-तिहाइ समय बिताइरहेका हुन्छन्। अतः विद्यालयीय शिक्षा औपचारिक मात्र नभई असल चरित्र, नैतिकवान्, अनुशासित, सामाजिक, व्यावहारिक, सिर्जनशील र जिम्मेवार नागरिक निर्माण गर्ने साझा थलो बन्नुपर्दछ।
 यसै उद्देश्य र विश्वासका साथ विद्यालयको भौतिक सुधार, प्रशासनिक चुस्तता, शैक्षिक गुणस्तर, पारदर्शी व्यवस्थापन र समुदायसँगको सहकार्यलाई अझ मजबुत र सुदृढ बनाउन विद्यालय व्यवस्थापन समिति तन-मन-वचन र अधिकारले भ्याएसम्म लाग्ने प्रतिबद्धता जाहेर गर्दछ। साथै विद्यालयको चौतर्फी विकासमा यहाँहरूको रचनात्मक सुझाव तथा सहयोग सधैँ स्वागतयोग्य रहनेछ।
 ।"
@@ -411,6 +415,7 @@
                             <button id="chairman-see-more" onclick="toggleMessage('chairman-message', 'chairman-see-more')" class="text-blue-600 font-bold text-xs mt-2 focus:outline-none hover:underline block">See More</button>
                         </div>
                     </div>
+ 
  <div class="bg-blue-50 p-6 rounded-2xl border-l-8 border-purple-600 shadow-sm">
                         <div class="flex items-center space-x-4 mb-3">
                             <div class="overflow-hidden rounded-full w-16 h-16 border-2 border-purple-600 shrink-0">
@@ -432,14 +437,12 @@
 <br>💡 रचनात्मक सुझाव र प्रतिक्रियाको अपेक्षा
 यो वेबसाइटलाई अझ बढी उपयोगी, सहज र सूचनामूलक बनाउन यहाँहरूको रचनात्मक सुझाव, सल्लाह र प्रतिक्रियाको सधैँ स्वागत गरिनेछ। आफ्ना अमूल्य विचारहरू निर्धक्क भई साझा गरिदिनुहुन म सम्पूर्ण पाठकवर्गमा हार्दिक अनुरोध गर्दछु।
 अन्त्यमा, यस वेबसाइटको सोचलाई साकार पार्ने क्रममा प्राविधिक डिजाइन र कोडिङका हरेक चरणहरू पार गर्दै यहाँसम्म पुर्‍याउन प्रत्यक्ष वा अप्रत्यक्ष रूपमा हौसला र सहयोग पुर्‍याउनुहुने सम्पूर्ण शिक्षक-कर्मचारी, एवम् विद्यालय व्यवस्थापन समितिसमक्ष हार्दिक आभार प्रकट गर्दछु।
-
-
 ।"
                             </blockquote>
                             <button id="admin-see-more" onclick="toggleMessage('admin-message', 'admin-see-more')" class="text-blue-600 font-bold text-xs mt-2 focus:outline-none hover:underline block">See More</button>
                         </div>
-
                 </div>
+
  <div class="bg-blue-50 p-6 rounded-2xl border-l-8 border-purple-600 shadow-sm">
                         <div class="flex items-center space-x-4 mb-3">
                             <div class="overflow-hidden rounded-full w-16 h-16 border-2 border-purple-600 shrink-0">
@@ -453,17 +456,13 @@
                         <div class="relative">
                             <blockquote id="education-message" class="text-gray-700 italic text-sm leading-relaxed text-justify overflow-hidden transition-all duration-300 pr-2" style="max-height: 9.5em;">
                                 "प्रिय विद्यार्थीहरू, आदरणीय अभिभावकज्यूहरू, सम्माननीय शिक्षक–शिक्षिका तथा विद्यालय परिवार,
-
 हाम्रो विद्यालयले गुणस्तरीय, व्यवहारिक र जीवनोपयोगी शिक्षामार्फत सक्षम, अनुशासित, नैतिक तथा जिम्मेवार नागरिक उत्पादन गर्ने लक्ष्यका साथ निरन्तर कार्य गर्दै आएको छ। यस अभियानमा शिक्षक, विद्यार्थी, अभिभावक तथा समुदायको सक्रिय सहयोग र सहभागिता अत्यन्त महत्वपूर्ण रहेको छ।
-
 विद्यार्थीहरूलाई सिर्जनशील, आत्मविश्वासी र जिम्मेवार बनाउन विद्यालयले शैक्षिक, अतिरिक्त तथा सहपाठ्यक्रियात्मक गतिविधिलाई समान महत्व दिएको छ। हामी सबै विद्यार्थीलाई नियमित अध्ययन, अनुशासन, परिश्रम र असल आचरण अपनाई आफ्नो उज्ज्वल भविष्य निर्माण गर्न प्रेरित गर्दछौँ।
-
 यस विद्यालयप्रति विश्वास र सहयोग गर्नुहुने सम्पूर्ण अभिभावक, शिक्षक–शिक्षिका, विद्यालय व्यवस्थापन समिति, शुभेच्छुक तथा सम्पूर्ण विद्यालय परिवारप्रति हार्दिक आभार व्यक्त गर्दछौँ। आगामी दिनमा समेत निरन्तर सहयोग र सद्भावबाट विद्यालयलाई अझ उत्कृष्ट शैक्षिक संस्थाको रूपमा विकास गर्न सफल हुने विश्वास लिएको छु।
 ।"
                             </blockquote>
                             <button id="education-see-more" onclick="toggleMessage('education-message', 'education-see-more')" class="text-blue-600 font-bold text-xs mt-2 focus:outline-none hover:underline block">See More</button>
                         </div>
-
             </div>
         </section>
 
@@ -595,68 +594,217 @@
             </div>
         </section>
 
+        <!-- नवीनतम सूचनाहरू (यहाँ फेसबुक शेयर लिङ्क व्यवस्थित गरिएको छ) -->
         <section id="notices" class="container mx-auto px-4 py-16 scroll-mt-20">
-            <div class="grid md:grid-cols-2 gap-12">
-                <div>
-                    <h2 class="text-2xl font-bold text-blue-900 mb-6 border-b-2 border-blue-600 pb-2"><i class="fas fa-bullhorn text-red-500 mr-2"></i>नवीनतम सूचनाहरू</h2>
-                    <div class="space-y-4">
-                        <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4">
-                            <div>
-                                <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> २०८३ असार २७</span>
-                                <a href="#" class="font-bold text-gray-800 hover:text-blue-600 block mt-1">प्रथम त्रैमासिक परीक्षा तालिका प्रकाशन सम्बन्धी सूचना</a>
-                            </div>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-xs font-bold shrink-0 flex items-center space-x-1 transition">
-                                <i class="fab fa-facebook-f mr-1"></i><span>शेयर</span>
-                            </a>
-                        </div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4">
+          
+<div class="grid md:grid-cols-2 gap-12">
     <div>
-        <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> २०८३ साउन  ०७</span>
-        <a href="#" class="font-bold text-gray-800 hover:text-blue-600 block mt-1 text-justify">वर्षे विदा सम्बन्धि सूचना <br>प्रस्तुत विषयमा मनहरी गाउँपालिको २०८३ सालको शैक्षिक पात्रो अनुसार यहि मिति २०८३ श्रावण ०८ गते शुक्रबार देखि २०८३ श्रावण ३१ गते आइतबार सम्म वर्षे विदा दिने निर्णय भएको हुँदा उक्त विदा अवधिभर विद्यालयको शैक्षिक तथा प्रशासनिक कार्य वन्द रहने र भदौ १ गते देखि नियमित पठनपाठन तथा प्रशासनिक कार्य सूचारु रहने व्यहोरा सम्बन्धित सबैमा जानकारी गराइन्छ ।</a>
-    </div>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-xs font-bold shrink-0 flex items-center space-x-1 transition">
-        <i class="fab fa-facebook-f mr-1"></i><span>शेयर</span>
-    </a>
-</div>
-               
+        <h2 class="text-2xl font-bold text-blue-900 mb-6 border-b-2 border-blue-600 pb-2"><i class="fas fa-bullhorn text-red-500 mr-2"></i>नवीनतम सूचनाहरू</h2>
+        
+        <!-- सूचनाहरूको मुख्य कन्टेनर -->
+        <div id="notices-container" class="space-y-4">
+            
+            <!-- सूचना १ -->
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
+                 data-date="२०८३ साउन ०७" 
+                 data-title="वर्षे विदा सम्बन्धी अत्यन्त जरुरी सूचना" 
+                 data-desc="प्रस्तुत विषयमा मनहरी गाउँपालिको २०८३ सालको शैक्षिक पात्रो अनुसार यहि मिति २०८३ श्रावण ०८ गते शुक्रबार देखि २०८३ श्रावण ३१ गते आइतबार सम्म वर्षे विदा दिने निर्णय भएको हुँदा उक्त विदा अवधिभर विद्यालयको शैक्षिक तथा प्रशासनिक कार्य वन्द रहने र भदौ १ गते देखि नियमित पठनपाठन तथा प्रशासनिक कार्य सूचारु रहने व्यहोरा सम्बन्धित सबैमा जानकारी गराइन्छ ।">
+                <div class="cursor-pointer flex-grow notice-content-trigger">
+                    <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span class="notice-date-text"></span></span>
+                    <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition notice-title-text"></span>
+                    <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
+                </div>
+                <div class="flex items-center space-x-2 shrink-0">
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
+                        थप हेर्नुहोस्
+                    </button>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- सूचना २ -->
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
+                 data-date="२०८३ असार २५" 
+                 data-title="प्रविधिको सदुपयोग गरौं" 
+                 data-desc="मोबाइल, कम्प्युटर र इन्टरनेटलाई मनोरञ्जनका लागि मात्र प्रयोग नगरी शैक्षिक भिडियो हेर्न, नयाँ सीप सिक्न, डिजिटल पुस्तक पढ्न तथा ज्ञानवर्धक सामग्री खोज्न प्रयोग गरौं। सामाजिक सञ्जाल र अनावश्यक गेममा समय खेर नफालौं।">
+                <div class="cursor-pointer flex-grow notice-content-trigger">
+                    <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span class="notice-date-text"></span></span>
+                    <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition notice-title-text"></span>
+                    <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
+                </div>
+                <div class="flex items-center space-x-2 shrink-0">
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
+                        थप हेर्नुहोस्
+                    </button>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- सूचना ३ -->
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
+                 data-date="२०८३ साउन २५" 
+                 data-title="नियमित अध्ययन गर्ने बानी बसालौं" 
+                 data-desc="विद्यालय बिदा भए पनि दैनिक कम्तीमा १–२ घण्टा पाठ्यपुस्तक तथा आफूले कमजोर ठानेका विषयको अध्ययन गरौं। अघिल्लो कक्षामा पढेका पाठहरू दोहोर्याउनुका साथै आगामी कक्षाका पाठहरूबारे सामान्य जानकारी लिने बानी बसालौं।आगामी धान दिवसको अवसर पारेर विद्यालयमा अन्तर-सद्भाव हाजिरी जवाफ तथा वक्तृत्वकला प्रतियोगिता आयोजना हुनेछ।">
+                <div class="cursor-pointer flex-grow notice-content-trigger">
+                    <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span class="notice-date-text"></span></span>
+                    <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition notice-title-text"></span>
+                    <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
+                </div>
+                <div class="flex items-center space-x-2 shrink-0">
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
+                        थप हेर्नुहोस्
+                    </button>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- लुकेका थप सूचनाहरू (See More मा क्लिक गरेपछि खुल्ने) -->
+            <div id="extra-notices" class="space-y-4 hidden">
+                <!-- सूचना ४ -->
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
+                     data-date="२०८३ साउन २५" 
+                     data-title="सिर्जनात्मक तथा अतिरिक्त क्रियाकलापमा सहभागी बनौं" 
+                     data-desc="बिदाको समय चित्रकला, कथा/कविता लेखन, पुस्तक पढ्ने, हस्तकला, संगीत, खेलकुद तथा अन्य सिर्जनात्मक गतिविधिमा प्रयोग गरौं। यस्ता गतिविधिले ज्ञान, सीप र आत्मविश्वास बढाउन सहयोग गर्छ।">
+                    <div class="cursor-pointer flex-grow notice-content-trigger">
+                        <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span class="notice-date-text"></span></span>
+                        <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition notice-title-text"></span>
+                        <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
+                    </div>
+                    <div class="flex items-center space-x-2 shrink-0">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
+                            थप हेर्नुहोस्
+                        </button>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
                     </div>
                 </div>
-                
-                <div id="ai-ict-section">
-                    <h2 class="text-2xl font-bold text-blue-900 mb-6 border-b-2 border-purple-600 pb-2"><i class="fas fa-laptop-code text-purple-600 mr-2"></i>AI र ICT शिक्षा प्रवर्द्धन</h2>
-                    <div class="bg-white p-6 rounded-xl border shadow-sm">
-                        <p class="text-gray-600 text-sm mb-4">आधुनिक डिजिटल युगको गतिसँगै विद्यालयले विद्यार्थीहरूमा प्रविधि र कृत्रिम बुद्धिमत्ता (AI) सम्बन्धी ज्ञान विकासमा जोड दिइने छ।</p>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-start p-3 bg-blue-50/50 rounded-lg border border-blue-100">
-                                <div class="text-blue-600 text-xl mt-1 mr-3"><i class="fas fa-brain"></i></div>
-                                <div>
-                                    <h4 class="font-bold text-blue-900 text-sm">AI तथा स्मार्ट सिकाई (Smart Learning)</h4>
-                                    <p class="text-xs text-gray-600 mt-0.5">शिक्षण सिकाइ प्रक्रियामा AI टुलहरूको सही प्रयोग र डिजिटल एनिमेसन मार्फत कठिन विषयहरूलाई सहज बनाउने प्रयास।</p>
-                                </div>
-                            </div>
 
-                            <div class="flex items-start p-3 bg-purple-50/50 rounded-lg border border-purple-100">
-                                <div class="text-purple-600 text-xl mt-1 mr-3"><i class="fas fa-code"></i></div>
-                                <div>
-                                    <h4 class="font-bold text-purple-900 text-sm">आधारभूत कोडिङ र कम्प्युटर साक्षरता</h4>
-                                    <p class="text-xs text-gray-600 mt-0.5">विद्यार्थीहरूलाई प्रविधिको केवल प्रयोगकर्ता मात्र नबनाई सिर्जनशील बनाउन आधारभूत प्रोग्रामिङ र तार्किक क्षमता अभिवृद्धि कक्षाहरू संचालन गर्ने सोच बनाइएको छ ।</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start p-3 bg-emerald-50/50 rounded-lg border border-emerald-100">
-                                <div class="text-emerald-600 text-xl mt-1 mr-3"><i class="fas fa-network-wired"></i></div>
-                                <div>
-                                    <h4 class="font-bold text-emerald-900 text-sm">साइवर सुरक्षा(Cyber Security)</h4>
-                                    <p class="text-xs text-gray-600 mt-0.5">इन्टरनेट र सामाजिक सञ्जालको सुरक्षित, मर्यादित र सिर्जनशील प्रयोगका बारेमा नियमित सचेतना कार्यक्रम।</p>
-                                </div>
-                            </div>
-                        </div>
+                <!-- सूचना ५ -->
+                <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
+                     data-date="२०८३ साउन २५" 
+                     data-title="स्वास्थ्य, सरसफाइ र अनुशासनमा ध्यान दिऔं" 
+                     data-desc="घरपरिवारलाई सहयोग गर्दै बिदाको समयलाई रमाइलो, सुरक्षित र उपलब्धिमूलक बनाऔं।">
+                    <div class="cursor-pointer flex-grow notice-content-trigger">
+                        <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span class="notice-date-text"></span></span>
+                        <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition notice-title-text"></span>
+                        <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
+                    </div>
+                    <div class="flex items-center space-x-2 shrink-0">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
+                            थप हेर्नुहोस्
+                        </button>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-        </section>
 
+            <!-- See More / See Less बटन -->
+            <div class="text-center pt-2">
+                <button id="toggle-notices-btn" onclick="toggleMoreNotices()" class="text-blue-600 hover:text-blue-800 font-bold text-sm focus:outline-none flex items-center justify-center mx-auto space-x-1">
+                    <span id="toggle-text">सबै सूचनाहरू हेर्नुहोस् (See More)</span>
+                    <i id="toggle-icon" class="fas fa-chevron-down text-xs"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+    
+    <div id="ai-ict-section">
+        <!-- AI र ICT शिक्षा सेक्सन -->
+        <h2 class="text-2xl font-bold text-blue-900 mb-6 border-b-2 border-purple-600 pb-2"><i class="fas fa-laptop-code text-purple-600 mr-2"></i>AI र ICT शिक्षा प्रवर्द्धन</h2>
+        <div class="bg-white p-6 rounded-xl border shadow-sm">
+            <p class="text-gray-600 text-sm mb-4">आधुनिक डिजिटल युगको गतिसँगै विद्यालयले विद्यार्थीहरूमा प्रविधि र कृत्रिम बुद्धिमत्ता (AI) सम्बन्धी ज्ञान विकासमा जोड दिइने छ।</p>
+            
+            <div class="space-y-4">
+                <div class="flex items-start p-3 bg-blue-50/50 rounded-lg border border-blue-100">
+                    <div class="text-blue-600 text-xl mt-1 mr-3"><i class="fas fa-brain"></i></div>
+                    <div>
+                        <h4 class="font-bold text-blue-900 text-sm">AI तथा स्मार्ट सिकाई (Smart Learning)</h4>
+                        <p class="text-xs text-gray-600 mt-0.5">शिक्षण सिकाइ प्रक्रियामा AI टुलहरूको सही प्रयोग र डिजिटल एनिमेसन मार्फत कठिन विषयहरूलाई सहज बनाउने प्रयास।</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start p-3 bg-purple-50/50 rounded-lg border border-purple-100">
+                    <div class="text-purple-600 text-xl mt-1 mr-3"><i class="fas fa-code"></i></div>
+                    <div>
+                        <h4 class="font-bold text-blue-900 text-sm">आधारभूत कोडिङ र कम्प्युटर साक्षरता</h4>
+                        <p class="text-xs text-gray-600 mt-0.5">विद्यार्थीहरूलाई प्रविधिको केवल प्रयोगकर्ता मात्र नबनाई सिर्जनशील बनाउन आधारभूत प्रोग्रामिङ र तार्किक क्षमता अभिवृद्धि कक्षाहरू संचालन गर्ने सोच बनाइएको छ ।</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start p-3 bg-emerald-50/50 rounded-lg border border-emerald-100">
+                    <div class="text-emerald-600 text-xl mt-1 mr-3"><i class="fas fa-network-wired"></i></div>
+                    <div>
+                        <h4 class="font-bold text-blue-900 text-sm">साइवर सुरक्षा (Cyber Security)</h4>
+                        <p class="text-xs text-gray-600 mt-0.5">इन्टरनेट र सामाजिक सञ्जालको सुरक्षित, मर्यादित र सिर्जनशील प्रयोगका बारेमा नियमित सचेतना कार्यक्रम।</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- जाभास्क्रिप्ट कोड -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const noticeCards = document.querySelectorAll('.notice-card');
+    
+    noticeCards.forEach(card => {
+        const date = card.getAttribute('data-date');
+        const title = card.getAttribute('data-title');
+        const desc = card.getAttribute('data-desc');
+        
+        // डेटा स्वतः HTML को भित्री भागमा राख्ने
+        const dateSpan = card.querySelector('.notice-date-text');
+        const titleSpan = card.querySelector('.notice-title-text');
+        
+        if(dateSpan) dateSpan.innerText = date;
+        if(titleSpan) titleSpan.innerText = title;
+        
+        // बक्समा क्लिक गर्दा मोडल खुल्ने
+        const contentTrigger = card.querySelector('.notice-content-trigger');
+        if(contentTrigger) {
+            contentTrigger.addEventListener('click', function() {
+                openNoticeModal(date, title, desc);
+            });
+        }
+        
+        // "थप हेर्नुहोस्" बटनमा क्लिक गर्दा मोडल खुल्ने
+        const btnTrigger = card.querySelector('.notice-btn');
+        if(btnTrigger) {
+            btnTrigger.addEventListener('click', function() {
+                openNoticeModal(date, title, desc);
+            });
+        }
+    });
+});
+
+// See More / See Less टगल गर्ने फंक्सन
+function toggleMoreNotices() {
+    const extraNotices = document.getElementById('extra-notices');
+    const toggleText = document.getElementById('toggle-text');
+    const toggleIcon = document.getElementById('toggle-icon');
+
+    if (extraNotices.classList.contains('hidden')) {
+        extraNotices.classList.remove('hidden');
+        toggleText.innerText = "कम मात्र देखाउनुहोस् (See Less)";
+        toggleIcon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+    } else {
+        extraNotices.classList.add('hidden');
+        toggleText.innerText = "सबै सूचनाहरू हेर्नुहोस् (See More)";
+        toggleIcon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+    }
+}
+</script>
         <section class="container mx-auto px-4 py-16 border-t">
             <div class="text-center max-w-xl mx-auto mb-12">
                 <h2 class="text-3xl font-bold text-blue-900 mb-2">हाम्रो फोटो ग्यालरी</h2>
@@ -722,12 +870,10 @@
                     </div>
                     
                     <div class="md:col-span-3 w-full flex flex-col md:flex-row gap-6">
-                        <!-- Google Map -->
                         <div class="flex-grow min-h-[260px] bg-gray-300 rounded-xl overflow-hidden relative shadow-sm border">
                             <iframe class="w-full h-full absolute inset-0 border-0" src="https://maps.google.com/maps?q=27.414256,84.939989&hl=en&z=15&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                         
-                        <!-- सूचना अधिकारी -->
                         <div class="w-full md:w-64 bg-white p-5 rounded-xl shadow-sm border border-gray-200 flex flex-col items-center text-center">
                             <h3 class="font-bold text-blue-900 mb-4 border-b pb-2 w-full">सूचना अधिकारी</h3>
                             <div class="overflow-hidden rounded-full w-24 h-24 border-2 border-blue-600 mb-3">
@@ -773,6 +919,19 @@
         </footer>
     </div>
 
+    <!-- Notice Detail Modal -->
+    <div id="notice-modal" class="fixed inset-0 bg-black/70 hidden z-[99999] flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl p-6 max-w-lg w-full shadow-2xl relative max-h-[80vh] overflow-y-auto">
+            <button onclick="closeNoticeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
+            <span id="modal-notice-date" class="text-xs text-blue-600 font-semibold block mb-1"></span>
+            <h3 id="modal-notice-title" class="text-xl font-bold text-blue-900 mb-3"></h3>
+            <p id="modal-notice-desc" class="text-gray-700 text-sm leading-relaxed text-justify"></p>
+            <div class="mt-6 text-right">
+                <button onclick="closeNoticeModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const audio = document.getElementById('school-song');
         const musicIcon = document.getElementById('music-icon');
@@ -794,7 +953,6 @@
             }
         }
 
-        // अटो-प्लेको लागि लजिक
         window.addEventListener('load', () => {
             const playAttempt = () => {
                 audio.play().then(() => {
@@ -803,13 +961,10 @@
                     musicBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
                     hasInteracted = true;
                 }).catch(error => {
-                    console.log("अटो-प्ले रोकियो, प्रयोगकर्ताको अन्तरक्रिया आवश्यक छ।");
+                    console.log("अटो-प्ले रोकियो।");
                 });
             };
-
             playAttempt();
-
-            // यदि अटो-प्ले भएन भने, पहिलो क्लिकमा प्ले गर्नको लागि
             document.addEventListener('click', () => {
                 if (!hasInteracted) {
                     audio.play();
@@ -827,7 +982,6 @@
 
             if (element) {
                 const isMobile = element.classList.contains('mobile-nav-link') || element.closest('#mobile-menu');
-                
                 if (isMobile) {
                     document.querySelectorAll('.mobile-nav-link').forEach(link => {
                         link.classList.remove('text-blue-600');
@@ -849,7 +1003,6 @@
                 pageViewer.classList.add('hidden');
                 homeView.classList.remove('hidden');
                 pageViewer.src = "";
-                
                 if (sectionId) {
                     const elementToScroll = document.getElementById(sectionId);
                     if (elementToScroll) {
@@ -870,9 +1023,7 @@
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalImg');
             const modalDetails = document.getElementById('modalDetails');
-            
             modalImg.src = src;
-            
             if (name) {
                 document.getElementById('modalName').innerText = name;
                 document.getElementById('modalRole').innerText = role;
@@ -881,7 +1032,6 @@
             } else {
                 modalDetails.classList.add('hidden');
             }
-            
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden'; 
         }
@@ -892,22 +1042,33 @@
             document.body.style.overflow = 'auto';
         }
 
+        function openNoticeModal(date, title, desc) {
+            document.getElementById('modal-notice-date').innerText = date;
+            document.getElementById('modal-notice-title').innerText = title;
+            document.getElementById('modal-notice-desc').innerText = desc;
+            document.getElementById('notice-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNoticeModal() {
+            document.getElementById('notice-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
         function toggleMessage(contentId, btnId) {
             const content = document.getElementById(contentId);
             const btn = document.getElementById(btnId);
-            
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                btn.innerText = "See Less";
-            } else {
-                content.style.maxHeight = "9.5em";
+            if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+                content.style.maxHeight = "0px";
                 btn.innerText = "See More";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                btn.innerText = "See Less";
             }
         }
 
         function searchInPage(keyword) {
             if (!keyword.trim()) return;
-
             const previousHighlights = document.querySelectorAll('.search-highlight');
             previousHighlights.forEach(el => {
                 el.replaceWith(document.createTextNode(el.textContent));
@@ -940,11 +1101,9 @@
                 setTimeout(() => {
                     const targetNode = matches[0];
                     const parentEl = targetNode.parentNode;
-                    
                     const regex = new RegExp(`(${keyword})`, 'gi');
                     const newHTML = parentEl.innerHTML.replace(regex, `<span class="search-highlight">$1</span>`);
                     parentEl.innerHTML = newHTML;
-
                     const highlightTarget = parentEl.querySelector('.search-highlight');
                     if (highlightTarget) {
                         highlightTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -957,40 +1116,30 @@
 
         const siteSearchInput = document.getElementById('site-search');
         siteSearchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
+            if (e.key === 'Enter') { performSearch(); }
         });
 
         function performSearch() {
-            const query = siteSearchInput.value;
-            searchInPage(query);
+            searchInPage(siteSearchInput.value);
         }
 
         const mobileSearchInput = document.getElementById('mobile-site-search');
         mobileSearchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                performMobileSearch();
-            }
+            if (e.key === 'Enter') { performMobileSearch(); }
         });
 
         function performMobileSearch() {
-            const query = mobileSearchInput.value;
-            searchInPage(query);
+            searchInPage(mobileSearchInput.value);
             document.getElementById('mobile-search-box').classList.add('hidden');
         }
 
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
 
         const mobileSearchBtn = document.getElementById('mobile-search-btn');
         const mobileSearchBox = document.getElementById('mobile-search-box');
-        mobileSearchBtn.addEventListener('click', () => {
-            mobileSearchBox.classList.toggle('hidden');
-        });
+        mobileSearchBtn.addEventListener('click', () => { mobileSearchBox.classList.toggle('hidden'); });
 
         const aboutDropdownBtn = document.getElementById('about-dropdown-btn');
         const aboutDropdownMenu = document.getElementById('about-dropdown-menu');
@@ -1011,20 +1160,6 @@
             if (!aboutDropdownMenu.classList.contains('hidden')) {
                 aboutDropdownMenu.classList.add('hidden');
             }
-        });
-
-        const subLinks = document.querySelectorAll('#mobile-about-menu a');
-        subLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-
-        const navLinks = mobileMenu.querySelectorAll('a:not(#mobile-about-btn *)');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
         });
     </script>
 </body>
