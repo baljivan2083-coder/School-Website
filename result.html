@@ -94,31 +94,40 @@
         &copy; 2083 Shree Bal Jivan Jyoti Secondary School. All rights reserved.
     </footer>
 
-    <script>
-        function proceedToResult() {
-            const examSelector = document.getElementById('exam-selector').value;
-            const errDisplay = document.getElementById('error-display');
+<script>
+    function proceedToResult() {
+        const examSelector = document.getElementById('exam-selector').value;
+        const errDisplay = document.getElementById('error-display');
 
-            // Reset error message
-            errDisplay.classList.add('hidden');
-            errDisplay.innerText = "";
+        // Reset error message
+        errDisplay.classList.add('hidden');
+        errDisplay.innerText = "";
 
-            if (!examSelector) {
-                errDisplay.innerText = "कृपया ड्रपडाउनबाट परीक्षाको किसिम छान्नुहोस्।";
-                errDisplay.classList.remove('hidden');
-                return;
-            }
-
-            // Define URLs
-            const urls = {
-                "first-terminal": "https://script.google.com/macros/s/AKfycbx29k3UgCHtqCloaGxoxKHg2TOD-YBx6Sv5K2acIy4efbSE2uvAwRaVEzvK0wgMm-wYDQ/exec",
-                "second-terminal": "https://script.google.com/macros/s/AKfycbxZ_C8ChoLiV7v4BQ1jE-4HPuCkkgE1CVFCldFvfWmFKtvsX6ei27Oc-7vSxrlQGATn/exec",
-                "final-exam": "https://script.google.com/macros/s/AKfycbxTxml5xMyjQ3OISmeE81ni4cum_V-0YEFJ2S4-SBrqodEojVK-FOjVoghDSPkop1p5/exec"
-            };
-
-            // Redirect to the selected URL
-            window.location.href = urls[examSelector];
+        if (!examSelector) {
+            errDisplay.innerText = "कृपया ड्रपडाउनबाट परीक्षाको किसिम छान्नुहोस्।";
+            errDisplay.classList.remove('hidden');
+            return;
         }
-    </script>
+
+        let targetURL = "";
+
+        // Handle routing based on selection with updated URLs
+        if (examSelector === "first-terminal") {
+            targetURL = "https://script.google.com/macros/s/AKfycbzovkzBUb81jsne59_22a2SxxFrHXl7g9QAl8mkPKAPrqOkmqxwfQuSPeVsZisSS5QDgA/exec";
+        } 
+        else if (examSelector === "second-terminal") {
+            targetURL = "https://script.google.com/macros/s/AKfycbxZ_C8ChoLiV7v4BQ1jE-4HPuCkkgE1CVFCldFvfWmFKtvsX6ei27Oc-7vSxrlQGATn/exec";
+        } 
+        else if (examSelector === "final-exam") {
+            targetURL = "https://script.google.com/macros/s/AKfycbxTxml5xMyjQ3OISmeE81ni4cum_V-0YEFJ2S4-SBrqodEojVK-FOjVoghDSPkop1p5/exec";
+        }
+
+        // Open the google script result system smoothly in a new tab/window
+        if (targetURL) {
+            window.open(targetURL, '_blank');
+        }
+    }
+</script>
+
 </body>
 </html>
