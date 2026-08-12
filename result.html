@@ -94,36 +94,31 @@
         &copy; 2083 Shree Bal Jivan Jyoti Secondary School. All rights reserved.
     </footer>
 
-<script>
-    function proceedToResult() {
-        const examSelector = document.getElementById('exam-selector').value;
-        const errDisplay = document.getElementById('error-display');
+    <script>
+        function proceedToResult() {
+            const examSelector = document.getElementById('exam-selector').value;
+            const errDisplay = document.getElementById('error-display');
 
-        // Reset error message
-        errDisplay.classList.add('hidden');
-        errDisplay.innerText = "";
+            // Reset error message
+            errDisplay.classList.add('hidden');
+            errDisplay.innerText = "";
 
-        if (!examSelector) {
-            errDisplay.innerText = "कृपया ड्रपडाउनबाट परीक्षाको किसिम छान्नुहोस्।";
-            errDisplay.classList.remove('hidden');
-            return;
+            if (!examSelector) {
+                errDisplay.innerText = "कृपया ड्रपडाउनबाट परीक्षाको किसिम छान्नुहोस्।";
+                errDisplay.classList.remove('hidden');
+                return;
+            }
+
+            // Define URLs
+            const urls = {
+                "first-terminal": "https://script.google.com/macros/s/AKfycbx29k3UgCHtqCloaGxoxKHg2TOD-YBx6Sv5K2acIy4efbSE2uvAwRaVEzvK0wgMm-wYDQ/exec",
+                "second-terminal": "https://script.google.com/macros/s/AKfycbxZ_C8ChoLiV7v4BQ1jE-4HPuCkkgE1CVFCldFvfWmFKtvsX6ei27Oc-7vSxrlQGATn/exec",
+                "final-exam": "https://script.google.com/macros/s/AKfycbxTxml5xMyjQ3OISmeE81ni4cum_V-0YEFJ2S4-SBrqodEojVK-FOjVoghDSPkop1p5/exec"
+            };
+
+            // Redirect to the selected URL
+            window.location.href = urls[examSelector];
         }
-
-        // Handle routing based on selection with updated URL for first term
-        if (examSelector === "first-terminal") {
-            const firstTerminalURL = "https://script.google.com/macros/s/AKfycbx29k3UgCHtqCloaGxoxKHg2TOD-YBx6Sv5K2acIy4efbSE2uvAwRaVEzvK0wgMm-wYDQ/exec";
-            window.location.href = firstTerminalURL;
-        } 
-        else if (examSelector === "second-terminal") {
-            const secondTerminalURL = "https://script.google.com/macros/s/AKfycbxZ_C8ChoLiV7v4BQ1jE-4HPuCkkgE1CVFCldFvfWmFKtvsX6ei27Oc-7vSxrlQGATn/exec";
-            window.location.href = secondTerminalURL;
-        } 
-        else if (examSelector === "final-exam") {
-            const finalExamURL = "https://script.google.com/macros/s/AKfycbxTxml5xMyjQ3OISmeE81ni4cum_V-0YEFJ2S4-SBrqodEojVK-FOjVoghDSPkop1p5/exec";
-            window.location.href = finalExamURL;
-        }
-    }
-</script>
-
+    </script>
 </body>
 </html>
