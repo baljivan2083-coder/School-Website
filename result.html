@@ -109,10 +109,9 @@
             return;
         }
 
-        // Handle routing based on selection with corrected URLs
+        // Handle routing based on selection with updated URL for first term
         if (examSelector === "first-terminal") {
-            // यदि तपाईंको Google Apps Script को सही लिङ्क अर्कै छ भने यहाँ परिवर्तन गर्नुहोला
-            const firstTerminalURL = "https://script.google.com/macros/s/AKfycbzovkzBUb81jsne59_22a2SxxFrHXl7g9QAl8mkPKAPrqOkmqxwfQuSPeVsZisSS5QDgA/exec";
+            const firstTerminalURL = "https://script.google.com/macros/s/AKfycbx29k3UgCHtqCloaGxoxKHg2TOD-YBx6Sv5K2acIy4efbSE2uvAwRaVEzvK0wgMm-wYDQ/exec";
             window.location.href = firstTerminalURL;
         } 
         else if (examSelector === "second-terminal") {
