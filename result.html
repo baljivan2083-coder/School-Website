@@ -113,18 +113,27 @@
 
         // Handle routing based on selection with updated URLs
         if (examSelector === "first-terminal") {
-            targetURL = "https://script.google.com/macros/s/AKfycbzovkzBUb81jsne59_22a2SxxFrHXl7g9QAl8mkPKAPrqOkmqxwfQuSPeVsZisSS5QDgA/exec";
+            targetURL = "https://script.google.com/macros/s/AKfycbzNU8ozG3yUBkZ22Or5rMnuL7kzou_XiH5XujV76MlztnwLa-PKG7SHPbem0IkBmRUC1g/exec";
         } 
         else if (examSelector === "second-terminal") {
-            targetURL = "https://script.google.com/macros/s/AKfycbxZ_C8ChoLiV7v4BQ1jE-4HPuCkkgE1CVFCldFvfWmFKtvsX6ei27Oc-7vSxrlQGATn/exec";
+            targetURL = "https://script.google.com/macros/s/AKfycbwNt8qRHEQRh98soXUn51I5xSwLKVig8wnF0BAtnJPD9A65Jr-oUQ8ZQ6IdnThmNZM2/exec";
         } 
-        else if (examSelector === "final-exam") {
-            targetURL = "https://script.google.com/macros/s/AKfycbxTxml5xMyjQ3OISmeE81ni4cum_V-0YEFJ2S4-SBrqodEojVK-FOjVoghDSPkop1p5/exec";
+        else if (examSession = examSelector === "final-exam") {
+            targetURL = "https://script.google.com/macros/s/AKfycbzSr1bZ-1GxICj_Ty9UnlF1RTXu4G_V7vICMiyXkfwi4M91AvARsLRUYGDDx0EumyX3Tw/exec";
         }
 
-        // Open the google script result system smoothly in a new tab/window
+        // Fix for Google Chrome blocking popup windows:
+        // Try opening in a new tab first, if blocked or restricted, seamlessly redirect in the current tab.
         if (targetURL) {
-            window.open(targetURL, '_blank');
+            try {
+                let newWindow = window.open(targetURL, '_blank');
+                if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                    // Fallback for Chrome popup blockers
+                    window.location.href = targetURL;
+                }
+            } catch (e) {
+                window.location.href = targetURL;
+            }
         }
     }
 </script>
