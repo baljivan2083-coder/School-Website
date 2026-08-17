@@ -188,7 +188,7 @@
         <div class="bg-yellow-400 text-blue-950 font-bold py-3 shadow-md relative z-10">
             <div class="container mx-auto px-4 flex items-center">
                 <span class="bg-red-600 text-white px-3 py-1 rounded text-sm mr-4 shrink-0 animate-pulse"><i class="fas fa-bullhorn mr-1"></i> जरुरी सूचना:</span>
-                <marquee id="jaruri-notice-text" class="text-md cursor-pointer" scrollamount="5">प्रस्तुत विषयमा मनहरी गाउँपालिको २०८३ सालको शैक्षिक पात्रो अनुसार यहि मिति २०८३ श्रावण ०८ गते शुक्रबार देखि २०८३ श्रावण ३१ गते आइतबार सम्म वर्षे विदा दिने निर्णय भएको हुँदा उक्त विदा अवधिभर विद्यालयको शैक्षिक तथा प्रशासनिक कार्य वन्द रहने र भदौ १ गते देखि नियमित पठनपाठन तथा प्रशासनिक कार्य सूचारु रहने व्यहोरा सम्बन्धित सबैमा जानकारी गराइन्छ ।</marquee>
+                <marquee id="jaruri-notice-text" class="text-md cursor-pointer" scrollamount="5">प्रस्तुत विषयमा मनहरी गाउँपालिकाको २०८३ सालको शैक्षिक पात्रो अनुसार यस विद्यालयमा मिति २०८३ श्रावण ०८ गते शुक्रबारदेखि २०८३ श्रावण ३१ गते आइतबारसम्म वर्षे बिदा दिइएकोमा उक्त बिदा समाप्त भइसकेको हुँदा मिति २०८३ भदौ १ गतेदेखि विद्यालयको नियमित पठनपाठन तथा प्रशासनिक कार्य सञ्चालन हुने व्यहोरा सम्बन्धित सबैमा जानकारी गराइन्छ।</marquee>
             </div>
         </div>
 
@@ -603,7 +603,25 @@
         
         <!-- सूचनाहरूको मुख्य कन्टेनर -->
         <div id="notices-container" class="space-y-4">
-            
+       <!-- सूचना ० -->
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
+                 data-date="२०८३ साउन ३१" 
+                 data-title="विद्यालय सञ्चालन सम्बन्धी सूचना" 
+                 data-desc="प्प्रस्तुत विषयमा मनहरी गाउँपालिकाको २०८३ सालको शैक्षिक पात्रो अनुसार यस विद्यालयमा मिति २०८३ श्रावण ०८ गते शुक्रबारदेखि २०८३ श्रावण ३१ गते आइतबारसम्म वर्षे बिदा दिइएकोमा उक्त बिदा समाप्त भइसकेको हुँदा मिति २०८३ भदौ १ गतेदेखि विद्यालयको नियमित पठनपाठन तथा प्रशासनिक कार्य सञ्चालन हुने व्यहोरा सम्बन्धित सबैमा जानकारी गराइन्छ।">
+                <div class="cursor-pointer flex-grow notice-content-trigger">
+                    <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span class="notice-date-text"></span></span>
+                    <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition notice-title-text"></span>
+                    <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
+                </div>
+                <div class="flex items-center space-x-2 shrink-0">
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
+                        थप हेर्नुहोस्
+                    </button>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank" onclick="this.href='https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href);" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+            </div>       
             <!-- सूचना १ -->
             <div class="bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card" 
                  data-date="२०८३ साउन ०७" 
