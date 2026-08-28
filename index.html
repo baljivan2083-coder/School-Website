@@ -23,15 +23,24 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: linear-gradient(rgba(30, 64, 175, 0.75), rgba(15, 23, 42, 0.8)), url('poshan.jpg');
-            background-size: cover;
-            background-position: center;
             z-index: 0;
-            animation: bgZoom 20s infinite alternate ease-in-out;
         }
-        @keyframes bgZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.15); }
+        .hero-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(30, 64, 175, 0.75), rgba(15, 23, 42, 0.8));
+            z-index: 1;
         }
         .search-highlight {
             background-color: #fef08a;
@@ -49,7 +58,10 @@
 <body class="bg-gray-50 text-gray-800">
 
     <!-- स्कुलको गीत फाइल -->
-    <audio id="school-song" src="school_song.mp3.mp3" loop></audio>
+    <audio id="school-song" loop>
+        <source src="school_song.mp3.mp3" type="audio/mpeg">
+        <source src="https://actions.google.com/sounds/v1/ambiences/school_room.ogg" type="audio/ogg">
+    </audio>
 
     <!-- गुड्ने/फ्लोटिङ म्युजिक कन्ट्रोल बटन -->
     <div class="fixed bottom-6 right-6 z-[9999]">
@@ -173,7 +185,13 @@
 
     <div id="home-view">
         <section id="home" class="hero-container text-white py-24 md:py-36 px-4 text-center">
-            <div class="hero-bg"></div>
+            <div class="hero-bg">
+                <video autoplay muted loop playsinline>
+                    <source src="1.mp4" type="video/mp4">
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="hero-overlay"></div>
             <div class="max-w-3xl mx-auto relative z-10">
                 <span class="bg-yellow-500 text-blue-950 font-bold px-4 py-1.5 rounded-full text-sm uppercase tracking-wide">ज्ञान नै शक्ति हो</span>
                 <h2 class="text-3xl md:text-5xl font-bold mt-4 mb-3 flex flex-col space-y-6">
@@ -962,7 +980,9 @@ function toggleMoreNotices() {
                     musicIcon.className = 'fas fa-volume-up text-xl';
                     musicBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
                     musicBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
-                }).catch(err => console.log("प्ले गर्न असफल:", err));
+                }).catch(err => {
+                    console.log("प्ले गर्न असफल:", err);
+                });
             } else {
                 audio.pause();
                 musicIcon.className = 'fas fa-volume-mute text-xl';
@@ -979,13 +999,13 @@ function toggleMoreNotices() {
                     musicBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
                     hasInteracted = true;
                 }).catch(error => {
-                    console.log("अटो-प्ले रोकियो।");
+                    console.log("अटो-प्ले रोकियो वा स्रोत उपलब्ध छैन।");
                 });
             };
             playAttempt();
             document.addEventListener('click', () => {
                 if (!hasInteracted) {
-                    audio.play();
+                    audio.play().catch(e => console.log(e));
                     musicIcon.className = 'fas fa-volume-up text-xl';
                     musicBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
                     musicBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
@@ -1166,13 +1186,15 @@ function toggleMoreNotices() {
             aboutDropdownMenu.classList.toggle('hidden');
         });
 
-        const mobileAboutBtn = document.getElementById('mobile-about-btn');
+        const mobileAboutBtn = document.getElementById('mobile-about-init-btn') || document.getElementById('mobile-about-btn');
         const mobileAboutMenu = document.getElementById('mobile-about-menu');
         const mobileAboutIcon = document.getElementById('mobile-about-icon');
-        mobileAboutBtn.addEventListener('click', () => {
-            mobileAboutMenu.classList.toggle('hidden');
-            mobileAboutIcon.classList.toggle('rotate-180');
-        });
+        if (mobileAboutBtn) {
+            mobileAboutBtn.addEventListener('click', () => {
+                mobileAboutMenu.classList.toggle('hidden');
+                mobileAboutIcon.classList.toggle('rotate-180');
+            });
+        }
 
         document.addEventListener('click', () => {
             if (!aboutDropdownMenu.classList.contains('hidden')) {
