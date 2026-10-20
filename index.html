@@ -612,7 +612,7 @@
             </div>
         </section>
 
-        <!-- नवीनतम सूचनाहरू (Google Sheet बाट सिधै लोड हुने सेक्सन - See More सुविधा सहित) -->
+        <!-- नवीनतम सूचनाहरू (Google Sheet बाट सिधै लोड हुने सेक्सन) -->
         <section id="notices" class="container mx-auto px-4 py-16 scroll-mt-20">
             <div class="grid md:grid-cols-2 gap-12">
                 <div>
@@ -623,7 +623,7 @@
                         <p class="text-gray-500 text-sm">सूचनाहरू लोड हुँदैछ...</p>
                     </div>
 
-                    <!-- See More Button (यदि ३ वटा भन्दा बढी सूचना भएमा मात्र देखा पर्नेछ) -->
+                    <!-- See More Button (3 vanda badi bhaye matra dekhine) -->
                     <div id="see-more-container" class="mt-4 text-center hidden">
                         <button onclick="openAllNoticesModal()" class="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg text-sm transition shadow-md">
                             <i class="fas fa-list-ul mr-2"></i> सबै सूचनाहरू हेर्नुहोस् (See More)
@@ -781,7 +781,7 @@
         </footer>
     </div>
 
-    <!-- Notice Detail Modal (Single Notice) -->
+    <!-- Notice Detail Modal -->
     <div id="notice-modal" class="fixed inset-0 bg-black/70 hidden z-[99999] flex items-center justify-center p-4">
         <div class="bg-white rounded-xl p-6 max-w-lg w-full shadow-2xl relative max-h-[80vh] overflow-y-auto">
             <button onclick="closeNoticeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
@@ -794,7 +794,7 @@
         </div>
     </div>
 
-    <!-- All Notices Modal (See More Modal) -->
+    <!-- All Notices Modal (See More) -->
     <div id="all-notices-modal" class="fixed inset-0 bg-black/70 hidden z-[99999] flex items-center justify-center p-4">
         <div class="bg-white rounded-xl p-6 max-w-2xl w-full shadow-2xl relative max-h-[85vh] overflow-y-auto">
             <button onclick="closeAllNoticesModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
@@ -813,7 +813,7 @@
         let allNoticesData = []; 
 
         document.addEventListener("DOMContentLoaded", function() {
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwS0H3UJoUqDVafg_M-ayXQbH1VMxPPZxoIV5uWMd-jUH95koQGaC_1F3EaxQ_KtQMM/exec'; // <--- यहाँ आफ्नो Google Apps Script को URL राख्नुहोला
+            const scriptURL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'; // <--- यहाँ आफ्नो Google Apps Script को URL राख्नुहोला
             const container = document.getElementById('google-sheet-notices');
             const seeMoreContainer = document.getElementById('see-more-container');
             const jaruriNoticeText = document.getElementById('jaruri-notice-text');
@@ -832,8 +832,7 @@
                         // 2. नवीनतम सूचनाहरू लोड गर्ने (Suruma matra 3 ota dekhauxa)
                         if(container) {
                             container.innerHTML = '';
-                            
-                            const limitedNotices = allNoticesData.slice(0, 3); // Sirf pehle 3 notices
+                            const limitedNotices = allNoticesData.slice(0, 3);
                             
                             limitedNotices.forEach((notice, index) => {
                                 const noticeTitle = notice.Title || notice.title;
@@ -866,7 +865,6 @@
                                 }
                             });
 
-                            // Yadi 3 ota bhanda dherai suchana xa vane 'See More' button dekhaune
                             if (allNoticesData.length > 3 && seeMoreContainer) {
                                 seeMoreContainer.classList.remove('hidden');
                             }
@@ -881,7 +879,6 @@
             }
         });
 
-        // Sabai suchana haru ko modal kholne function (See More click garda)
         function openAllNoticesModal() {
             const allContainer = document.getElementById('all-notices-container');
             allContainer.innerHTML = '';
