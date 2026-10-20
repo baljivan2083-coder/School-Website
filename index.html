@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>श्री बाल जीवन ज्योति माध्यमिक विद्यालय - मनहरी-१, मकवानपुर</title>
+    
+    <!-- Open Graph Meta Tags (Facebook ma share karta vakhate Notice Heading ane Main Photo dekhadva mate) -->
+    <meta property="og:title" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालय - सूचना तथा समाचार" id="og-title">
+    <meta property="og:description" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालयको आधिकारिक वेबसाइटबाट नवीनतम सूचनाहरू हेर्नुहोस्।" id="og-desc">
+    <meta property="og:image" content="https://i.ibb.co/1Z43W8g/school-banner.jpg" id="og-image">
+    <meta property="og:url" content="" id="og-url">
+    <meta property="og:type" content="article">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -926,12 +934,18 @@
             document.getElementById('modal-notice-title').innerText = title;
             document.getElementById('modal-notice-desc').innerText = desc;
             
+            const baseUrl = window.location.href.split('#')[0];
+            const noticeShareUrl = noticeId ? `${baseUrl}#notice-${noticeId}` : window.location.href;
+
             if (noticeId) {
                 window.location.hash = `notice-${noticeId}`;
             }
 
-            const baseUrl = window.location.href.split('#')[0];
-            const noticeShareUrl = noticeId ? `${baseUrl}#notice-${noticeId}` : window.location.href;
+            // Dynamically update Open Graph Meta Tags for Facebook Sharing with Main Photo & Notice Title
+            document.getElementById('og-title').setAttribute('content', title);
+            document.getElementById('og-desc').setAttribute('content', desc.substring(0, 150) + '...');
+            document.getElementById('og-url').setAttribute('content', noticeShareUrl);
+
             const fbUrl = shareUrl || `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(title)}`;
             
             document.getElementById('modal-facebook-share').href = fbUrl;
