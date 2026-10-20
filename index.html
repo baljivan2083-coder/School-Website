@@ -881,8 +881,8 @@
             const baseUrl = window.location.href.split('#')[0];
             const noticeShareUrl = `${baseUrl}#notice-${noticeId}`;
 
-            // Share text containing notice heading and direct link
-            const shareText = `${noticeTitle}\n\nविस्तृत सूचनाका लागि यो लिङ्कमा क्लिक गर्नुहोस्: ${noticeShareUrl}`;
+            // Heading + Notice URL included in Facebook Share text
+            const shareText = `📌 ${noticeTitle}\n\n🔗 विस्तृत सूचनाका लागि यो लिङ्कमा क्लिक गर्नुहोस्:\n${noticeShareUrl}`;
             const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(shareText)}`;
 
             const noticeCard = document.createElement('div');
@@ -951,7 +951,8 @@
             if (ogDescElem) ogDescElem.setAttribute('content', desc.substring(0, 150) + '...');
             if (ogUrlElem) ogUrlElem.setAttribute('content', noticeShareUrl);
 
-            const shareText = `${title}\n\nविस्तृत सूचनाका लागि लिङ्क: ${noticeShareUrl}`;
+            // Heading + Notice URL included in Facebook Share text inside Modal
+            const shareText = `📌 ${title}\n\n🔗 विस्तृत सूचनाका लागि यो लिङ्कमा क्लिक गर्नुहोस्:\n${noticeShareUrl}`;
             const fbUrl = shareUrl || `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(shareText)}`;
             
             document.getElementById('modal-facebook-share').href = fbUrl;
