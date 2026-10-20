@@ -479,7 +479,7 @@
 यस विद्यालयप्रति विश्वास र सहयोग गर्नुहुने सम्पूर्ण अभिभावक, शिक्षक–शिक्षिका, विद्यालय व्यवस्थापन समिति, शुभेच्छुक तथा सम्पूर्ण विद्यालय परिवारप्रति हार्दिक आभार व्यक्त गर्दछौँ। आगामी दिनमा समेत निरन्तर सहयोग र सद्भावबाट विद्यालयलाई अझ उत्कृष्ट शैक्षिक संस्थाको रूपमा विकास गर्न सफल हुने विश्वास लिएको छु।
 ।"
                             </blockquote>
-                            <button id="education-see-more" onclick="toggleMessage('education-see-more', 'education-see-more')" class="text-blue-600 font-bold text-xs mt-2 focus:outline-none hover:underline block">See More</button>
+                            <button id="education-see-more" onclick="toggleMessage('education-message', 'education-see-more')" class="text-blue-600 font-bold text-xs mt-2 focus:outline-none hover:underline block">See More</button>
                         </div>
             </div>
         </section>
@@ -612,7 +612,7 @@
             </div>
         </section>
 
-        <!-- नवीनतम सूचनाहरू (Google Sheet बाट सिधै लोड हुने सेक्सन) -->
+        <!-- नवीनतम सूचनाहरू (Google Sheet बाट सिधै लोड हुने सेक्सन - See More सुविधा सहित) -->
         <section id="notices" class="container mx-auto px-4 py-16 scroll-mt-20">
             <div class="grid md:grid-cols-2 gap-12">
                 <div>
@@ -621,6 +621,13 @@
                     <!-- Google Sheet बाट डाटा ल्याएर देखाउने ठाउँ -->
                     <div id="google-sheet-notices" class="space-y-4">
                         <p class="text-gray-500 text-sm">सूचनाहरू लोड हुँदैछ...</p>
+                    </div>
+
+                    <!-- See More Button (यदि ३ वटा भन्दा बढी सूचना भएमा मात्र देखा पर्नेछ) -->
+                    <div id="see-more-container" class="mt-4 text-center hidden">
+                        <button onclick="openAllNoticesModal()" class="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg text-sm transition shadow-md">
+                            <i class="fas fa-list-ul mr-2"></i> सबै सूचनाहरू हेर्नुहोस् (See More)
+                        </button>
                     </div>
                 </div>
                 
@@ -774,7 +781,7 @@
         </footer>
     </div>
 
-    <!-- Notice Detail Modal -->
+    <!-- Notice Detail Modal (Single Notice) -->
     <div id="notice-modal" class="fixed inset-0 bg-black/70 hidden z-[99999] flex items-center justify-center p-4">
         <div class="bg-white rounded-xl p-6 max-w-lg w-full shadow-2xl relative max-h-[80vh] overflow-y-auto">
             <button onclick="closeNoticeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
@@ -787,31 +794,48 @@
         </div>
     </div>
 
+    <!-- All Notices Modal (See More Modal) -->
+    <div id="all-notices-modal" class="fixed inset-0 bg-black/70 hidden z-[99999] flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl p-6 max-w-2xl w-full shadow-2xl relative max-h-[85vh] overflow-y-auto">
+            <button onclick="closeAllNoticesModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold">&times;</button>
+            <h3 class="text-2xl font-bold text-blue-900 mb-6 border-b pb-2"><i class="fas fa-bullhorn text-red-500 mr-2"></i>सबै नवीनतम सूचनाहरू</h3>
+            <div id="all-notices-container" class="space-y-4">
+                <!-- Sabai suchana haru yaha load hunxan -->
+            </div>
+            <div class="mt-6 text-right">
+                <button onclick="closeAllNoticesModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold">बन्द गर्नुहोस्</button>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript कोड -->
     <script>
-        let allNoticesData = []; // Global array to store notices for hash routing
+        let allNoticesData = []; 
 
         document.addEventListener("DOMContentLoaded", function() {
             const scriptURL = 'https://script.google.com/macros/s/AKfycbwS0H3UJoUqDVafg_M-ayXQbH1VMxPPZxoIV5uWMd-jUH95koQGaC_1F3EaxQ_KtQMM/exec'; // <--- यहाँ आफ्नो Google Apps Script को URL राख्नुहोला
             const container = document.getElementById('google-sheet-notices');
+            const seeMoreContainer = document.getElementById('see-more-container');
             const jaruriNoticeText = document.getElementById('jaruri-notice-text');
 
             if(scriptURL !== 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
                 fetch(scriptURL)
                     .then(response => response.json())
                     .then(data => {
-                        allNoticesData = data; // Save data globally
+                        allNoticesData = data.reverse(); // Newest first
 
                         // 1. जरुरी सूचना (K2 cell) लोड गर्ने
                         if (data.length > 0 && data[0].jaruriNotice) {
                             jaruriNoticeText.innerText = data[0].jaruriNotice;
                         }
 
-                        // 2. नवीनतम सूचनाहरू लोड गर्ने
+                        // 2. नवीनतम सूचनाहरू लोड गर्ने (Suruma matra 3 ota dekhauxa)
                         if(container) {
                             container.innerHTML = '';
                             
-                            data.forEach((notice, index) => {
+                            const limitedNotices = allNoticesData.slice(0, 3); // Sirf pehle 3 notices
+                            
+                            limitedNotices.forEach((notice, index) => {
                                 const noticeTitle = notice.Title || notice.title;
                                 if(noticeTitle) {
                                     const noticeCard = document.createElement('div');
@@ -820,7 +844,6 @@
                                     const noticeDate = notice.Date || notice.date || 'मिति उपलब्ध छैन';
                                     const noticeDesc = notice.Description || notice.description || 'विवरण उपलब्ध छैन';
 
-                                    // Unique Share URL banayeko (jastai: website.com/#notice=0)
                                     const shareUrl = `${window.location.origin}${window.location.pathname}#notice=${index}`;
                                     const fbShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
 
@@ -839,12 +862,15 @@
                                             </a>
                                         </div>
                                     `;
-
                                     container.appendChild(noticeCard);
                                 }
                             });
 
-                            // Check if URL has #notice=ID, if yes, automatically open that notice modal
+                            // Yadi 3 ota bhanda dherai suchana xa vane 'See More' button dekhaune
+                            if (allNoticesData.length > 3 && seeMoreContainer) {
+                                seeMoreContainer.classList.remove('hidden');
+                            }
+
                             checkURLHashForNotice();
                         }
                     })
@@ -855,7 +881,51 @@
             }
         });
 
-        // URL hash check garne function j ले गर्दा link click garda direct notice kholxa
+        // Sabai suchana haru ko modal kholne function (See More click garda)
+        function openAllNoticesModal() {
+            const allContainer = document.getElementById('all-notices-container');
+            allContainer.innerHTML = '';
+
+            allNoticesData.forEach((notice, index) => {
+                const noticeTitle = notice.Title || notice.title;
+                if(noticeTitle) {
+                    const noticeCard = document.createElement('div');
+                    noticeCard.className = "bg-gray-50 p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4";
+                    
+                    const noticeDate = notice.Date || notice.date || 'मिति उपलब्ध छैन';
+                    const noticeDesc = notice.Description || notice.description || 'विवरण उपलब्ध छैन';
+
+                    const shareUrl = `${window.location.origin}${window.location.pathname}#notice=${index}`;
+                    const fbShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+
+                    noticeCard.innerHTML = `
+                        <div class="cursor-pointer flex-grow" onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}')">
+                            <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span>${noticeDate}</span></span>
+                            <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition">${noticeTitle}</span>
+                            <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
+                        </div>
+                        <div class="flex items-center space-x-2 shrink-0">
+                            <button onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                                थप हेर्नुहोस्
+                            </button>
+                            <a href="${fbShareLink}" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="फेसबुकमा शेयर गर्नुहोस्">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </div>
+                    `;
+                    allContainer.appendChild(noticeCard);
+                }
+            });
+
+            document.getElementById('all-notices-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAllNoticesModal() {
+            document.getElementById('all-notices-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
         function checkURLHashForNotice() {
             const hash = window.location.hash;
             if (hash.startsWith('#notice=')) {
@@ -996,7 +1066,6 @@
         function closeNoticeModal() {
             document.getElementById('notice-modal').classList.add('hidden');
             document.body.style.overflow = 'auto';
-            // URL bata hash hataune modal banda huda
             if (window.location.hash.startsWith('#notice=')) {
                 history.pushState("", document.title, window.location.pathname + window.location.search);
             }
