@@ -822,6 +822,7 @@
     <script>
         let allNoticesData = []; 
         let currentActiveNoticeLink = '';
+        let currentActiveNoticeTitle = '';
 
         document.addEventListener("DOMContentLoaded", function() {
             const scriptURL = 'https://script.google.com/macros/s/AKfycbwS0H3UJoUqDVafg_M-ayXQbH1VMxPPZxoIV5uWMd-jUH95koQGaC_1F3EaxQ_KtQMM/exec'; // <--- यहाँ आफ्नो Google Apps Script को URL राख्नुहोला
@@ -855,16 +856,17 @@
                                     const noticeDesc = notice.Description || notice.description || 'विवरण उपलब्ध छैन';
 
                                     const shareUrl = `${window.location.origin}${window.location.pathname}#notice=${index}`;
-                                    const fbShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+                                    const fbShareQuote = `${noticeTitle} \n${shareUrl}`;
+                                    const fbShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(fbShareQuote)}`;
 
                                     noticeCard.innerHTML = `
-                                        <div class="cursor-pointer flex-grow notice-content-trigger" onclick="openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')">
+                                        <div class="cursor-pointer flex-grow notice-content-trigger" onclick="openNoticeModal('${noticeDate}', '${noticeTitle.replace(/'/g, "\\'")}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')">
                                             <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span>${noticeDate}</span></span>
                                             <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition">${noticeTitle}</span>
                                             <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
                                         </div>
                                         <div class="flex items-center space-x-2 shrink-0">
-                                            <button onclick="openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                                            <button onclick="openNoticeModal('${noticeDate}', '${noticeTitle.replace(/'/g, "\\'")}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
                                                 थप हेर्नुहोस्
                                             </button>
                                             <a href="${fbShareLink}" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="फेसबुकमा शेयर गर्नुहोस्">
@@ -904,16 +906,17 @@
                     const noticeDesc = notice.Description || notice.description || 'विवरण उपलब्ध छैन';
 
                     const shareUrl = `${window.location.origin}${window.location.pathname}#notice=${index}`;
-                    const fbShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+                    const fbShareQuote = `${noticeTitle} \n${shareUrl}`;
+                    const fbShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(fbShareQuote)}`;
 
                     noticeCard.innerHTML = `
-                        <div class="cursor-pointer flex-grow" onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')">
+                        <div class="cursor-pointer flex-grow" onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle.replace(/'/g, "\\'")}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')">
                             <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span>${noticeDate}</span></span>
                             <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition">${noticeTitle}</span>
                             <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
                         </div>
                         <div class="flex items-center space-x-2 shrink-0">
-                            <button onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                            <button onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle.replace(/'/g, "\\'")}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
                                 थप हेर्नुहोस्
                             </button>
                             <a href="${fbShareLink}" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="फेसबुकमा शेयर गर्नुहोस्">
@@ -958,7 +961,10 @@
             document.getElementById('modal-notice-desc').innerText = desc;
             
             currentActiveNoticeLink = shareUrl || window.location.href;
-            document.getElementById('modal-fb-share').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentActiveNoticeLink)}`;
+            currentActiveNoticeTitle = title;
+
+            const fbShareQuote = `${currentActiveNoticeTitle} \n${currentActiveNoticeLink}`;
+            document.getElementById('modal-fb-share').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentActiveNoticeLink)}&quote=${encodeURIComponent(fbShareQuote)}`;
 
             document.getElementById('notice-modal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
@@ -973,8 +979,9 @@
         }
 
         function copyNoticeDirectLink() {
-            navigator.clipboard.writeText(currentActiveNoticeLink).then(() => {
-                alert('सूचनाको प्रत्यक्ष लिङ्क (Direct Link) सफलतापूर्वक कपी भयो!');
+            const textToCopy = `${currentActiveNoticeTitle}\n${currentActiveNoticeLink}`;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('सूचनाको शीर्षक र लिङ्क सफलतापूर्वक कपी भयो!');
             }).catch(err => {
                 console.error('Failed to copy: ', err);
             });
