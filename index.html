@@ -623,7 +623,7 @@
                         <p class="text-gray-500 text-sm">सूचनाहरू लोड हुँदैछ...</p>
                     </div>
 
-                    <!-- See More Button (3 vanda badi bhaye matra dekhine) -->
+                    <!-- See More Button -->
                     <div id="see-more-container" class="mt-4 text-center hidden">
                         <button onclick="openAllNoticesModal()" class="bg-blue-900 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg text-sm transition shadow-md">
                             <i class="fas fa-list-ul mr-2"></i> सबै सूचनाहरू हेर्नुहोस् (See More)
@@ -788,8 +788,18 @@
             <span id="modal-notice-date" class="text-xs text-blue-600 font-semibold block mb-1"></span>
             <h3 id="modal-notice-title" class="text-xl font-bold text-blue-900 mb-3"></h3>
             <p id="modal-notice-desc" class="text-gray-700 text-sm leading-relaxed text-justify"></p>
-            <div class="mt-6 text-right">
-                <button onclick="closeNoticeModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-bold">बन्द गर्नुहोस्</button>
+            
+            <!-- Direct Share Options inside Modal -->
+            <div class="mt-6 pt-4 border-t flex flex-wrap justify-between items-center gap-2">
+                <button onclick="copyNoticeDirectLink()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded-lg text-xs font-bold transition">
+                    <i class="fas fa-copy mr-1"></i> सूचनाको लिङ्क कपी गर्नुहोस्
+                </button>
+                <div class="flex space-x-2">
+                    <a id="modal-fb-share" href="#" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-xs font-bold transition">
+                        <i class="fab fa-facebook-f mr-1"></i> फेसबुकमा सेयर
+                    </a>
+                    <button onclick="closeNoticeModal()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-xs font-bold">बन्द गर्नुहोस्</button>
+                </div>
             </div>
         </div>
     </div>
@@ -811,6 +821,7 @@
     <!-- JavaScript कोड -->
     <script>
         let allNoticesData = []; 
+        let currentActiveNoticeLink = '';
 
         document.addEventListener("DOMContentLoaded", function() {
             const scriptURL = 'https://script.google.com/macros/s/AKfycbwS0H3UJoUqDVafg_M-ayXQbH1VMxPPZxoIV5uWMd-jUH95koQGaC_1F3EaxQ_KtQMM/exec'; // <--- यहाँ आफ्नो Google Apps Script को URL राख्नुहोला
@@ -847,13 +858,13 @@
                                     const fbShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
 
                                     noticeCard.innerHTML = `
-                                        <div class="cursor-pointer flex-grow notice-content-trigger" onclick="openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}')">
+                                        <div class="cursor-pointer flex-grow notice-content-trigger" onclick="openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')">
                                             <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span>${noticeDate}</span></span>
                                             <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition">${noticeTitle}</span>
                                             <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
                                         </div>
                                         <div class="flex items-center space-x-2 shrink-0">
-                                            <button onclick="openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                                            <button onclick="openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
                                                 थप हेर्नुहोस्
                                             </button>
                                             <a href="${fbShareLink}" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="फेसबुकमा शेयर गर्नुहोस्">
@@ -896,13 +907,13 @@
                     const fbShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
 
                     noticeCard.innerHTML = `
-                        <div class="cursor-pointer flex-grow" onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}')">
+                        <div class="cursor-pointer flex-grow" onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')">
                             <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span>${noticeDate}</span></span>
                             <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition">${noticeTitle}</span>
                             <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
                         </div>
                         <div class="flex items-center space-x-2 shrink-0">
-                            <button onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                            <button onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
                                 थप हेर्नुहोस्
                             </button>
                             <a href="${fbShareLink}" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="फेसबुकमा शेयर गर्नुहोस्">
@@ -932,12 +943,41 @@
                     const noticeDate = notice.Date || notice.date || 'मिति उपलब्ध छैन';
                     const noticeTitle = notice.Title || notice.title || 'शीर्षक उपलब्ध छैन';
                     const noticeDesc = notice.Description || notice.description || 'विवरण उपलब्ध छैन';
+                    const shareUrl = `${window.location.origin}${window.location.pathname}#notice=${noticeIndex}`;
                     
                     setTimeout(() => {
-                        openNoticeModal(noticeDate, noticeTitle, noticeDesc);
+                        openNoticeModal(noticeDate, noticeTitle, noticeDesc, shareUrl);
                     }, 500);
                 }
             }
+        }
+
+        function openNoticeModal(date, title, desc, shareUrl = '') {
+            document.getElementById('modal-notice-date').innerText = date;
+            document.getElementById('modal-notice-title').innerText = title;
+            document.getElementById('modal-notice-desc').innerText = desc;
+            
+            currentActiveNoticeLink = shareUrl || window.location.href;
+            document.getElementById('modal-fb-share').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentActiveNoticeLink)}`;
+
+            document.getElementById('notice-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNoticeModal() {
+            document.getElementById('notice-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            if (window.location.hash.startsWith('#notice=')) {
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+            }
+        }
+
+        function copyNoticeDirectLink() {
+            navigator.clipboard.writeText(currentActiveNoticeLink).then(() => {
+                alert('सूचनाको प्रत्यक्ष लिङ्क (Direct Link) सफलतापूर्वक कपी भयो!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
         }
 
         // Purana baki sabai functions
@@ -1050,22 +1090,6 @@
             const modal = document.getElementById('imageModal');
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
-        }
-
-        function openNoticeModal(date, title, desc) {
-            document.getElementById('modal-notice-date').innerText = date;
-            document.getElementById('modal-notice-title').innerText = title;
-            document.getElementById('modal-notice-desc').innerText = desc;
-            document.getElementById('notice-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeNoticeModal() {
-            document.getElementById('notice-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-            if (window.location.hash.startsWith('#notice=')) {
-                history.pushState("", document.title, window.location.pathname + window.location.search);
-            }
         }
 
         function toggleMessage(contentId, btnId) {
