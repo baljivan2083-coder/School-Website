@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>श्री बाल जीवन ज्योति माध्यमिक विद्यालय - मनहरी-१, मकवानपुर</title>
     
-    <!-- Open Graph Meta Tags (Facebook ma share karta vakhate Notice Heading ane Main Photo dekhadva mate) -->
+    <!-- Open Graph Meta Tags (Facebook Share me main photo aur detail ke liye) -->
     <meta property="og:title" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालय - सूचना तथा समाचार" id="og-title">
     <meta property="og:description" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालयको आधिकारिक वेबसाइटबाट नवीनतम सूचनाहरू हेर्नुहोस्।" id="og-desc">
-    <meta property="og:image" content="https://i.ibb.co/1Z43W8g/school-banner.jpg" id="og-image">
+    <meta property="og:image" content="Purbabidharthi1.jpg" id="og-image">
     <meta property="og:url" content="" id="og-url">
     <meta property="og:type" content="article">
 
@@ -462,7 +462,7 @@
 यस डिजिटल प्लेटफर्मले विद्यालय, विद्यार्थी, अभिभावक र सम्पूर्ण सरोकारवालाहरूबीचको सम्बन्धलाई थप पारदर्शी, मजबुत र जीवन्त बनाउनेछ भन्ने पूर्ण विश्वास लिएको छु।
 <br>💡 रचनात्मक सुझाव र प्रतिक्रियाको अपेक्षा
 यो वेबसाइटलाई अझ बढी उपयोगी, सहज र सूचनामूलक बनाउन यहाँहरूको रचनात्मक सुझाव, सल्लाह र प्रतिक्रियाको सधैँ स्वागत गरिनेछ। आफ्ना अमूल्य विचारहरू निर्धक्क भई साझा गरिदिनुहुन म सम्पूर्ण पाठकवर्गमा हार्दिक अनुरोध गर्दछु।
-अन्त्यमा, यस वेबसाइटको सोचलाई साकार पार्ने क्रममा प्राविधिक डिजाइन र कोडिङका हरेक चरणहरू पार गर्दै यहाँसम्म पुर्‍याउन प्रत्यक्ष वा अप्रत्यक्ष रूपमा हौसला र सहयोग पुर्‍याउनुहुने सम्पूर्ण शिक्षक-कर्मचारी, एवम् विद्यालय व्यवस्थापन समितिसमक्ष हार्दिक आभार प्रकट गर्दछु।
+अन्त्यमा, यस वेबसाइटको सोचलाई साकार पार्ने क्रममा प्राविधिक डिजाइन र कोडिङका हरेक चरणहरू पार गर्दै यहाँसम्म पुर्‍याउन प्रत्यक्ष वा अप्रत्यक्ष रूपमा हौसला र सहयोग पुर्‍याउनुहुने सम्पूर्ण शिक्षक-कर्मचारी, एवम् विद्यालय व्यवस्थापन समितिसमक्ष हार्दिक आभार प्रकट गर्दछछु।
 ।"
                             </blockquote>
                             <button id="admin-see-more" onclick="toggleMessage('admin-message', 'admin-see-more')" class="text-blue-600 font-bold text-xs mt-2 focus:outline-none hover:underline block">See More</button>
@@ -881,8 +881,9 @@
             const baseUrl = window.location.href.split('#')[0];
             const noticeShareUrl = `${baseUrl}#notice-${noticeId}`;
 
-            // Facebook share URL direct heading ane share link sathe
-            const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(noticeTitle)}`;
+            // Facebook Share URL with notice title, notice URL, and text heading
+            const shareText = `${noticeTitle}\n\nविस्तृत सूचनाका लागि यो लिङ्कमा क्लिक गर्नुहोस्: ${noticeShareUrl}`;
+            const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(shareText)}`;
 
             const noticeCard = document.createElement('div');
             noticeCard.className = "bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card";
@@ -942,11 +943,16 @@
             }
 
             // Dynamically update Open Graph Meta Tags for Facebook Sharing with Main Photo & Notice Title
-            document.getElementById('og-title').setAttribute('content', title);
-            document.getElementById('og-desc').setAttribute('content', desc.substring(0, 150) + '...');
-            document.getElementById('og-url').setAttribute('content', noticeShareUrl);
+            const ogTitleElem = document.getElementById('og-title');
+            const ogDescElem = document.getElementById('og-desc');
+            const ogUrlElem = document.getElementById('og-url');
+            
+            if (ogTitleElem) ogTitleElem.setAttribute('content', title);
+            if (ogDescElem) ogDescElem.setAttribute('content', desc.substring(0, 150) + '...');
+            if (ogUrlElem) ogUrlElem.setAttribute('content', noticeShareUrl);
 
-            const fbUrl = shareUrl || `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(title)}`;
+            const shareText = `${title}\n\nविस्तृत सूचनाका लागि लिङ्क: ${noticeShareUrl}`;
+            const fbUrl = shareUrl || `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(shareText)}`;
             
             document.getElementById('modal-facebook-share').href = fbUrl;
 
