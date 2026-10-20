@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>श्री बाल जीवन ज्योति माध्यमिक विद्यालय - मनहरी-१, मकवानपुर</title>
+    
+    <!-- Facebook Open Graph Meta Tags for Photo & Metadata Preview -->
+    <meta property="og:title" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालय - मनहरी-१, मकवानपुर" />
+    <meta property="og:description" content="गुणस्तरीय शिक्षा, अनुशासित विद्यार्थी, उज्ज्वल भविष्य। मनहरी गाउँपालिका-१, मकरी, मकवानपुर।" />
+    <meta property="og:type" content="website" />
+    <!-- Yahan apni website ka main display photo URL rakhein (Direct absolute HTTP/HTTPS link) -->
+    <meta property="og:image" content="https://baljivanjyoti.edu.np/Purbabidharthi1.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -795,9 +805,9 @@
                     <i class="fas fa-copy mr-1"></i> सूचनाको लिङ्क कपी गर्नुहोस्
                 </button>
                 <div class="flex space-x-2">
-                    <a id="modal-fb-share" href="#" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-xs font-bold transition">
+                    <button onclick="shareNoticeToFB()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-xs font-bold transition">
                         <i class="fab fa-facebook-f mr-1"></i> फेसबुकमा सेयर
-                    </a>
+                    </button>
                     <button onclick="closeNoticeModal()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-xs font-bold">बन्द गर्नुहोस्</button>
                 </div>
             </div>
@@ -856,8 +866,6 @@
                                     const noticeDesc = notice.Description || notice.description || 'विवरण उपलब्ध छैन';
 
                                     const shareUrl = `${window.location.origin}${window.location.pathname}#notice=${index}`;
-                                    const fbShareQuote = `${noticeTitle} \n${shareUrl}`;
-                                    const fbShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(fbShareQuote)}`;
 
                                     noticeCard.innerHTML = `
                                         <div class="cursor-pointer flex-grow notice-content-trigger" onclick="openNoticeModal('${noticeDate}', '${noticeTitle.replace(/'/g, "\\'")}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')">
@@ -869,9 +877,9 @@
                                             <button onclick="openNoticeModal('${noticeDate}', '${noticeTitle.replace(/'/g, "\\'")}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
                                                 थप हेर्नुहोस्
                                             </button>
-                                            <a href="${fbShareLink}" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="फेसबुकमा शेयर गर्नुहोस्">
+                                            <button onclick="triggerDirectFBShare('${noticeTitle.replace(/'/g, "\\'")}', '${shareUrl}')" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="फेसबुकमा शेयर गर्नुहोस्">
                                                 <i class="fab fa-facebook-f"></i>
-                                            </a>
+                                            </button>
                                         </div>
                                     `;
                                     container.appendChild(noticeCard);
@@ -892,6 +900,22 @@
             }
         });
 
+        function triggerDirectFBShare(title, link) {
+            // Title aur Link dono ko text clipboard me auto-copy karke Facebook Sharer open karta hai
+            const textToShare = `${title}\n${link}`;
+            navigator.clipboard.writeText(textToShare).then(() => {
+                const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
+                window.open(fbUrl, '_blank');
+            }).catch(() => {
+                const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
+                window.open(fbUrl, '_blank');
+            });
+        }
+
+        function shareNoticeToFB() {
+            triggerDirectFBShare(currentActiveNoticeTitle, currentActiveNoticeLink);
+        }
+
         function openAllNoticesModal() {
             const allContainer = document.getElementById('all-notices-container');
             allContainer.innerHTML = '';
@@ -906,8 +930,6 @@
                     const noticeDesc = notice.Description || notice.description || 'विवरण उपलब्ध छैन';
 
                     const shareUrl = `${window.location.origin}${window.location.pathname}#notice=${index}`;
-                    const fbShareQuote = `${noticeTitle} \n${shareUrl}`;
-                    const fbShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(fbShareQuote)}`;
 
                     noticeCard.innerHTML = `
                         <div class="cursor-pointer flex-grow" onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle.replace(/'/g, "\\'")}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')">
@@ -919,9 +941,9 @@
                             <button onclick="closeAllNoticesModal(); openNoticeModal('${noticeDate}', '${noticeTitle.replace(/'/g, "\\'")}', '${noticeDesc.replace(/'/g, "\\'")}', '${shareUrl}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
                                 थप हेर्नुहोस्
                             </button>
-                            <a href="${fbShareLink}" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="फेसबुकमा शेयर गर्नुहोस्">
+                            <button onclick="triggerDirectFBShare('${noticeTitle.replace(/'/g, "\\'")}', '${shareUrl}')" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="फेसबुकमा शेयर गर्नुहोस्">
                                 <i class="fab fa-facebook-f"></i>
-                            </a>
+                            </button>
                         </div>
                     `;
                     allContainer.appendChild(noticeCard);
@@ -962,9 +984,6 @@
             
             currentActiveNoticeLink = shareUrl || window.location.href;
             currentActiveNoticeTitle = title;
-
-            const fbShareQuote = `${currentActiveNoticeTitle} \n${currentActiveNoticeLink}`;
-            document.getElementById('modal-fb-share').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentActiveNoticeLink)}&quote=${encodeURIComponent(fbShareQuote)}`;
 
             document.getElementById('notice-modal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
