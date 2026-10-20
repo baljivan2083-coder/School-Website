@@ -202,7 +202,7 @@
             </div>
         </section>
 
-        <!-- जरुरी सूचना (Google Sheet ko K2 cell se load hogi) -->
+        <!-- जरुरी सूचना -->
         <div class="bg-yellow-400 text-blue-950 font-bold py-3 shadow-md relative z-10">
             <div class="container mx-auto px-4 flex items-center">
                 <span class="bg-red-600 text-white px-3 py-1 rounded text-sm mr-4 shrink-0 animate-pulse"><i class="fas fa-bullhorn mr-1"></i> जरुरी सूचना:</span>
@@ -479,7 +479,7 @@
 यस विद्यालयप्रति विश्वास र सहयोग गर्नुहुने सम्पूर्ण अभिभावक, शिक्षक–शिक्षिका, विद्यालय व्यवस्थापन समिति, शुभेच्छुक तथा सम्पूर्ण विद्यालय परिवारप्रति हार्दिक आभार व्यक्त गर्दछौँ। आगामी दिनमा समेत निरन्तर सहयोग र सद्भावबाट विद्यालयलाई अझ उत्कृष्ट शैक्षिक संस्थाको रूपमा विकास गर्न सफल हुने विश्वास लिएको छु।
 ।"
                             </blockquote>
-                            <button id="education-see-more" onclick="toggleMessage('education-message', 'education-see-more')" class="text-blue-600 font-bold text-xs mt-2 focus:outline-none hover:underline block">See More</button>
+                            <button id="education-see-more" onclick="toggleMessage('education-see-more', 'education-see-more')" class="text-blue-600 font-bold text-xs mt-2 focus:outline-none hover:underline block">See More</button>
                         </div>
             </div>
         </section>
@@ -789,7 +789,8 @@
 
     <!-- JavaScript कोड -->
     <script>
-        // Google Sheet बाट जरुरी सूचना (K2 cell) र नवीनतम सूचनाहरू तान्ने कोड
+        let allNoticesData = []; // Global array to store notices for hash routing
+
         document.addEventListener("DOMContentLoaded", function() {
             const scriptURL = 'https://script.google.com/macros/s/AKfycbwS0H3UJoUqDVafg_M-ayXQbH1VMxPPZxoIV5uWMd-jUH95koQGaC_1F3EaxQ_KtQMM/exec'; // <--- यहाँ आफ्नो Google Apps Script को URL राख्नुहोला
             const container = document.getElementById('google-sheet-notices');
@@ -799,7 +800,9 @@
                 fetch(scriptURL)
                     .then(response => response.json())
                     .then(data => {
-                        // 1. जरुरी सूचना (K2 cell) लोड गर्ने - (Sheet data ko pehle row me jaruriNotice key honi chahiye)
+                        allNoticesData = data; // Save data globally
+
+                        // 1. जरुरी सूचना (K2 cell) लोड गर्ने
                         if (data.length > 0 && data[0].jaruriNotice) {
                             jaruriNoticeText.innerText = data[0].jaruriNotice;
                         }
@@ -808,8 +811,7 @@
                         if(container) {
                             container.innerHTML = '';
                             
-                            data.reverse().forEach(notice => {
-                                // Agar row me notice ka title hai tabhi list me add karega
+                            data.forEach((notice, index) => {
                                 const noticeTitle = notice.Title || notice.title;
                                 if(noticeTitle) {
                                     const noticeCard = document.createElement('div');
@@ -818,29 +820,32 @@
                                     const noticeDate = notice.Date || notice.date || 'मिति उपलब्ध छैन';
                                     const noticeDesc = notice.Description || notice.description || 'विवरण उपलब्ध छैन';
 
+                                    // Unique Share URL banayeko (jastai: website.com/#notice=0)
+                                    const shareUrl = `${window.location.origin}${window.location.pathname}#notice=${index}`;
+                                    const fbShareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+
                                     noticeCard.innerHTML = `
-                                        <div class="cursor-pointer flex-grow notice-content-trigger">
+                                        <div class="cursor-pointer flex-grow notice-content-trigger" onclick="openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}')">
                                             <span class="text-xs text-gray-500 font-semibold block"><i class="far fa-calendar-alt mr-1"></i> <span>${noticeDate}</span></span>
                                             <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition">${noticeTitle}</span>
                                             <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
                                         </div>
                                         <div class="flex items-center space-x-2 shrink-0">
-                                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
+                                            <button onclick="openNoticeModal('${noticeDate}', '${noticeTitle}', '${noticeDesc.replace(/'/g, "\\'")}')" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
                                                 थप हेर्नुहोस्
                                             </button>
-                                            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="शेयर गर्नुहोस्">
+                                            <a href="${fbShareLink}" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="फेसबुकमा शेयर गर्नुहोस्">
                                                 <i class="fab fa-facebook-f"></i>
                                             </a>
                                         </div>
                                     `;
 
-                                    const openModal = () => openNoticeModal(noticeDate, noticeTitle, noticeDesc);
-                                    noticeCard.querySelector('.notice-content-trigger').addEventListener('click', openModal);
-                                    noticeCard.querySelector('.notice-btn').addEventListener('click', openModal);
-
                                     container.appendChild(noticeCard);
                                 }
                             });
+
+                            // Check if URL has #notice=ID, if yes, automatically open that notice modal
+                            checkURLHashForNotice();
                         }
                     })
                     .catch(error => {
@@ -850,7 +855,25 @@
             }
         });
 
-        // पुरानो वेबसाइटका सबै फंक्सनहरू
+        // URL hash check garne function j ले गर्दा link click garda direct notice kholxa
+        function checkURLHashForNotice() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#notice=')) {
+                const noticeIndex = parseInt(hash.replace('#notice=', ''));
+                if (!isNaN(noticeIndex) && allNoticesData[noticeIndex]) {
+                    const notice = allNoticesData[noticeIndex];
+                    const noticeDate = notice.Date || notice.date || 'मिति उपलब्ध छैन';
+                    const noticeTitle = notice.Title || notice.title || 'शीर्षक उपलब्ध छैन';
+                    const noticeDesc = notice.Description || notice.description || 'विवरण उपलब्ध छैन';
+                    
+                    setTimeout(() => {
+                        openNoticeModal(noticeDate, noticeTitle, noticeDesc);
+                    }, 500);
+                }
+            }
+        }
+
+        // Purana baki sabai functions
         const audio = document.getElementById('school-song');
         const musicIcon = document.getElementById('music-icon');
         const musicBtn = document.getElementById('music-toggle-btn');
@@ -973,6 +996,10 @@
         function closeNoticeModal() {
             document.getElementById('notice-modal').classList.add('hidden');
             document.body.style.overflow = 'auto';
+            // URL bata hash hataune modal banda huda
+            if (window.location.hash.startsWith('#notice=')) {
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+            }
         }
 
         function toggleMessage(contentId, btnId) {
