@@ -5,18 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>श्री बाल जीवन ज्योति माध्यमिक विद्यालय - मनहरी-१, मकवानपुर</title>
     
-    <!-- Open Graph Meta Tags (Facebook Crawler / Social Share Page Load Level) -->
+    <!-- Open Graph Meta Tags (Facebook Share me main photo aur detail ke liye) -->
     <meta property="og:title" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालय - सूचना तथा समाचार" id="og-title">
     <meta property="og:description" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालयको आधिकारिक वेबसाइटबाट नवीनतम सूचनाहरू हेर्नुहोस्।" id="og-desc">
     <meta property="og:image" content="Purbabidharthi1.jpg" id="og-image">
     <meta property="og:url" content="" id="og-url">
     <meta property="og:type" content="article">
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालय - सूचना तथा समाचार">
-    <meta name="twitter:description" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालयको आधिकारिक वेबसाइटबाट नवीनतम सूचनाहरू हेर्नुहोस्।">
-    <meta name="twitter:image" content="Purbabidharthi1.jpg">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -803,11 +797,17 @@
             <span id="modal-notice-date" class="text-xs text-blue-600 font-semibold block mb-1"></span>
             <h3 id="modal-notice-title" class="text-xl font-bold text-blue-900 mb-3"></h3>
             <p id="modal-notice-desc" class="text-gray-700 text-sm leading-relaxed text-justify whitespace-pre-line"></p>
-            <div class="mt-6 flex justify-between items-center border-t pt-4">
-                <a id="modal-facebook-share" href="#" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white px-4 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-2">
-                    <i class="fab fa-facebook-f"></i>
-                    <span>फेसबुकमा शेयर गर्नुहोस्</span>
-                </a>
+            <div class="mt-6 flex flex-wrap gap-2 justify-between items-center border-t pt-4">
+                <div class="flex items-center space-x-2">
+                    <button id="modal-copy-share-btn" onclick="copyNoticeData()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-1.5">
+                        <i class="fas fa-copy"></i>
+                        <span id="copy-btn-text">Heading ra Link Copy</span>
+                    </button>
+                    <a id="modal-facebook-share" href="#" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white px-3 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-1.5">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>फेसबुकमा शेयर गर्नुहोस्</span>
+                    </a>
+                </div>
                 <button onclick="closeNoticeModal()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-xs font-bold">बन्द गर्नुहोस्</button>
             </div>
         </div>
@@ -832,10 +832,11 @@
     <!-- JavaScript कोड -->
     <script>
         let allNoticesData = [];
+        let currentModalNoticeText = '';
 
         // Google Sheet बाट जरुरी सूचना (K2 cell) र नवीनतम सूचनाहरू तान्ने कोड
         document.addEventListener("DOMContentLoaded", function() {
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwS0H3UJoUqDVafg_M-ayXQbH1VMxPPZxoIV5uWMd-jUH95koQGaC_1F3EaxQ_KtQMM/exec'; 
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwS0H3UJoUqDVafg_M-ayXQbH1VMxPPZxoIV5uWMd-jUH95koQGaC_1F3EaxQ_KtQMM/exec'; // <--- यहाँ आफ्नो Google Apps Script को URL राख्नुहोला
             const container = document.getElementById('google-sheet-notices');
             const jaruriNoticeText = document.getElementById('jaruri-notice-text');
 
@@ -877,29 +878,19 @@
             }
         });
 
-        // Helper function to resolve absolute image URL
-        function getAbsoluteImageUrl(imagePath) {
-            if (!imagePath) return window.location.origin + '/Purbabidharthi1.jpg';
-            if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
-                return imagePath;
-            }
-            const cleanPath = imagePath.startsWith('/') ? imagePath.substring(1) : imagePath;
-            return window.location.origin + '/' + cleanPath;
-        }
-
         // Notice Card Element Banavva Mate Helper Function
         function createNoticeCard(notice, noticeId) {
             const noticeTitle = notice.Title || notice.title;
             const noticeDate = notice.Date || notice.date || 'मिति उपलब्ध छैन';
             const noticeDesc = notice.Description || notice.description || 'विवरण उपलब्ध छैन';
-            const noticeImage = notice.Image || notice.image || 'Purbabidharthi1.jpg';
 
-            // Absolute Deep Link for specific notice
-            const baseUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
+            // Direct URL generate karva mate base URL + Notice ID
+            const baseUrl = window.location.href.split('#')[0];
             const noticeShareUrl = `${baseUrl}#notice-${noticeId}`;
 
-            // Formatting title and direct parameters for Facebook Feed/Share Dialog
-            const fbShareUrl = `https://www.facebook.com/dialog/share?app_id=966242223397117&display=popup&href=${encodeURIComponent(noticeShareUrl)}&redirect_uri=${encodeURIComponent(noticeShareUrl)}&hashtag=${encodeURIComponent('#सूचना')}`;
+            // Heading + Notice URL included in Facebook Share text
+            const shareText = `📌 ${noticeTitle}\n\n🔗 विस्तृत सूचनाका लागि यो लिङ्कमा क्लिक गर्नुहोस्:\n${noticeShareUrl}`;
+            const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(shareText)}`;
 
             const noticeCard = document.createElement('div');
             noticeCard.className = "bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card";
@@ -910,9 +901,12 @@
                     <span class="font-bold text-blue-900 hover:text-blue-600 block mt-1 transition">${noticeTitle}</span>
                     <p class="text-gray-600 text-xs mt-1">थप हेर्नुहोस्मा क्लिक गर्नुहोस्...</p>
                 </div>
-                <div class="flex items-center space-x-2 shrink-0">
+                <div class="flex items-center space-x-1.5 shrink-0">
                     <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition notice-btn">
                         थप हेर्नुहोस्
+                    </button>
+                    <button onclick="copyNoticeText('${encodeURIComponent(shareText)}', this)" class="bg-emerald-600 hover:bg-emerald-700 text-white p-2 rounded-lg text-xs font-bold transition" title="Heading ra Link Copy">
+                        <i class="fas fa-copy"></i>
                     </button>
                     <a href="${fbShareUrl}" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white p-2 rounded-lg text-xs font-bold transition" title="फेसबुकमा शेयर गर्नुहोस्">
                         <i class="fab fa-facebook-f"></i>
@@ -920,11 +914,39 @@
                 </div>
             `;
 
-            const openModal = () => openNoticeModal(noticeDate, noticeTitle, noticeDesc, fbShareUrl, noticeId, noticeImage);
+            const openModal = () => openNoticeModal(noticeDate, noticeTitle, noticeDesc, fbShareUrl, noticeId);
             noticeCard.querySelector('.notice-content-trigger').addEventListener('click', openModal);
             noticeCard.querySelector('.notice-btn').addEventListener('click', openModal);
 
             return noticeCard;
+        }
+
+        function copyNoticeText(encodedText, btnElem) {
+            const textToCopy = decodeURIComponent(encodedText);
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = btnElem.innerHTML;
+                btnElem.innerHTML = '<i class="fas fa-check"></i>';
+                btnElem.classList.add('bg-green-700');
+                setTimeout(() => {
+                    btnElem.innerHTML = originalHTML;
+                    btnElem.classList.remove('bg-green-700');
+                }, 2000);
+            }).catch(err => {
+                console.error('Copy failed: ', err);
+            });
+        }
+
+        function copyNoticeData() {
+            if(!currentModalNoticeText) return;
+            navigator.clipboard.writeText(currentModalNoticeText).then(() => {
+                const btnText = document.getElementById('copy-btn-text');
+                btnText.innerText = "Copied!";
+                setTimeout(() => {
+                    btnText.innerText = "Heading ra Link Copy";
+                }, 2000);
+            }).catch(err => {
+                console.error('Copy failed: ', err);
+            });
         }
 
         // Popup Modal ma sabai notice dekhadva mate
@@ -946,34 +968,34 @@
             document.body.style.overflow = 'auto';
         }
 
-        function openNoticeModal(date, title, desc, shareUrl = '', noticeId = null, noticeImage = 'Purbabidharthi1.jpg') {
+        function openNoticeModal(date, title, desc, shareUrl = '', noticeId = null) {
             document.getElementById('modal-notice-date').innerText = date;
             document.getElementById('modal-notice-title').innerText = title;
             document.getElementById('modal-notice-desc').innerText = desc;
             
-            const baseUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
+            const baseUrl = window.location.href.split('#')[0];
             const noticeShareUrl = noticeId ? `${baseUrl}#notice-${noticeId}` : window.location.href;
 
             if (noticeId) {
                 window.location.hash = `notice-${noticeId}`;
             }
 
-            // Absolute Image URL Resolution
-            const fullImageUrl = getAbsoluteImageUrl(noticeImage);
+            // Heading + Notice URL string saved for Copy
+            currentModalNoticeText = `📌 ${title}\n\n🔗 विस्तृत सूचनाका लागि यो लिङ्कमा क्लिक गर्नुहोस्:\n${noticeShareUrl}`;
 
-            // Dynamically update Meta Tags in DOM for Browser/SEO Context
+            // Dynamically update Meta Tags for OG Share
             const ogTitleElem = document.getElementById('og-title');
             const ogDescElem = document.getElementById('og-desc');
-            const ogImageElem = document.getElementById('og-image');
             const ogUrlElem = document.getElementById('og-url');
             
             if (ogTitleElem) ogTitleElem.setAttribute('content', title);
-            if (ogDescElem) ogDescElem.setAttribute('content', desc.substring(0, 160));
-            if (ogImageElem) ogImageElem.setAttribute('content', fullImageUrl);
+            if (ogDescElem) ogDescElem.setAttribute('content', desc.substring(0, 150) + '...');
             if (ogUrlElem) ogUrlElem.setAttribute('content', noticeShareUrl);
 
-            // Share URL Generator for FB
-            const fbUrl = shareUrl || `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}`;
+            // Heading + Notice URL included in Facebook Share text inside Modal
+            const shareText = currentModalNoticeText;
+            const fbUrl = shareUrl || `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(shareText)}`;
+            
             document.getElementById('modal-facebook-share').href = fbUrl;
 
             document.getElementById('notice-modal').classList.remove('hidden');
@@ -998,9 +1020,8 @@
                     const noticeTitle = notice.Title || notice.title;
                     const noticeDate = notice.Date || notice.date || 'मिति उपलब्ध छैन';
                     const noticeDesc = notice.Description || notice.description || 'विवरण उपलब्ध छैन';
-                    const noticeImage = notice.Image || notice.image || 'Purbabidharthi1.jpg';
                     
-                    openNoticeModal(noticeDate, noticeTitle, noticeDesc, '', noticeId, noticeImage);
+                    openNoticeModal(noticeDate, noticeTitle, noticeDesc, '', noticeId);
                 }
             }
         }
