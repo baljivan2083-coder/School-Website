@@ -6,7 +6,7 @@
     <title>श्री बाल जीवन ज्योति माध्यमिक विद्यालय - मनहरी-१, मकवानपुर</title>
     
     <!-- Open Graph Meta Tags (Facebook Share me main photo aur detail ke liye) -->
-    <meta property="og:title" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालय - सूचना तथा समाचार" id="og-title">
+    <meta property="og:title" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालय,मनहरी-१,मकवानपुर" id="og-title">
     <meta property="og:description" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालयको आधिकारिक वेबसाइटबाट नवीनतम सूचनाहरू हेर्नुहोस्।" id="og-desc">
     <meta property="og:image" content="Purbabidharthi1.jpg" id="og-image">
     <meta property="og:url" content="" id="og-url">
@@ -801,7 +801,7 @@
                 <div class="flex items-center space-x-2">
                     <button id="modal-copy-share-btn" onclick="copyNoticeData()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-1.5">
                         <i class="fas fa-copy"></i>
-                        <span id="copy-btn-text">Heading ra Link Copy</span>
+                        <span id="copy-btn-text">Copy Link</span>
                     </button>
                     <a id="modal-facebook-share" href="#" target="_blank" class="bg-blue-800 hover:bg-blue-900 text-white px-3 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-1.5">
                         <i class="fab fa-facebook-f"></i>
@@ -889,7 +889,7 @@
             const noticeShareUrl = `${baseUrl}#notice-${noticeId}`;
 
             // Heading + Notice URL included in Facebook Share text
-            const shareText = `📌 ${noticeTitle}\n\n🔗 विस्तृत सूचनाका लागि यो लिङ्कमा क्लिक गर्नुहोस्:\n${noticeShareUrl}`;
+            const shareText = `📌 ${noticeTitle}\n\n🔗 विस्तृत जानकारीका लागि यो लिङ्कमा क्लिक गर्नुहोस्:\n${noticeShareUrl}`;
             const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(shareText)}`;
 
             const noticeCard = document.createElement('div');
@@ -942,7 +942,7 @@
                 const btnText = document.getElementById('copy-btn-text');
                 btnText.innerText = "Copied!";
                 setTimeout(() => {
-                    btnText.innerText = "Heading ra Link Copy";
+                    btnText.innerText = "Copy Link";
                 }, 2000);
             }).catch(err => {
                 console.error('Copy failed: ', err);
