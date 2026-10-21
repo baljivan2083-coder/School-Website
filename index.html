@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>श्री बाल जीवन ज्योति माध्यमिक विद्यालय - मनहरी-१, मकवानपुर</title>
     
-    <!-- Open Graph Meta Tags (फेसबुक शेयर कार्डमा सूचनाको हेडिङ, विवरण र फोटो देखाउनका लागि) -->
-    <meta property="og:site_name" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालय">
+    <!-- Open Graph Meta Tags (Facebook Share me main photo aur detail ke liye) -->
     <meta property="og:title" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालय - सूचना तथा समाचार" id="og-title">
-    <meta property="og:description" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालयको आधिकारिक सूचना तथा समाचारहरू।" id="og-desc">
+    <meta property="og:description" content="श्री बाल जीवन ज्योति माध्यमिक विद्यालयको आधिकारिक वेबसाइटबाट नवीनतम सूचनाहरू हेर्नुहोस्।" id="og-desc">
     <meta property="og:image" content="Purbabidharthi1.jpg" id="og-image">
     <meta property="og:url" content="" id="og-url">
     <meta property="og:type" content="article">
@@ -830,7 +829,7 @@
 
         // Google Sheet बाट जरुरी सूचना (K2 cell) र नवीनतम सूचनाहरू तान्ने कोड
         document.addEventListener("DOMContentLoaded", function() {
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwS0H3UJoUqDVafg_M-ayXQbH1VMxPPZxoIV5uWMd-jUH95koQGaC_1F3EaxQ_KtQMM/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwS0H3UJoUqDVafg_M-ayXQbH1VMxPPZxoIV5uWMd-jUH95koQGaC_1F3EaxQ_KtQMM/exec'; // <--- यहाँ आफ्नो Google Apps Script को URL राख्नुहोला
             const container = document.getElementById('google-sheet-notices');
             const jaruriNoticeText = document.getElementById('jaruri-notice-text');
 
@@ -872,7 +871,7 @@
             }
         });
 
-        // Notice Card Element Banavva Mate Helper Function (Facebook Share Photo Style Format)
+        // Notice Card Element Banavva Mate Helper Function
         function createNoticeCard(notice, noticeId) {
             const noticeTitle = notice.Title || notice.title;
             const noticeDate = notice.Date || notice.date || 'मिति उपलब्ध छैन';
@@ -882,8 +881,9 @@
             const baseUrl = window.location.href.split('#')[0];
             const noticeShareUrl = `${baseUrl}#notice-${noticeId}`;
 
-            // फोटोमा जस्तै ठूलो अक्षरमा सूचनाको हेडिङ (Title) नै मुख्य मुख्य ठाउँमा आउने गरी शेयर URL बनाइएको छ
-            const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&title=${encodeURIComponent(noticeTitle)}`;
+            // Heading set directly for Facebook share quote parameter so Facebook heading displays Notice Title
+            const shareTitleText = `${noticeTitle} - श्री बाल जीवन ज्योति माध्यमिक विद्यालय`;
+            const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(shareTitleText)}`;
 
             const noticeCard = document.createElement('div');
             noticeCard.className = "bg-white p-4 rounded-lg shadow-sm border border-l-4 border-l-blue-600 flex justify-between items-center gap-4 notice-card";
@@ -942,19 +942,20 @@
                 window.location.hash = `notice-${noticeId}`;
             }
 
-            // फोटोमा जस्तै फेसबुक शेयर कार्डको मुख्य Title र Description परिवर्तन गर्ने
-            document.title = `${title} - श्री बाल जीवन ज्योति मा.वि.`;
+            // Dynamically update document Title and Meta Tags for Notice Heading display
+            const fullHeading = `${title} - श्री बाल जीवन ज्योति माध्यमिक विद्यालय`;
+            document.title = fullHeading;
 
             const ogTitleElem = document.getElementById('og-title');
             const ogDescElem = document.getElementById('og-desc');
             const ogUrlElem = document.getElementById('og-url');
             
-            if (ogTitleElem) ogTitleElem.setAttribute('content', title);
-            if (ogDescElem) ogDescElem.setAttribute('content', desc.substring(0, 160));
+            if (ogTitleElem) ogTitleElem.setAttribute('content', fullHeading);
+            if (ogDescElem) ogDescElem.setAttribute('content', desc.substring(0, 150) + '...');
             if (ogUrlElem) ogUrlElem.setAttribute('content', noticeShareUrl);
 
-            // Modal भित्रको Facebook Share बटनमा सूचनाको Heading अगाडि आउने गरी URL set गर्ने
-            const fbUrl = shareUrl || `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&title=${encodeURIComponent(title)}`;
+            // Updated Facebook Share link with heading as quote parameter
+            const fbUrl = shareUrl || `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(fullHeading)}`;
             
             document.getElementById('modal-facebook-share').href = fbUrl;
 
@@ -965,7 +966,7 @@
         function closeNoticeModal() {
             document.getElementById('notice-modal').classList.add('hidden');
             document.body.style.overflow = 'auto';
-            document.title = 'श्री बाल जीवन ज्योति माध्यमिक विद्यालय - मनहरी-१, मकवानपुर';
+            document.title = "श्री बाल जीवन ज्योति माध्यमिक विद्यालय - मनहरी-१, मकवानपुर";
             if (window.location.hash.startsWith('#notice-')) {
                 history.pushState("", document.title, window.location.pathname + window.location.search);
             }
