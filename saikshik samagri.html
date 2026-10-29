@@ -96,8 +96,12 @@
         }
 
         function handleSelection(className, subject) {
-            // "ऐच्छिक द्वितीय" क्लिक गर्दा केही पनि नहोस्, केवल सूची खुलोस्
-            if (className === "कक्षा १० (SEE)" && subject === "ऐच्छिक द्वितीय") {
+            // कक्षा ९ को "ऐच्छिक द्वितीय" क्लिक गर्दा "Dr Cr Rules.html" फाइल खोल्ने
+            if (className === "कक्षा ९" && subject === "ऐच्छिक द्वितीय") {
+                window.open('Dr Cr Rules.html', '_blank');
+            }
+            // "कक्षा १० (SEE)" को "ऐच्छिक द्वितीय" क्लिक गर्दा पाठहरूको सूची खोल्ने
+            else if (className === "कक्षा १० (SEE)" && subject === "ऐच्छिक द्वितीय") {
                 const list = document.getElementById('subjectList');
                 document.getElementById('modalTitle').innerText = "ऐच्छिक द्वितीय - पाठहरू";
                 list.innerHTML = `<button onclick="location.reload()" class="text-blue-600 text-sm mb-2 underline">← पछाडि फर्कनुहोस्</button>`;
