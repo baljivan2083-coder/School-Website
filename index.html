@@ -889,7 +889,7 @@
             const noticeShareUrl = `${baseUrl}#notice-${noticeId}`;
 
             // Heading + Notice URL included in Facebook Share text
-            const shareText = `📌 ${noticeTitle}\n\n🔗 विस्तृत जानकारीका लागि यो लिङ्कमा क्लिक गर्नुहोस्:\n${noticeShareUrl}`;
+            const shareText = `📌 ${noticeTitle}\n\nविस्तृत जानकारी तलको लिंकमा।👇 गर्नुहोस्:\n${noticeShareUrl}`;
             const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(noticeShareUrl)}&quote=${encodeURIComponent(shareText)}`;
 
             const noticeCard = document.createElement('div');
@@ -981,7 +981,7 @@
             }
 
             // Heading + Notice URL string saved for Copy
-            currentModalNoticeText = `📌 ${title}\n\n🔗 विस्तृत जानकारीका लागि यो लिङ्कमा क्लिक गर्नुहोस्:\n${noticeShareUrl}`;
+            currentModalNoticeText = `📌 ${title}\n\nविस्तृत जानकारी तलको लिंकमा।👇\n${noticeShareUrl}`;
 
             // Dynamically update Meta Tags for OG Share
             const ogTitleElem = document.getElementById('og-title');
