@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>डिजिटल सुझाव पेटिका - श्री बाल जीवन ज्योति माध्यमिक विद्यालय</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #312e81 100%);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35),
+                        0 0 30px rgba(59, 130, 246, 0.2);
+            transform-style: preserve-3d;
+            transition: all 0.4s ease;
+        }
+        .glass-card:hover {
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.45),
+                        0 0 40px rgba(99, 102, 241, 0.4);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .floating-badge {
+            animation: float 4s ease-in-out infinite;
+        }
+        .custom-input:focus {
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+            border-color: #2563eb;
+        }
+        /* QR Zoom Modal Styles */
+        #qrModal {
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4 md:p-6">
+
+    <div class="glass-card w-full max-w-xl rounded-3xl overflow-hidden relative">
+        
+        <!-- Top Decorative 3D Banner -->
+        <div class="bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-800 text-white p-7 text-center relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+            <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-blue-400/20 rounded-full blur-xl"></div>
+            
+            <div class="floating-badge w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner border border-white/30">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-white drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold tracking-wide drop-shadow-sm">डिजिटल सुझाव पेटिका</h1>
+            <p class="text-blue-100 text-xs md:text-sm mt-1.5 font-medium">तपाईंको अमूल्य सल्लाह, सुझाव तथा गुनासो पूर्ण रूपमा गोप्य रहनेछ</p>
+        </div>
+
+        <!-- Form Body -->
+        <form id="suggestionForm" class="p-6 md:p-8 space-y-5">
+            
+            <!-- Role Selection -->
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">तपाईंको परिचय (Role)</label>
+                <div class="relative">
+                    <select id="role" class="w-full px-4 py-3 rounded-xl border border-slate-300 custom-input outline-none bg-white/80 font-medium text-slate-800 appearance-none cursor-pointer">
+                        <option value="विद्यार्थी">विद्यार्थी (Student)</option>
+                        <option value="अभिभावक">अभिभावक (Guardian)</option>
+                        <option value="शिक्षक / कर्मचारी">शिक्षक / कर्मचारी (Teacher/Staff)</option>
+                        <option value="अन्य">अन्य (Other)</option>
+                    </select>
+                    <div class="absolute right-4 top-3.5 pointer-events-none text-slate-500">▼</div>
+                </div>
+            </div>
+
+            <!-- Anonymous Toggle Switch -->
+            <div class="flex items-center justify-between bg-blue-50/70 p-4 rounded-xl border border-blue-100 shadow-sm">
+                <div>
+                    <span class="text-sm font-bold text-slate-800 block">नाम गोप्य राख्नुहोस् (Anonymous)</span>
+                    <span class="text-xs text-slate-500">यो अन गरेमा तपाईंको नाम खुलाइने छैन</span>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="anonymousToggle" class="sr-only peer" checked>
+                    <div class="w-12 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 shadow-inner"></div>
+                </label>
+            </div>
+
+            <!-- Name Field -->
+            <div id="nameContainer" class="hidden transition-all duration-300">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">नाम तथा कक्षा / ठेगाना</label>
+                <input type="text" id="name" placeholder="उदाहरण: रमेश शर्मा, कक्षा १०" class="w-full px-4 py-3 rounded-xl border border-slate-300 custom-input outline-none bg-white/80 text-slate-800">
+            </div>
+
+            <!-- Category Selection -->
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">सुझावको क्षेत्र (Category)</label>
+                <div class="relative">
+                    <select id="category" class="w-full px-4 py-3 rounded-xl border border-slate-300 custom-input outline-none bg-white/80 font-medium text-slate-800 appearance-none cursor-pointer">
+                        <option value="पठनपाठन तथा शैक्षिक सुधार">पठनपाठन तथा शैक्षिक सुधार</option>
+                        <option value="सरसफाइ तथा खानेपानी">सरसफाइ तथा खानेपानी</option>
+                        <option value="अनुशासन तथा सुरक्षा">अनुशासन तथा सुरक्षा</option>
+                        <option value="खेलकुद तथा अतिरिक्त क्रियाकलाप">खेलकुद तथा अतिरिक्त क्रियाकलाप</option>
+                        <option value="प्रशासनिक तथा अन्य">प्रशासनिक तथा अन्य</option>
+                    </select>
+                    <div class="absolute right-4 top-3.5 pointer-events-none text-slate-500">▼</div>
+                </div>
+            </div>
+
+            <!-- Message Textarea -->
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">तपाईंको सुझाव वा गुनासो <span class="text-red-500">*</span></label>
+                <textarea id="message" rows="4" required placeholder="यहाँ आफ्नो कुरा स्पष्ट र खुला रूपमा लेख्नुहोस्..." class="w-full px-4 py-3 rounded-xl border border-slate-300 custom-input outline-none resize-none bg-white/80 text-slate-800"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-blue-500/30 transform active:scale-[0.98] transition duration-200 flex items-center justify-center gap-2 text-base">
+                <span>सुझाव सुरक्षित पठाउनुहोस्</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                </svg>
+            </button>
+
+            <!-- Bottom QR Section Card (Clickable to Zoom) -->
+            <div class="pt-4 border-t border-slate-200/80 flex items-center justify-between gap-4 bg-slate-50/60 p-4 rounded-2xl">
+                <div>
+                    <span class="inline-block bg-blue-100 text-blue-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full mb-1">मोबाइल एक्सेस</span>
+                    <p class="font-bold text-slate-800 text-sm">QR Code स्क्यान गर्नुहोस्</p>
+                    <p class="text-xs text-slate-500 mt-0.5">ठूलो हेर्न QR मा क्लिक गर्नुहोस्।</p>
+                </div>
+                <!-- QR Box with Click Event -->
+                <div id="qrcode" onclick="openQrModal()" class="p-2 bg-white border-2 border-dashed border-blue-300 rounded-xl shadow-sm shrink-0 cursor-pointer hover:scale-105 transition transform" title="क्लिक गरेर ठूलो हेर्नुहोस्"></div>
+            </div>
+        </form>
+
+        <!-- Success Message Box -->
+        <div id="successBox" class="hidden p-10 text-center space-y-4">
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner animate-bounce">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800">हार्दिक धन्यवाद!</h2>
+            <p class="text-slate-600 text-sm max-w-sm mx-auto leading-relaxed">तपाईंको अमूल्य सुझाव सफलतापूर्वक विद्यालय प्रशासनसमक्ष सुरक्षित रूपमा पठाइएको छ。</p>
+            <button onclick="resetForm()" class="mt-4 px-6 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-800 text-sm font-semibold rounded-xl transition shadow-sm">
+                अर्को सुझाव पठाउनुहोस्
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Zoomed QR Modal Popup -->
+    <div id="qrModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4" onclick="closeQrModal()">
+        <div class="bg-white p-6 rounded-3xl shadow-2xl text-center max-w-xs w-full relative transform transition-all scale-95" onclick="event.stopPropagation()">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-bold text-slate-800 text-base">स्क्यान गर्ने QR Code</h3>
+                <button onclick="closeQrModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-lg">&times;</button>
+            </div>
+            <!-- Zoomed QR Code Container -->
+            <div id="modalQrcode" class="p-4 bg-slate-50 border-2 border-blue-600 rounded-2xl flex justify-center my-2 shadow-inner"></div>
+            <p class="text-xs text-slate-500 mt-3 leading-relaxed">मोबाइलको क्यामेरा वा स्क्यानरबाट स्क्यान गरी सुझाव दिनुहोस्।</p>
+            <button onclick="closeQrModal()" class="mt-4 w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2.5 rounded-xl text-sm transition">बन्द गर्नुहोस्</button>
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_FORM_ACTION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdtdUyXgfRulVPMLDchlB8pvOT06YGCnAuWwbSsrfJmOPc0yQ/formResponse";
+        
+        const ENTRY_ROLE     = "entry.418946183";
+        const ENTRY_NAME     = "entry.995766505";
+        const ENTRY_CATEGORY = "entry.1701855131";
+        const ENTRY_MESSAGE  = "entry.299021021";
+
+        const anonymousToggle = document.getElementById('anonymousToggle');
+        const nameContainer = document.getElementById('nameContainer');
+        const nameInput = document.getElementById('name');
+        const form = document.getElementById('suggestionForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successBox = document.getElementById('successBox');
+
+        // सानो QR Code जेनेरेट गर्ने
+        new QRCode(document.getElementById("qrcode"), {
+            text: window.location.href,
+            width: 75,
+            height: 75,
+            colorDark: "#1e3a8a",
+            colorLight: "#ffffff"
+        });
+
+        // ठूलो (Zoomed) QR Code जेनेरेट गर्ने Modal को लागि
+        new QRCode(document.getElementById("modalQrcode"), {
+            text: window.location.href,
+            width: 220,
+            height: 220,
+            colorDark: "#1e3a8a",
+            colorLight: "#ffffff"
+        });
+
+        function openQrModal() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQrModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        anonymousToggle.addEventListener('change', function() {
+            if (this.checked) {
+                nameContainer.classList.add('hidden');
+                nameInput.value = '';
+            } else {
+                nameContainer.classList.remove('hidden');
+            }
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span>पठाइँदैछ...</span>`;
+
+            const params = new URLSearchParams();
+            params.append(ENTRY_ROLE, document.getElementById('role').value);
+            params.append(ENTRY_NAME, anonymousToggle.checked ? "गोप्य (Anonymous)" : (nameInput.value.trim() || "उल्लेख नगरिएको"));
+            params.append(ENTRY_CATEGORY, document.getElementById('category').value);
+            params.append(ENTRY_MESSAGE, document.getElementById('message').value.trim());
+
+            fetch(GOOGLE_FORM_ACTION_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: params.toString()
+            })
+            .then(() => {
+                form.classList.add('hidden');
+                successBox.classList.remove('hidden');
+            })
+            .catch(error => {
+                alert("सुझाव पठाउन समस्या भयो। कृपया इन्टरनेट जाँच गर्नुहोस्।");
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<span>सुझाव सुरक्षित पठाउनुहोस्</span>`;
+            });
+        });
+
+        function resetForm() {
+            form.reset();
+            anonymousToggle.checked = true;
+            nameContainer.classList.add('hidden');
+            successBox.classList.add('hidden');
+            form.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
